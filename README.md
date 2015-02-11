@@ -3,3 +3,4 @@
 
 * Lucía Sánchez
 * Jorge Sierra Miranda
+* Ángel Rodríguez Bobes
