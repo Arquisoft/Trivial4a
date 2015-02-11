@@ -5,5 +5,5 @@
 * Jorge Sierra Miranda
 * Ángel Rodríguez Bobes
 * Santiago Marqués
-* Cristina Montes Rubio
+* Cristina Montes Rubio -- Skype: rinayusuri
 * Miguel Fernández Fuentes  Skype->miguel.fernandez160
