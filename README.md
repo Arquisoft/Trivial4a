@@ -2,3 +2,4 @@
 ## Equipo formado por: 
 
 * Lucía Sánchez
+* Jorge Sierra Miranda
