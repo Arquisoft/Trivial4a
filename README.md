@@ -1,6 +1,4 @@
-# Trivial4b
+# Trivial4a
 ## Equipo formado por: 
 
-* Joaquín García
-* Jose Labra
-* Sergio Rodríguez
+* Lucía Sánchez
