@@ -3,7 +3,7 @@
 
 * Lucía Sánchez
 * Jorge Sierra Miranda
-* Ángel Rodríguez Bobes
+* Ángel Rodríguez Bobes Skype--->angelrodriguez1991
 * Santiago Marqués
 * Cristina Montes Rubio -- Skype: rinayusuri
 * Miguel Fernández Fuentes  Skype->miguel.fernandez160
