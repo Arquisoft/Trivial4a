@@ -2,7 +2,7 @@
 ## Equipo formado por: 
 
 * Lucía Sánchez
-* Jorge Sierra Miranda Skype → jorge.darnier
+* Jorge Sierra Miranda | Skype → jorge.darnier
 * Ángel Rodríguez Bobes Skype--->angelrodriguez1991
 * Santiago Marqués
 * Cristina Montes Rubio -- Skype: rinayusuri
