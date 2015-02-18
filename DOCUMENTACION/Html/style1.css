@@ -1,0 +1,87 @@
+@charset "UTF-8";
+
+@import url("http://fonts.googleapis.com/css?family=Source+Code+Pro:300,400,700|Droid+Serif:700|Open+Sans:400italic,700italic,400,700");
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: #dddddd;
+    text-align: justify;
+	min-width: 440px;
+    margin-left: 20%;
+	margin-right: 20%;
+    padding: 0;
+	color:#470047;
+}
+
+header {
+	padding-top: 6px;
+	padding-bottom: 6px;
+}
+
+nav {
+}
+
+nav a:link, nav a:visited {
+    display: block;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #98bf21;
+    width: 120px;
+    text-align: center;
+    padding: 4px;
+    text-decoration: none;
+}
+
+nav ul {
+	list-style: none;
+}
+
+nav li {
+	display: inline-block;
+	background-image: url(sqpurple.gif);
+    background-repeat: no-repeat;
+    background-position: 0px 5px;
+}
+
+section {
+	margin-bottom:15px;
+}
+
+#lista_articulos {
+    background-color: #98bf21;
+	list-style-type: none;
+}
+#lista_articulos li{
+	padding-bottom:5px;
+}
+#lista_articulos a:visited, #lista_articulos a:link {
+	text-decoration: none;
+	color: #ffffff;
+}
+#lista_articulos a:hover{
+	font-size: 150%;
+}
+
+section a:link, section a:visited {
+    display: block;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #98bf21;
+    padding: 4px;
+    text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: rgb(46, 116, 181);
+}
+
+footer {
+	background-color: #cccccc;
+	padding: 10px;
+	box-shadow: 10px 10px 5px #888888;
+}
+
+footer a:visited, footer a:link{
+	text-decoration: none;
+	color:#470047;
+}
