@@ -1,4 +1,7 @@
 # Trivial4a
+
+* https://travis-ci.org/Arquisoft/Trivial4a.svg?branch=master
+
 ## Equipo formado por: 
 
 * Lucía Sánchez | Skype-> luzy_s
