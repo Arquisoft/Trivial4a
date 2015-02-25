@@ -3,8 +3,11 @@ package es.uniovi.asw.trivial;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.stream.FileImageInputStream;
+
+import es.uniovi.asw.trivial.pregunta.JSonable;
 
 public class Extractor {
 	
@@ -32,11 +35,17 @@ public class Extractor {
 		 * El parser creado con yacc y jflex debe invocarse desde aqui.
 		 * Deberá verificar el fichero y procesarlo para que devuelva una estructura de datos que contenta las preguntas.
 		 * Esta estructura de datos se recorrera despues para generar el json.
-		 * Para pasar la lista de objetos a Json intentaremos usar gson.
-		 * http://search.maven.org/#artifactdetails%7Ccom.google.code.gson%7Cgson%7C2.3.1%7Cjar
 		 */
-
-		System.out.println("To'bien.");
+		
+		ArrayList<JSonable> preguntas;
+		//preguntas = parser.evaluateAndETC();
+		preguntas = null;
+		
+		//TODO ver si se puede hacer que el segundo argumento sea la ruta de salia de forma sencilla. la ruta actual de salida es añadir .out.json al fichero de entrada
+		
+		JSonWriter jsw = new JSonWriter(args[0]+".out.json");
+		jsw.writeJSonFile(preguntas);
+		
 		return 0 ;
 	}
 	

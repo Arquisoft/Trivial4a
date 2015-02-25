@@ -1,6 +1,6 @@
 package es.uniovi.asw.trivial.pregunta;
 
-public class Pregunta {
+public class Pregunta implements JSonable{
 	
 	/*
 	 * TODO
