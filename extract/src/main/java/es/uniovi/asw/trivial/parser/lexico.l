@@ -11,6 +11,11 @@ package es.uniovi.asw.trivial.parser;
   public String lexeme() {
    return yytext();
   }
+  
+  private Parser parser;
+public void setParser(Parser parser) {
+	this.parser=parser;
+}
 
   public int line() {
     return yyline + 1;

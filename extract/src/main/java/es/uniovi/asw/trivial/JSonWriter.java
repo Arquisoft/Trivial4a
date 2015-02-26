@@ -2,11 +2,11 @@ package es.uniovi.asw.trivial;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
-
-import es.uniovi.asw.trivial.pregunta.JSonable;
+import java.util.ArrayList;
 
 import com.google.gson.Gson;
+
+import es.uniovi.asw.trivial.pregunta.JSonable;
 
 
 public class JSonWriter {
@@ -22,10 +22,10 @@ public class JSonWriter {
 		this.rutaSalida = rutaSalida;
 	}
 	
-	public void writeJSonFile(List<JSonable> jSonables){
+	public void writeJSonFile(ArrayList<JSonable> preguntas){
 		Gson gson = new Gson();
 		StringBuilder sb = new StringBuilder();
-		for(JSonable i : jSonables){
+		for(JSonable i : preguntas){
 			sb.append(gson.toJson(i));
 			sb.append("\n");
 		}

@@ -2,6 +2,7 @@
 package es.uniovi.asw.trivial.parser;
 import es.uniovi.asw.trivial.pregunta.*;
 import java.util.*;
+ @SuppressWarnings("all")
 %}
 
 %TOKEN TEXTO
@@ -45,7 +46,7 @@ simbolo
 %%
 
 private Yylex lex;
-private List<Pregunta> preguntas;
+private ArrayList<JSonable> preguntas;
 private int token;
 
 public Parser(Yylex lex, boolean debug) {
@@ -75,7 +76,13 @@ int yylex() {
   }
 }
 
-public List<Pregunta> getPreguntas() {
+public ArrayList<JSonable> getPreguntas() {
 	return preguntas;
 }
 
+
+
+public Parser(Yylex lexico) {
+	this.lex = lexico;
+	lex.setParser(this);
+}

@@ -20,7 +20,8 @@
 package es.uniovi.asw.trivial.parser;
 import es.uniovi.asw.trivial.pregunta.*;
 import java.util.*;
-//#line 21 "Parser.java"
+ @SuppressWarnings("all")
+//#line 22 "Parser.java"
 
 
 
@@ -220,28 +221,28 @@ null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
-null,null,null,null,null,null,null,"\"TEXTO\"","\"DOBLEPUNTO\"",
+null,null,null,null,null,null,null,"TEXTO","DOBLEPUNTO",
 };
 final static String yyrule[] = {
 "$accept : preguntas",
 "preguntas : preguntas pregunta",
 "preguntas : pregunta",
-"pregunta : identificador \"TEXTO\" '{' respuestas '}'",
-"identificador : \"DOBLEPUNTO\" \"TEXTO\" \"DOBLEPUNTO\"",
+"pregunta : identificador TEXTO '{' respuestas '}'",
+"identificador : DOBLEPUNTO TEXTO DOBLEPUNTO",
 "identificador :",
 "respuestas : respuestas respuesta",
 "respuestas : respuesta",
-"respuesta : simbolo \"TEXTO\" comentario",
-"comentario : '#' \"TEXTO\"",
+"respuesta : simbolo TEXTO comentario",
+"comentario : '#' TEXTO",
 "comentario :",
 "simbolo : '='",
 "simbolo : '~'",
 };
 
-//#line 37 "sintac.y"
+//#line 47 "sintac.y"
 
 private Yylex lex;
-private List<Pregunta> preguntas;
+private ArrayList<JSonable> preguntas;
 private int token;
 
 public Parser(Yylex lex, boolean debug) {
@@ -271,11 +272,17 @@ int yylex() {
   }
 }
 
-List<Pregunta> getPreguntas() {
+public ArrayList<JSonable> getPreguntas() {
 	return preguntas;
 }
 
-//#line 220 "Parser.java"
+
+
+public Parser(Yylex lexico) {
+	this.lex = lexico;
+	lex.setParser(this);
+}
+//#line 227 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
