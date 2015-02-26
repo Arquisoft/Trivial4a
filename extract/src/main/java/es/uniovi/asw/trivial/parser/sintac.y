@@ -1,6 +1,7 @@
 %{
 package es.uniovi.asw.trivial.parser;
 import es.uniovi.asw.trivial.pregunta.*;
+import java.util.*;
 %}
 
 %TOKEN TEXTO
@@ -74,7 +75,7 @@ int yylex() {
   }
 }
 
-List<Preguntas> getPreguntas() {
+List<Pregunta> getPreguntas() {
 	return preguntas;
 }
 

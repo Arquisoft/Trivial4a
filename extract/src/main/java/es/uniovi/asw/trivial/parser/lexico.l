@@ -1,4 +1,4 @@
-package sintactico;
+package es.uniovi.asw.trivial.parser;
 
 %%
 %byaccj

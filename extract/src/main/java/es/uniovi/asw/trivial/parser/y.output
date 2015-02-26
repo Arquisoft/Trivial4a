@@ -1,0 +1,187 @@
+   0  $accept : preguntas $end
+
+   1  preguntas : preguntas pregunta
+   2            | pregunta
+
+   3  pregunta : identificador "TEXTO" '{' respuestas '}'
+
+   4  identificador : "DOBLEPUNTO" "TEXTO" "DOBLEPUNTO"
+   5                |
+
+   6  respuestas : respuestas respuesta
+   7             | respuesta
+
+   8  respuesta : simbolo "TEXTO" comentario
+
+   9  comentario : '#' "TEXTO"
+  10             |
+
+  11  simbolo : '='
+  12          | '~'
+
+state 0
+	$accept : . preguntas $end  (0)
+	identificador : .  (5)
+
+	"DOBLEPUNTO"  shift 1
+	"TEXTO"  reduce 5
+
+	preguntas  goto 2
+	pregunta  goto 3
+	identificador  goto 4
+
+
+state 1
+	identificador : "DOBLEPUNTO" . "TEXTO" "DOBLEPUNTO"  (4)
+
+	"TEXTO"  shift 5
+	.  error
+
+
+state 2
+	$accept : preguntas . $end  (0)
+	preguntas : preguntas . pregunta  (1)
+	identificador : .  (5)
+
+	$end  accept
+	"DOBLEPUNTO"  shift 1
+	"TEXTO"  reduce 5
+
+	pregunta  goto 6
+	identificador  goto 4
+
+
+state 3
+	preguntas : pregunta .  (2)
+
+	.  reduce 2
+
+
+state 4
+	pregunta : identificador . "TEXTO" '{' respuestas '}'  (3)
+
+	"TEXTO"  shift 7
+	.  error
+
+
+state 5
+	identificador : "DOBLEPUNTO" "TEXTO" . "DOBLEPUNTO"  (4)
+
+	"DOBLEPUNTO"  shift 8
+	.  error
+
+
+state 6
+	preguntas : preguntas pregunta .  (1)
+
+	.  reduce 1
+
+
+state 7
+	pregunta : identificador "TEXTO" . '{' respuestas '}'  (3)
+
+	'{'  shift 9
+	.  error
+
+
+state 8
+	identificador : "DOBLEPUNTO" "TEXTO" "DOBLEPUNTO" .  (4)
+
+	.  reduce 4
+
+
+state 9
+	pregunta : identificador "TEXTO" '{' . respuestas '}'  (3)
+
+	'='  shift 10
+	'~'  shift 11
+	.  error
+
+	respuestas  goto 12
+	respuesta  goto 13
+	simbolo  goto 14
+
+
+state 10
+	simbolo : '=' .  (11)
+
+	.  reduce 11
+
+
+state 11
+	simbolo : '~' .  (12)
+
+	.  reduce 12
+
+
+state 12
+	pregunta : identificador "TEXTO" '{' respuestas . '}'  (3)
+	respuestas : respuestas . respuesta  (6)
+
+	'}'  shift 15
+	'='  shift 10
+	'~'  shift 11
+	.  error
+
+	respuesta  goto 16
+	simbolo  goto 14
+
+
+state 13
+	respuestas : respuesta .  (7)
+
+	.  reduce 7
+
+
+state 14
+	respuesta : simbolo . "TEXTO" comentario  (8)
+
+	"TEXTO"  shift 17
+	.  error
+
+
+state 15
+	pregunta : identificador "TEXTO" '{' respuestas '}' .  (3)
+
+	.  reduce 3
+
+
+state 16
+	respuestas : respuestas respuesta .  (6)
+
+	.  reduce 6
+
+
+state 17
+	respuesta : simbolo "TEXTO" . comentario  (8)
+	comentario : .  (10)
+
+	'#'  shift 18
+	'}'  reduce 10
+	'='  reduce 10
+	'~'  reduce 10
+
+	comentario  goto 19
+
+
+state 18
+	comentario : '#' . "TEXTO"  (9)
+
+	"TEXTO"  shift 20
+	.  error
+
+
+state 19
+	respuesta : simbolo "TEXTO" comentario .  (8)
+
+	.  reduce 8
+
+
+state 20
+	comentario : '#' "TEXTO" .  (9)
+
+	.  reduce 9
+
+
+9 terminals, 8 nonterminals
+13 grammar rules, 21 states
