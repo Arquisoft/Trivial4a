@@ -10,37 +10,83 @@ import java.util.*;
 
 %%
 
+s
+	:	preguntas	{ preguntas = (ArrayList<JSonable>)$1; }
+	;
+
 preguntas
-	:	preguntas pregunta
-	|	pregunta
+	:	preguntas pregunta						{
+													List<JSonable> preguntas = (List<Jsonable>)$1;
+													preguntas.add((Pregunta)$2);
+													$$ = preguntas;
+												}
+	|	pregunta								{
+													List<JSonable> preguntas = new ArrayList<JSonable>();
+													$$ = preguntas.add((Pregunta)$1);
+												}
 	;
 		
 pregunta
-	:	identificador TEXTO '{' respuestas '}'
+	:	identificador TEXTO '{' respuestas '}' {
+													String identificador = (String)$1;
+													String pregunta = (String)$2;
+													if(identificador==null)
+														identificador=pregunta;
+													List<Respuesta> respuestas = (List<Respuesta>)$4;
+													List<String> respuestasCorrectas = new ArrayList<String>();	
+													List<String> respuestasIncorrectas = new ArrayList<String>();
+													for(Respuesta r : respuestas)
+														if(r.isCorrecta)
+															respuestasCorrectas.add(r.respuesta);
+														else
+															respuestasIncorrectas.add(r.respuesta);	
+															
+													Pregunta preguntas = new Pregunta(identificador,pregunta,resputasCorrectas,respuestasIncorrectas);
+													$$ = preguntas;	
+												}
 	;
 		
 identificador
-	:	DOBLEPUNTO TEXTO DOBLEPUNTO
-	|
+	:	DOBLEPUNTO TEXTO DOBLEPUNTO	{
+										$$ = $2;
+									}
+	|								{
+										$$ = null;
+									}
 	;
 	
 respuestas
 	:	respuestas respuesta
-	|	respuesta
+									{
+										List<Respuesta> r1 = (List<Respuesta>)$1;
+										r1.add((Respuesta)$2);
+										$$ = r1;
+									}
+	|	respuesta					{
+										List<Respuesta> r1 = new ArrayList<Respuesta>();
+										r1.add((Respuesta)$1);
+										$$ = r1;
+									}
 	;
 		
 respuesta
-	:	simbolo TEXTO comentario
+	:	simbolo TEXTO comentario 	{
+										String simbolo = (String)$1;
+										String texto = (String)$2;
+										boolean isCorrecta= simbolo=="=";
+										Respuesta r1 = new Respuesta(texto,isCorrecta);
+										$$ = r1;									
+									 }
 	;
 		
 comentario
 	:	'#'	TEXTO
-	|
+	|			
 	;
 		
 simbolo
-	:	'='
-	|	'~'
+	:	'='		{ $$ = $1; }
+	|	'~'		{ $$ = $1; }
 	;
 
 %%
