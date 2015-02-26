@@ -2,6 +2,7 @@ package es.uniovi.asw.trivial;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -16,13 +17,12 @@ public class Extractor {
     }	
 	
 	public int run(String[] args) {
-		if (args.length == 0) {
-			mostrarErrorNoFargumentos();
-			return -1;
-		}
+		
 		try {
-			
-			FileImageInputStream inputStream = new FileImageInputStream(new File(args[0]));
+			if (args.length == 0) 
+				throw new Exception("No se han espeficicado argumentos.");
+				
+			FileReader inputStream = new FileReader(new File(args[0]));
 			
 		} catch (FileNotFoundException e) {
 			System.err.println("No se ha encontrado el archivo.");
@@ -35,7 +35,10 @@ public class Extractor {
 		 * El parser creado con yacc y jflex debe invocarse desde aqui.
 		 * Deberá verificar el fichero y procesarlo para que devuelva una estructura de datos que contenta las preguntas.
 		 * Esta estructura de datos se recorrera despues para generar el json.
-		 */
+		 */ catch (Exception e) {
+			
+			System.err.print(e.getMessage());
+		}
 		
 		ArrayList<JSonable> preguntas;
 		//preguntas = parser.evaluateAndETC();
