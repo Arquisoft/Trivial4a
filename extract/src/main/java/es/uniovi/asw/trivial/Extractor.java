@@ -5,9 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-
+import es.uniovi.asw.trivial.parser.*;
 import javax.imageio.stream.FileImageInputStream;
 
+import es.uniovi.asw.trivial.parser.Parser;
 import es.uniovi.asw.trivial.pregunta.JSonable;
 
 public class Extractor {
@@ -18,11 +19,12 @@ public class Extractor {
 	
 	public int run(String[] args) {
 		
+		FileReader inputStream = null;
 		try {
 			if (args.length == 0) 
 				throw new Exception("No se han espeficicado argumentos.");
 				
-			FileReader inputStream = new FileReader(new File(args[0]));
+			inputStream = new FileReader(new File(args[0]));
 			
 		} catch (FileNotFoundException e) {
 			System.err.println("No se ha encontrado el archivo.");
@@ -40,8 +42,17 @@ public class Extractor {
 			System.err.print(e.getMessage());
 		}
 		
+		try{
+		if(inputStream!=null)	
+			Yylex lexico = new Yylex(inputStream);
+		else
+			throw new NullPointerException();
+		}catch (NullPointerException e)
+		{
+			System.err.println("No hay filereader");
+		}
 		ArrayList<JSonable> preguntas;
-		preguntas = parser.evaluateAndETC();
+		//preguntas = Parser.getPreguntas();
 		//preguntas = null;
 		
 		//TODO ver si se puede hacer que el segundo argumento sea la ruta de salia de forma sencilla. la ruta actual de salida es añadir .out.json al fichero de entrada

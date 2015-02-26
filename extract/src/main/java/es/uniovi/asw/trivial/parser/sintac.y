@@ -75,7 +75,7 @@ int yylex() {
   }
 }
 
-List<Pregunta> getPreguntas() {
+public List<Pregunta> getPreguntas() {
 	return preguntas;
 }
 
