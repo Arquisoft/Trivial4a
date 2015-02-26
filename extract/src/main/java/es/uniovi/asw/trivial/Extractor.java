@@ -41,8 +41,8 @@ public class Extractor {
 		}
 		
 		ArrayList<JSonable> preguntas;
-		//preguntas = parser.evaluateAndETC();
-		preguntas = null;
+		preguntas = parser.evaluateAndETC();
+		//preguntas = null;
 		
 		//TODO ver si se puede hacer que el segundo argumento sea la ruta de salia de forma sencilla. la ruta actual de salida es añadir .out.json al fichero de entrada
 		
