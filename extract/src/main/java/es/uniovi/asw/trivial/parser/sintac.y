@@ -3,34 +3,43 @@ package es.uniovi.asw.trivial.parser;
 import es.uniovi.asw.trivial.pregunta.*;
 %}
 
+%TOKEN TEXTO
+%TOKEN DOBLEPUNTO
 
 %%
 
-preguntas: preguntas pregunta
-		|	pregunta
-		;
+preguntas
+	:	preguntas pregunta
+	|	pregunta
+	;
 		
-pregunta: identificador 'TEXTO' '{' respuestas '}'
-		;
+pregunta
+	:	identificador TEXTO '{' respuestas '}'
+	;
 		
-identificador: 'DOBLEPUNTO' 'TEXTO' 'DOBLEPUNTO'
+identificador
+	:	DOBLEPUNTO TEXTO DOBLEPUNTO
 	|
 	;
 	
-respuestas: respuestas respuesta
-		| respuesta
-		;
+respuestas
+	:	respuestas respuesta
+	|	respuesta
+	;
 		
-respuesta: simbolo 'TEXTO' comentario
-		;
+respuesta
+	:	simbolo TEXTO comentario
+	;
 		
-comentario: '#' 'TEXTO'
-		|
-		;
+comentario
+	:	'#'	TEXTO
+	|
+	;
 		
-simbolo: '='
-		| '~'
-		;
+simbolo
+	:	'='
+	|	'~'
+	;
 
 %%
 

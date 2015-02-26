@@ -23,15 +23,15 @@ package sintactico;
 
 %%
 
-"/*"~"*/"	{ }
-"//".*\n	{ }
+"/*"~"*/"		{ }
+"//".*\n		{ }
 
-[ \n\r\t]     { }
+[ \n\r\t]     	{ }
 
+::				{ return Parser.DOBLEPUNTO; }
 
-::			{ return Parser.DOBLEPUNTO; }
-[=#\~{}]	{ return yytext().charAt(0); }
+[=#\~{}]		{ return yytext().charAt(0); }
 
-.*			{ return Parser.TEXTO; }
+.*				{ return Parser.TEXTO; }
 
 

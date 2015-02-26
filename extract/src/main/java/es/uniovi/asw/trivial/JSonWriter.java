@@ -13,6 +13,7 @@ public class JSonWriter {
 	
 	private String rutaSalida;
 	
+	@SuppressWarnings("unused")
 	private JSonWriter(){
 		//Se debe usar contructor con parametros.
 	}
