@@ -7,7 +7,7 @@
 * Lucía Sánchez | Skype-> luzy_s
 * Jorge Sierra Miranda | Skype → jorge.darnier
 * Ángel Rodríguez Bobes Skype--->angelrodriguez1991
-* Santiago Marqués
+* Santiago Marqués		Skype--->zzpetaz
 * Cristina Montes Rubio -- Skype: rinayusuri
 * Miguel Fernández Fuentes  Skype->miguel.fernandez160
 * David Sariego fernández Skype-> neverstopthemassacre
