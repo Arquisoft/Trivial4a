@@ -31,12 +31,15 @@ public void setParser(Parser parser) {
 "/*"~"*/"		{ }
 "//".*\n		{ }
 
-[ \n\r\t]     	{ }
+[\n\r\t]     	{ }
 
 ::				{ return Parser.DOBLEPUNTO; }
 
-[=#\~{}]		{ return yytext().charAt(0); }
+[=#\~{}]						{ return yytext().charAt(0); }
 
-.*				{ return Parser.TEXTO; }
+[a-zA-Z0-9_ñÑ? áéíóúÁÉÍÓÚ]+	{ return Parser.TEXTO; }
+
+.				{ System.out.println("Error lexico con "+ yytext()); }
+
 
 

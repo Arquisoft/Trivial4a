@@ -2,6 +2,7 @@
 package es.uniovi.asw.trivial.parser;
 import es.uniovi.asw.trivial.pregunta.*;
 import java.util.*;
+
  @SuppressWarnings("all")
 %}
 
@@ -16,13 +17,14 @@ s
 
 preguntas
 	:	preguntas pregunta						{
-													List<JSonable> preguntas = (List<Jsonable>)$1;
+													List<JSonable> preguntas = (List<JSonable>)$1;
 													preguntas.add((Pregunta)$2);
 													$$ = preguntas;
 												}
 	|	pregunta								{
 													List<JSonable> preguntas = new ArrayList<JSonable>();
-													$$ = preguntas.add((Pregunta)$1);
+													preguntas.add((Pregunta)$1);
+													$$ = preguntas;
 												}
 	;
 		
@@ -41,7 +43,7 @@ pregunta
 														else
 															respuestasIncorrectas.add(r.respuesta);	
 															
-													Pregunta preguntas = new Pregunta(identificador,pregunta,resputasCorrectas,respuestasIncorrectas);
+													Pregunta preguntas = new Pregunta(identificador,pregunta,respuestasCorrectas,respuestasIncorrectas);
 													$$ = preguntas;	
 												}
 	;
@@ -85,8 +87,12 @@ comentario
 	;
 		
 simbolo
-	:	'='		{ $$ = $1; }
-	|	'~'		{ $$ = $1; }
+	:	'='							{
+										 $$ = $1; 
+									}
+	|	'~'							{
+										$$ = $1;
+									}
 	;
 
 %%
@@ -109,7 +115,7 @@ public int parse() { return yyparse(); }
 
 void yyerror(String s)
 {
- System.out.println("Error sint�ctico en " + lex.line() + ":" + lex.column() + " Token = " + token + " lexema = \"" + lex.lexeme()+"\"");
+ System.out.println("Error sintactico en " + lex.line() + ":" + lex.column() + " Token = " + token + " lexema = \"" + lex.lexeme()+"\"");
 }
 
 int yylex() {

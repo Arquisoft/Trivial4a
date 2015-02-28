@@ -50,8 +50,10 @@ public class Extractor {
 		lexico  = new Yylex(fr);
 		Parser parser = new Parser(lexico);
 		parser.run();
+		
 		ArrayList<JSonable> preguntas;
 		preguntas = parser.getPreguntas();
+		
 		//preguntas = null;
 		
 		//TODO ver si se puede hacer que el segundo argumento sea la ruta de salia de forma sencilla. la ruta actual de salida es añadir .out.json al fichero de entrada

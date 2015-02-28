@@ -20,8 +20,9 @@
 package es.uniovi.asw.trivial.parser;
 import es.uniovi.asw.trivial.pregunta.*;
 import java.util.*;
+
  @SuppressWarnings("all")
-//#line 22 "Parser.java"
+//#line 23 "Parser.java"
 
 
 
@@ -150,56 +151,97 @@ public final static short TEXTO=257;
 public final static short DOBLEPUNTO=258;
 public final static short YYERRCODE=256;
 final static short yylhs[] = {                           -1,
-    0,    0,    1,    2,    2,    3,    3,    4,    6,    6,
-    5,    5,
+    0,    1,    1,    2,    3,    3,    4,    4,    5,    7,
+    7,    6,    6,
 };
 final static short yylen[] = {                            2,
-    2,    1,    5,    3,    0,    2,    1,    3,    2,    0,
-    1,    1,
+    1,    2,    1,    5,    3,    0,    2,    1,    3,    2,
+    0,    1,    1,
 };
 final static short yydefred[] = {                         0,
-    0,    0,    2,    0,    0,    1,    0,    4,    0,   11,
-   12,    0,    7,    0,    3,    6,    0,    0,    8,    9,
+    0,    0,    0,    3,    0,    0,    2,    0,    5,    0,
+   12,   13,    0,    8,    0,    4,    7,    0,    0,    9,
+   10,
 };
 final static short yydgoto[] = {                          2,
-    3,    4,   12,   13,   14,   19,
+    3,    4,    5,   13,   14,   15,   20,
 };
-final static short yysindex[] = {                      -257,
- -253, -257,    0, -252, -251,    0, -117,    0,  -58,    0,
-    0,  -61,    0, -249,    0,    0,  -26, -247,    0,    0,
+final static short yysindex[] = {                      -254,
+ -252,    0, -254,    0, -251, -250,    0, -116,    0,  -58,
+    0,    0,  -61,    0, -248,    0,    0,  -25, -246,    0,
+    0,
 };
-final static short yyrindex[] = {                      -253,
-    0, -253,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,  -59,    0,    0,    0,
+final static short yyrindex[] = {                      -252,
+    0,    0,    1,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,  -59,    0,    0,
+    0,
 };
 final static short yygindex[] = {                         0,
-    9,    0,    0,    1,    0,    0,
+    0,    9,    0,    0,    2,    0,    0,
 };
-final static int YYTABLESIZE=68;
+final static int YYTABLESIZE=258;
 static short yytable[];
 static { yytable();}
 static void yytable(){
-yytable = new short[]{                         10,
-    1,   10,   10,    5,    7,    9,    8,   17,   18,   20,
-    6,    0,   16,    0,    0,    0,    0,    0,    0,    0,
+yytable = new short[]{                         11,
+    1,   11,   11,    1,    6,    8,   10,    9,   18,   19,
+   21,    7,    0,    0,   17,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,   15,   11,   10,   10,   11,
+    0,    0,    0,   16,   12,   11,   11,   12,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    6,
 };
 }
 static short yycheck[];
 static { yycheck(); }
 static void yycheck() {
 yycheck = new short[] {                         61,
-  258,   61,   61,  257,  257,  123,  258,  257,   35,  257,
-    2,   -1,   12,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+    0,   61,   61,  258,  257,  257,  123,  258,  257,   35,
+  257,    3,   -1,   -1,   13,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
    -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,  125,  126,  125,  126,  126,
+   -1,   -1,   -1,  125,  126,  125,  126,  126,   -1,   -1,
+   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
+   -1,   -1,   -1,   -1,   -1,   -1,   -1,  257,
 };
 }
 final static short YYFINAL=2;
@@ -224,7 +266,8 @@ null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,
 null,null,null,null,null,null,null,"TEXTO","DOBLEPUNTO",
 };
 final static String yyrule[] = {
-"$accept : preguntas",
+"$accept : s",
+"s : preguntas",
 "preguntas : preguntas pregunta",
 "preguntas : pregunta",
 "pregunta : identificador TEXTO '{' respuestas '}'",
@@ -239,7 +282,7 @@ final static String yyrule[] = {
 "simbolo : '~'",
 };
 
-//#line 47 "sintac.y"
+//#line 99 "sintac.y"
 
 private Yylex lex;
 private ArrayList<JSonable> preguntas;
@@ -259,7 +302,7 @@ public int parse() { return yyparse(); }
 
 void yyerror(String s)
 {
- System.out.println("Error sint�ctico en " + lex.line() + ":" + lex.column() + " Token = " + token + " lexema = \"" + lex.lexeme()+"\"");
+ System.out.println("Error sintactico en " + lex.line() + ":" + lex.column() + " Token = " + token + " lexema = \"" + lex.lexeme()+"\"");
 }
 
 int yylex() {
@@ -282,7 +325,7 @@ public Parser(Yylex lexico) {
 	this.lex = lexico;
 	lex.setParser(this);
 }
-//#line 227 "Parser.java"
+//#line 270 "Parser.java"
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -435,6 +478,97 @@ boolean doaction;
     switch(yyn)
       {
 //########## USER-SUPPLIED ACTIONS ##########
+case 1:
+//#line 15 "sintac.y"
+{ preguntas = (ArrayList<JSonable>)val_peek(0); }
+break;
+case 2:
+//#line 19 "sintac.y"
+{
+													List<JSonable> preguntas = (List<JSonable>)val_peek(1);
+													preguntas.add((Pregunta)val_peek(0));
+													yyval = preguntas;
+												}
+break;
+case 3:
+//#line 24 "sintac.y"
+{
+													List<JSonable> preguntas = new ArrayList<JSonable>();
+													preguntas.add((Pregunta)val_peek(0));
+													yyval = preguntas;
+												}
+break;
+case 4:
+//#line 32 "sintac.y"
+{
+													String identificador = (String)val_peek(4);
+													String pregunta = (String)val_peek(3);
+													if(identificador==null)
+														identificador=pregunta;
+													List<Respuesta> respuestas = (List<Respuesta>)val_peek(1);
+													List<String> respuestasCorrectas = new ArrayList<String>();	
+													List<String> respuestasIncorrectas = new ArrayList<String>();
+													for(Respuesta r : respuestas)
+														if(r.isCorrecta)
+															respuestasCorrectas.add(r.respuesta);
+														else
+															respuestasIncorrectas.add(r.respuesta);	
+															
+													Pregunta preguntas = new Pregunta(identificador,pregunta,respuestasCorrectas,respuestasIncorrectas);
+													yyval = preguntas;	
+												}
+break;
+case 5:
+//#line 52 "sintac.y"
+{
+										yyval = val_peek(1);
+									}
+break;
+case 6:
+//#line 55 "sintac.y"
+{
+										yyval = null;
+									}
+break;
+case 7:
+//#line 62 "sintac.y"
+{
+										List<Respuesta> r1 = (List<Respuesta>)val_peek(1);
+										r1.add((Respuesta)val_peek(0));
+										yyval = r1;
+									}
+break;
+case 8:
+//#line 67 "sintac.y"
+{
+										List<Respuesta> r1 = new ArrayList<Respuesta>();
+										r1.add((Respuesta)val_peek(0));
+										yyval = r1;
+									}
+break;
+case 9:
+//#line 75 "sintac.y"
+{
+										String simbolo = (String)val_peek(2);
+										String texto = (String)val_peek(1);
+										boolean isCorrecta= simbolo=="=";
+										Respuesta r1 = new Respuesta(texto,isCorrecta);
+										yyval = r1;									
+									 }
+break;
+case 12:
+//#line 90 "sintac.y"
+{
+										 yyval = val_peek(0); 
+									}
+break;
+case 13:
+//#line 93 "sintac.y"
+{
+										yyval = val_peek(0);
+									}
+break;
+//#line 508 "Parser.java"
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####
