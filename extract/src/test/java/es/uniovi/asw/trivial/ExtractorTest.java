@@ -62,12 +62,21 @@ public class ExtractorTest {
 		
 	}
 	
-	/*
+	
 	@Test
-	public void Test(){
+	public void multiplesRespuestasCorrectasTest()throws IOException{	
+		String args[] = {"preguntasPruebas3"};
+		Extractor ext = new Extractor();
+		ext.run(args);
+		String ficheroSalida="",ficheroCorrecto="";
+		
+		ficheroSalida=lector("pregunasPruebas3");
+		ficheroCorrecto=lector("preguntasPruebas3Correcto");
+		
+		assertEquals(ficheroCorrecto,ficheroSalida);
 		
 	}
-	
+	/*
 	@Test
 	public void Test(){
 		
