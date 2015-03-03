@@ -38,7 +38,7 @@ public void setParser(Parser parser) {
 \{" "*		    { return '{';}
 [=#\~,{}]		{ return yytext().charAt(0); }
 
-[a-zA-Z0-9_ñÑ? áéíóúÁÉÍÓÚ,.]+	{ return Parser.TEXTO; }
+[a-zA-ZñÑáéíóúÁÉÍÓÚ0-9_¿?¡!\*\+\-\%\/ ,.]+	{ return Parser.TEXTO; }
 
 .				{ System.out.println("Error lexico con "+ yytext()); }
 
