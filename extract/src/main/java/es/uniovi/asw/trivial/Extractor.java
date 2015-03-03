@@ -18,7 +18,7 @@ public class Extractor {
 	public static void main(String[] args) {
         new Extractor().run(args);
     }	
-	
+	protected ArrayList<JSonable> preguntas;
 	public int run(String[] args) {
 		
 		FileReader fr=null;
@@ -51,7 +51,7 @@ public class Extractor {
 		Parser parser = new Parser(lexico);
 		parser.run();
 		
-		ArrayList<JSonable> preguntas;
+		
 		preguntas = parser.getPreguntas();
 		
 		//preguntas = null;
