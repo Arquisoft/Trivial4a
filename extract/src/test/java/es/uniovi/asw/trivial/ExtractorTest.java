@@ -100,11 +100,24 @@ public class ExtractorTest {
 		
 		assertEquals(ficheroCorrecto,ficheroSalida);
 	}
-	/*
+	
+	/**
+	 * Asegura que el parser no permite la generación de preguntas incompletas
+	 * @throws IOException
+	 */
 	@Test
-	public void Test(){
-		
+	public void preguntaIncompletaTest() throws IOException{
+		String args[] = {"preguntasPruebas5"};
+		Extractor ext = new Extractor();
+		try{
+			ext.run(args);
+		}catch(NullPointerException e)
+		{
+			assertTrue(true);
+		}
+	
 	}
+	/*
 	@Test
 	public void Test(){
 		
