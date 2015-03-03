@@ -46,6 +46,10 @@ public class ExtractorTest {
 		
 	}
 	
+	/**
+	 * Se asegura que puedan existir múltiples preguntas en  un fichero
+	 * @throws IOException
+	 */
 	@Test
 	public void multiplesPreguntasTest() throws IOException{
 		String args[] = {"preguntasPruebas2"};
@@ -62,7 +66,10 @@ public class ExtractorTest {
 		
 	}
 	
-	
+	/**
+	 * Comprueba que es posible hacer una pregunta con varias respuestas correctas
+	 * @throws IOException
+	 */
 	@Test
 	public void multiplesRespuestasCorrectasTest()throws IOException{	
 		String args[] = {"preguntasPruebas3"};
@@ -76,11 +83,24 @@ public class ExtractorTest {
 		assertEquals(ficheroCorrecto,ficheroSalida);
 		
 	}
-	/*
+	
+	/**
+	 * Comprueba que la pregunta puede venir sin identificador, pasando a serlo el cuerpo de la pregunta
+	 * @throws IOException
+	 */
 	@Test
-	public void Test(){
+	public void identificadorOmitidoTest() throws IOException{
+		String args[] = {"preguntasPruebas4"};
+		Extractor ext = new Extractor();
+		ext.run(args);
+		String ficheroSalida="",ficheroCorrecto="";
 		
+		ficheroSalida=lector("pregunasPruebas4");
+		ficheroCorrecto=lector("preguntasPruebas4Correcto");
+		
+		assertEquals(ficheroCorrecto,ficheroSalida);
 	}
+	/*
 	@Test
 	public void Test(){
 		
