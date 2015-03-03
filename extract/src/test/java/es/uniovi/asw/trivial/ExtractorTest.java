@@ -57,7 +57,7 @@ public class ExtractorTest {
 		ext.run(args);
 		String ficheroSalida="",ficheroCorrecto="";
 		
-		ficheroSalida=lector("pregunasPruebas2");
+		ficheroSalida=lector("preguntasPruebas2");
 		ficheroCorrecto=lector("preguntasPruebas2Correcto");
 		
 		assertEquals(ficheroCorrecto,ficheroSalida);
@@ -77,7 +77,7 @@ public class ExtractorTest {
 		ext.run(args);
 		String ficheroSalida="",ficheroCorrecto="";
 		
-		ficheroSalida=lector("pregunasPruebas3");
+		ficheroSalida=lector("preguntasPruebas3");
 		ficheroCorrecto=lector("preguntasPruebas3Correcto");
 		
 		assertEquals(ficheroCorrecto,ficheroSalida);
@@ -95,7 +95,7 @@ public class ExtractorTest {
 		ext.run(args);
 		String ficheroSalida="",ficheroCorrecto="";
 		
-		ficheroSalida=lector("pregunasPruebas4");
+		ficheroSalida=lector("preguntasPruebas4");
 		ficheroCorrecto=lector("preguntasPruebas4Correcto");
 		
 		assertEquals(ficheroCorrecto,ficheroSalida);
