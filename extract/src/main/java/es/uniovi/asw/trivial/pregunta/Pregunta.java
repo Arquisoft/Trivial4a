@@ -30,9 +30,9 @@ public class Pregunta implements JSonable{
 
 	@Override
 	public String toString() {
-		return "Pregunta [identificador=" + identificador + "\n pregunta="
+		return "Pregunta:\n identificador=" + identificador + "\n pregunta="
 				+ pregunta + "\n respuestasCorrectas=" + imprimirLista(respuestasCorrectas)
-				+ "\n respuestasIncorrectas=" + imprimirLista(respuestasIncorrectas) + "]";
+				+ "\n respuestasIncorrectas=" + imprimirLista(respuestasIncorrectas);
 	}
 	
 	private String imprimirLista(List<String> lista)

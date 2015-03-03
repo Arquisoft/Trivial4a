@@ -46,7 +46,7 @@ public class Extractor {
 			
 			System.err.print(e.getMessage());
 		}
-		
+		if(fr!=null){
 		lexico  = new Yylex(fr);
 		Parser parser = new Parser(lexico);
 		parser.run();
@@ -60,7 +60,8 @@ public class Extractor {
 		
 		JSonWriter jsw = new JSonWriter(args[0]+".out.json");
 		jsw.writeJSonFile(preguntas);
-		
+		System.out.println(preguntas);
+		}
 		return 0 ;
 	}
 	
