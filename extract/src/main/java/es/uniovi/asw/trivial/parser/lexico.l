@@ -35,7 +35,8 @@ public void setParser(Parser parser) {
 
 ::				{ return Parser.DOBLEPUNTO; }
 
-[=#\~{}]						{ return yytext().charAt(0); }
+\{" "*		    { return '{';}
+[=#\~{}]		{ return yytext().charAt(0); }
 
 [a-zA-Z0-9_ñÑ? áéíóúÁÉÍÓÚ]+	{ return Parser.TEXTO; }
 
