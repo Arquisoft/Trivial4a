@@ -34,16 +34,34 @@ public class ExtractorTest {
 	public void caracteresEspaciadosTest() throws IOException{
 		String args[] = {"preguntasPruebas1"};
 		Extractor ext = new Extractor();
+		ext.run(args);
 		String ficheroSalida="",ficheroCorrecto="";
 		
-		ficheroSalida=lector("ficheroPruebas1");
-		ficheroCorrecto=lector("ficheroPruebas1Correcto");
+		ficheroSalida=lector("preguntasPruebas1");
+		ficheroCorrecto=lector("preguntasPruebas1Correcto");
 		
 		assertEquals(ficheroCorrecto,ficheroSalida);
 		
 		
 		
 	}
+	
+	@Test
+	public void multiplesPreguntasTest() throws IOException{
+		String args[] = {"preguntasPruebas2"};
+		Extractor ext = new Extractor();
+		ext.run(args);
+		String ficheroSalida="",ficheroCorrecto="";
+		
+		ficheroSalida=lector("pregunasPruebas2");
+		ficheroCorrecto=lector("preguntasPruebas2Correcto");
+		
+		assertEquals(ficheroCorrecto,ficheroSalida);
+		
+		
+		
+	}
+	
 	/*
 	@Test
 	public void Test(){
