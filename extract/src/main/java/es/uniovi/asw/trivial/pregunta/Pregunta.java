@@ -39,9 +39,14 @@ public class Pregunta implements JSonable{
 	{
 		String cadena="";
 		
-		for(String c : lista)
+		/*for(String c : lista)
 			cadena+=c+", ";
-		
+		*/
+		for(int i=0;i<lista.size();i++)
+			if(i!=lista.size()-1)
+				cadena+=lista.get(i)+", ";
+			else
+				cadena+=lista.get(i);
 		
 		return cadena;
 	}
