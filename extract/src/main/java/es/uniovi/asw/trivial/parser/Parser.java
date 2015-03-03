@@ -551,7 +551,7 @@ case 9:
 {
 										String simbolo = (String)val_peek(2);
 										String texto = (String)val_peek(1);
-										boolean isCorrecta= simbolo=="=";
+										boolean isCorrecta= simbolo.equals("=");
 										Respuesta r1 = new Respuesta(texto,isCorrecta);
 										yyval = r1;									
 									 }

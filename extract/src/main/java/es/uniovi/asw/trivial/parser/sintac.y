@@ -75,7 +75,7 @@ respuesta
 	:	simbolo TEXTO comentario 	{
 										String simbolo = (String)$1;
 										String texto = (String)$2;
-										boolean isCorrecta= simbolo=="=";
+										boolean isCorrecta= simbolo.equals("=");
 										Respuesta r1 = new Respuesta(texto,isCorrecta);
 										$$ = r1;									
 									 }
