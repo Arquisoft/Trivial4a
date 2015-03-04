@@ -4,7 +4,6 @@
 
 ## Equipo formado por: 
 
-<<<<<<< HEAD >>>>>>>
 
 =======
 * Lucía Sánchez | Skype-> luciiernaguilla
