@@ -33,7 +33,6 @@ public class JSonWriter {
 //			sb.append(gson.toJson(i));
 //			sb.append("\n");
 //		}
-		
 		FileWriter fw;
 		try {
 			fw = new FileWriter(rutaSalida);
