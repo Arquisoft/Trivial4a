@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.google.gson.stream.JsonReader;
@@ -68,7 +69,9 @@ public class Loader {
 		
 		 reader.endObject();
 		 
-		return new Pregunta();//TODO actualizar con constructor
+		return new Pregunta(aux.identificador, aux.pregunta, 
+				 new ArrayList<String>(Arrays.asList(aux.respuestasCorrectas)), 
+				 new ArrayList<String>(Arrays.asList(aux.respuestasIncorrectas)));
 	}
 
 
