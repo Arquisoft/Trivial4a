@@ -1,7 +1,0 @@
-//Comentario opcional
-:: Titulo de la pregunta
-:: Enunciado de la pregunta {
-     =Respuesta correcta
-     ~Respuesta incorrecta
-     #Explicacion de porque es incorrecta
-}
