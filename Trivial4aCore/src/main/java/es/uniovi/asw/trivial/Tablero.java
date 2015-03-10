@@ -35,5 +35,9 @@ public class Tablero {
 		//TODO en cuncion del tamaño del tablero y el numero de categorias pone en cuales habra quesito
 		
 	}
+	public boolean isQuesito(int posicion)
+	{
+		return categoriaQuesito[posicion]!=""? true : false;
+	}
 
 }

@@ -10,6 +10,8 @@ public class Juego {
 	private List<String> categorias;
 	private List<Categoria> preguntas;
 	private Jugador jugadorActivo;
+	Pregunta preguntaActual;
+	boolean isQuesito = false;
 	
 	public Juego(int tamañoTablero, List<Jugador> jugadores,List<Categoria> preguntas)
 	{
@@ -25,15 +27,34 @@ public class Juego {
 		jugadorActivo = jugadores.get(0);
 		
 		tablero = new Tablero(tamañoTablero, categorias, jugadores);
+		
+		preguntaActual=null;
+		isQuesito=false;
 	}
 	
-	public boolean responderPregunta()
+	public void conseguirPregunta()
 	{
 		Categoria categoriaActual=null;
+
+		
+		
 		categoriaActual=tablero.getCategoria(jugadorActivo);
+		isQuesito = tablero.isQuesito(jugadorActivo.getPosicion());
 		
+		preguntaActual = conseguirPregunta(categoriaActual);
+		//hasta aquí hemos sacado la pregunta de la categoria pertinente y si vale por quesito
+		mostrarPregunta(preguntaActual,isQuesito);
 		
-		return false;
+	}
+
+	private void mostrarPregunta(Pregunta pregunta, boolean isQuesito) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private Pregunta conseguirPregunta(Categoria categoriaActual) {
+		//TODO mostrar pregunta, categoria y si vale por quesito
+		return null;
 	}
 
 }
