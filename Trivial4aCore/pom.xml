@@ -8,4 +8,15 @@
   <artifactId>Trivial4aCore</artifactId>
   <version>0.1-SNAPSHOT</version>
   <name>Trivial4aCore</name>
+  
+  <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+  
+  <dependencies>
+  	<dependency>
+  		<groupId>com.google.code.gson</groupId>
+  		<artifactId>gson</artifactId>
+  	</dependency>
+  </dependencies>
 </project>
