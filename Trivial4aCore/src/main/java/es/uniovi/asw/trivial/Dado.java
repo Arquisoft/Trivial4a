@@ -4,12 +4,12 @@ import java.util.Random;
 
 public class Dado {
 	
-	private int numero=1;
-	private Random r1;
+	private static Random r1 = new Random();
 	
 	public static int lanzarDado()
 	{
-		return 1;
+		int numero = r1.nextInt(7);
+		return numero;
 		
 	}
 
