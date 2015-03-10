@@ -1,6 +1,8 @@
 package es.uniovi.asw.trivial;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Pregunta {
 
@@ -19,6 +21,35 @@ public class Pregunta {
 		this.respuestasIncorrectas = respuestasIncorrectas;
 	}
 	
+	public List<String> getRespuestas(){
+		List<String> aux = respuestasCorrectas;
+		
+		for(String s : respuestasIncorrectas)
+			aux.add(s);
+		aux = desordenar(aux);
+		
+		
+		return aux;
+	}
+	
+	private List<String> desordenar(List<String> aux) {
+		// TODO Auto-generated method stub
+		
+		List<String> aux2 = new ArrayList<String>();
+		int i=0;
+		Random r1 = new Random();
+		while(i<aux.size())
+		{
+			String respuesta= aux.get(r1.nextInt(aux.size()));
+			if(!aux2.contains(respuesta)){
+				aux2.add(respuesta);
+				i++;
+			}
+			
+		}
+				
+		return aux2;
+	}
 	public String getIdentificador() {
 		return identificador;
 	}

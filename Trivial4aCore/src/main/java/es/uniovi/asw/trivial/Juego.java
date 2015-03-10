@@ -59,7 +59,9 @@ public class Juego {
 
 	private void mostrarPregunta(Pregunta pregunta, boolean isQuesito) {
 		// TODO Auto-generated method stub
-		
+		if(isQuesito)
+			System.out.println("Por quesito de: "+tablero.getCategoria(jugadorActivo));
+		System.out.println("Pregunta: "+pregunta.getPregunta());
 	}
 
 	private Pregunta conseguirPregunta(Categoria categoriaActual) {
@@ -69,7 +71,8 @@ public class Juego {
 	
 	private void mostrarRespuestas()
 	{
-		//TODO
+		for(String s: preguntaActual.getRespuestas())
+			System.out.println(s);
 	}
 
 }
