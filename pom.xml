@@ -13,6 +13,7 @@
     <modules>
         <module>extract</module>
 <!-- Other modules should be added here: <module>...</module> -->
+    	<module>Trivial4aCore</module>
     </modules>
 
     <build>
