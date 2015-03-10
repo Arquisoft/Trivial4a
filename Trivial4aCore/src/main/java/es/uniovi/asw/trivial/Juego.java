@@ -30,9 +30,19 @@ public class Juego {
 		
 		preguntaActual=null;
 		isQuesito=false;
+		jugar();
 	}
 	
-	public void conseguirPregunta()
+	
+	
+	public void jugar() {
+		// TODO Poner métodos pertinentes para jugar (conseguir pregunta, responder blabla)
+		
+	}
+
+
+
+	private void conseguirPregunta()
 	{
 		Categoria categoriaActual=null;
 
@@ -55,6 +65,11 @@ public class Juego {
 	private Pregunta conseguirPregunta(Categoria categoriaActual) {
 		//TODO mostrar pregunta, categoria y si vale por quesito
 		return null;
+	}
+	
+	private void mostrarRespuestas()
+	{
+		//TODO
 	}
 
 }
