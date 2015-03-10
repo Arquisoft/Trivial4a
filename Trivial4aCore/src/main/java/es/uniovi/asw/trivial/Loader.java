@@ -1,10 +1,13 @@
 package es.uniovi.asw.trivial;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.*;
+import com.google.gson.stream.JsonReader;
 
 public class Loader {
 
@@ -21,8 +24,23 @@ public class Loader {
 
 	}
 	
-	private void loadFile(File file){
-		
-	}
+	private void loadFile(File file) throws Throwable{
+		Gson gson = new Gson();
+		 JsonReader jsonReader = new JsonReader(new FileReader(file));
+		 
+		 jsonReader.beginObject();
+		 while (jsonReader.hasNext()) {
+		   String name = jsonReader.nextName();
+	        if (name.equals("descriptor")) {
+	            ;//TODO 
 
+	        }
+	    }
+
+	   jsonReader.endObject();
+	   jsonReader.close();
+
+	}
 }
+
+

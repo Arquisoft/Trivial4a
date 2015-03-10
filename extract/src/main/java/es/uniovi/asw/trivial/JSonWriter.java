@@ -25,10 +25,15 @@ public class JSonWriter {
 	public void writeJSonFile(ArrayList<JSonable> preguntas){
 		Gson gson = new Gson();
 		StringBuilder sb = new StringBuilder();
-		for(JSonable i : preguntas){
-			sb.append(gson.toJson(i));
-			sb.append("\n");
-		}
+		sb.append(gson.toJson(preguntas));
+		
+		
+		
+//		for(JSonable i : preguntas){
+//			sb.append(gson.toJson(i));
+//			sb.append("\n");
+//		}
+		
 		FileWriter fw;
 		try {
 			fw = new FileWriter(rutaSalida);

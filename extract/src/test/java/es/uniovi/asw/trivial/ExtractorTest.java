@@ -6,7 +6,6 @@ import static org.junit.Assert.*;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -131,6 +130,7 @@ public class ExtractorTest {
 	{
 		String salida="";
 		try{
+			@SuppressWarnings("resource")
 			BufferedReader fr=new BufferedReader(new FileReader(new File(nombre+".out.json")));
 			while(fr.ready())
 				salida=salida+fr.readLine();
