@@ -5,16 +5,16 @@ import java.util.List;
 public class Tablero {
 	
 	//TODO a rellenar
-	private int tamaño;
+	private int tamanio;
 	private List<String> categorias;
 	private List<Jugador> jugadores;
 	private String[] categoriaQuesito;
 	
-	public Tablero(int tamaño,List<String> categorias,List<Jugador> jugadores) {
+	public Tablero(int tamanio,List<String> categorias,List<Jugador> jugadores) {
 		this.categorias=categorias;
-		this.tamaño = tamaño;
+		this.tamanio = tamanio;
 		this.jugadores=jugadores;
-		categoriaQuesito = new String[tamaño];
+		categoriaQuesito = new String[tamanio];
 		establecerCasillasQuesito();
 	}
 	
@@ -32,7 +32,7 @@ public class Tablero {
 	}
 	private void establecerCasillasQuesito()
 	{
-		//TODO en cuncion del tamaño del tablero y el numero de categorias pone en cuales habra quesito
+		//TODO en cuncion del tamaï¿½o del tablero y el numero de categorias pone en cuales habra quesito
 		
 	}
 	public boolean isQuesito(int posicion)

@@ -13,7 +13,7 @@ public class Juego {
 	Pregunta preguntaActual;
 	boolean isQuesito = false;
 	
-	public Juego(int tamañoTablero, List<Jugador> jugadores,List<Categoria> preguntas)
+	public Juego(int tamanioTablero, List<Jugador> jugadores,List<Categoria> preguntas)
 	{
 		
 		this.jugadores=jugadores;
@@ -26,7 +26,7 @@ public class Juego {
 		
 		jugadorActivo = jugadores.get(0);
 		
-		tablero = new Tablero(tamañoTablero, categorias, jugadores);
+		tablero = new Tablero(tamanioTablero, categorias, jugadores);
 		
 		preguntaActual=null;
 		isQuesito=false;
@@ -36,7 +36,7 @@ public class Juego {
 	
 	
 	public void jugar() {
-		// TODO Poner métodos pertinentes para jugar (conseguir pregunta, responder blabla)
+		// TODO Poner mï¿½todos pertinentes para jugar (conseguir pregunta, responder blabla)
 		
 	}
 
@@ -52,7 +52,7 @@ public class Juego {
 		isQuesito = tablero.isQuesito(jugadorActivo.getPosicion());
 		
 		preguntaActual = conseguirPregunta(categoriaActual);
-		//hasta aquí hemos sacado la pregunta de la categoria pertinente y si vale por quesito
+		//hasta aquï¿½ hemos sacado la pregunta de la categoria pertinente y si vale por quesito
 		mostrarPregunta(preguntaActual,isQuesito);
 		
 	}
