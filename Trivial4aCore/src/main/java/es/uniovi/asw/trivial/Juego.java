@@ -2,6 +2,7 @@ package es.uniovi.asw.trivial;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Juego {
 	
@@ -11,7 +12,7 @@ public class Juego {
 	private List<Categoria> preguntas;
 	private Jugador jugadorActivo;
 	Pregunta preguntaActual;
-	boolean isQuesito = false;
+	
 	
 	public Juego(int tamanioTablero, List<Jugador> jugadores,List<Categoria> preguntas)
 	{
@@ -29,7 +30,7 @@ public class Juego {
 		tablero = new Tablero(tamanioTablero, categorias, jugadores);
 		
 		preguntaActual=null;
-		isQuesito=false;
+		
 		jugar();
 	}
 	
@@ -37,42 +38,81 @@ public class Juego {
 	
 	public void jugar() {
 		// TODO Poner m�todos pertinentes para jugar (conseguir pregunta, responder blabla)
+		preguntaActual = conseguirPregunta();
+				
+		List<String> respuestas = mostrarPregunta(preguntaActual);
+		
+		if(isCorrecta(respuestas))
+		{
+			
+		}
 		
 	}
 
 
 
-	private void conseguirPregunta()
+	private boolean isCorrecta(List<String> respuestas) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
+	private Pregunta conseguirPregunta()
 	{
 		Categoria categoriaActual=null;
 
 		
 		
 		categoriaActual=tablero.getCategoria(jugadorActivo);
-		isQuesito = tablero.isQuesito(jugadorActivo.getPosicion());
 		
-		preguntaActual = conseguirPregunta(categoriaActual);
-		//hasta aqu� hemos sacado la pregunta de la categoria pertinente y si vale por quesito
-		mostrarPregunta(preguntaActual,isQuesito);
+		
+		return conseguirPregunta(categoriaActual);
 		
 	}
 
-	private void mostrarPregunta(Pregunta pregunta, boolean isQuesito) {
+	private List<String> mostrarPregunta(Pregunta pregunta) {
 		// TODO Auto-generated method stub
-		if(isQuesito)
+		if(tablero.isQuesito(jugadorActivo.getPosicion()))
 			System.out.println("Por quesito de: "+tablero.getCategoria(jugadorActivo));
 		System.out.println("Pregunta: "+pregunta.getPregunta());
+		
+		return mostrarRespuestas();
 	}
 
 	private Pregunta conseguirPregunta(Categoria categoriaActual) {
-		//TODO mostrar pregunta, categoria y si vale por quesito
-		return null;
+		
+		Random r1 = new Random();
+		
+		return filtrarPreguntas(categoriaActual).get(r1.nextInt(filtrarPreguntas(categoriaActual).size()));
 	}
 	
-	private void mostrarRespuestas()
+	private List<Pregunta> filtrarPreguntas(Categoria categoriaActual){
+		List<Pregunta> preguntasC = new ArrayList<Pregunta>();
+		
+		for(Categoria p : preguntas)
+			if(p.getCategoria().equals(categoriaActual))
+				preguntasC.addAll(p.getPreguntas());
+		
+		return preguntasC;
+	}
+	
+	private List<String> mostrarRespuestas()
 	{
 		for(String s: preguntaActual.getRespuestas())
 			System.out.println(s);
+		
+		return respuesta();
 	}
 
+
+
+	private List<String> respuesta() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
+	
 }
