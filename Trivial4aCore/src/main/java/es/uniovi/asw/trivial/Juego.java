@@ -49,7 +49,11 @@ public class Juego {
 		
 	}
 
-
+	private void avanzar()
+	{
+		
+		
+	}
 
 	private boolean isCorrecta(List<String> respuestas) {
 		// TODO Auto-generated method stub
@@ -60,7 +64,7 @@ public class Juego {
 
 	private Pregunta conseguirPregunta()
 	{
-		Categoria categoriaActual=null;
+		String categoriaActual=null;
 
 		
 		
@@ -80,13 +84,25 @@ public class Juego {
 		return mostrarRespuestas();
 	}
 
-	private Pregunta conseguirPregunta(Categoria categoriaActual) {
+	private Pregunta conseguirPregunta(String categoria) {
 		
 		Random r1 = new Random();
-		
+		Categoria categoriaActual = conseguirCategoria(categoria);
 		return filtrarPreguntas(categoriaActual).get(r1.nextInt(filtrarPreguntas(categoriaActual).size()));
 	}
 	
+	
+	
+	private Categoria conseguirCategoria(String categoria) {
+		// TODO Auto-generated method stub
+		for(Categoria c : preguntas)
+			if(c.getCategoria().equals(categoria))
+		return c;
+		return null;
+	}
+
+
+
 	private List<Pregunta> filtrarPreguntas(Categoria categoriaActual){
 		List<Pregunta> preguntasC = new ArrayList<Pregunta>();
 		

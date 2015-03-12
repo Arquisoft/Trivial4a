@@ -9,21 +9,30 @@ public class Tablero {
 	private List<String> categorias;
 	private List<Jugador> jugadores;
 	private String[] categoriaQuesito;
+	private String[] tablero;
 	
 	public Tablero(int tamanio,List<String> categorias,List<Jugador> jugadores) {
 		this.categorias=categorias;
 		this.tamanio = tamanio;
 		this.jugadores=jugadores;
+		tablero = new String[tamanio];
+		rellenarTablero();
 		categoriaQuesito = new String[tamanio];
 		establecerCasillasQuesito();
 	}
 	
-	public Categoria getCategoria(Jugador jugadorActivo) {
+	private void rellenarTablero() {
+		// TODO Auto-generated method stub
+		for(int i=0;i<tamanio;i++)
+			tablero[i]=categorias.get(i%categorias.size());
+	}
+
+	public String getCategoria(Jugador jugadorActivo) {
 		
 		return getCategoriaCasilla(jugadorActivo.getPosicion());
 	}
 	
-	private Categoria getCategoriaCasilla(int posicion)
+	private String getCategoriaCasilla(int posicion)
 	{
 		// TODO Elegir categoria en funcion de la casilla en la que se encuentre
 		Categoria c = null;
