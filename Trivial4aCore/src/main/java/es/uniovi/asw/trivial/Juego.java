@@ -38,22 +38,35 @@ public class Juego {
 	
 	public void jugar() {
 		// TODO Poner m�todos pertinentes para jugar (conseguir pregunta, responder blabla)
+		jugadorActivo.avanzar();
+		
 		preguntaActual = conseguirPregunta();
 				
 		List<String> respuestas = mostrarPregunta(preguntaActual);
 		
 		if(isCorrecta(respuestas))
+			jugar();
+		else
 		{
-			
+			jugadorActivo = conseguirSiguienteJugador();
 		}
+		
 		
 	}
 
-	private void avanzar()
-	{
-		
-		
+	private Jugador conseguirSiguienteJugador() {
+		// TODO Auto-generated method stub
+		int i=0;
+		for(Jugador j : jugadores)
+			if(!j.equals(jugadorActivo))
+				i++;
+		i++;
+		if(i==jugadores.size())
+			i=0;
+		return jugadores.get(i);
 	}
+
+
 
 	private boolean isCorrecta(List<String> respuestas) {
 		// TODO Auto-generated method stub
