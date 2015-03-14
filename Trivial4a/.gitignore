@@ -4,7 +4,6 @@
 .project
 .settings
 target
-.idea
 
 *.pydevproject
 .metadata
@@ -15,7 +14,6 @@ tmp/
 *.bak
 *.swp
 *~.nib
-*.iml
 local.properties
 .settings/
 .loadpath
@@ -26,3 +24,4 @@ local.properties
 .target
 .texlipse
 Thumbs.db
+Trivial4aCore/prueba.json
