@@ -8,9 +8,9 @@ import java.net.UnknownHostException;
 
 import org.apache.log4j.Logger;
 
+import es.uniovi.asw.trivial.model.Pregunta;
 import es.uniovi.asw.trivial.parser.*;
 import es.uniovi.asw.trivial.persistence.MongoDB;
-import es.uniovi.asw.trivial.pregunta.Pregunta;
 
 public class Extractor {
 	

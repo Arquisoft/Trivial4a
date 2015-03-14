@@ -10,7 +10,7 @@ import java.util.Date;
 
 import com.google.gson.Gson;
 
-import es.uniovi.asw.trivial.pregunta.Pregunta;
+import es.uniovi.asw.trivial.model.Pregunta;
 
 
 public class JSonWriter {
