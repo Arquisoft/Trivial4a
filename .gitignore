@@ -16,6 +16,7 @@ tmp/
 *.swp
 *~.nib
 *.iml
+*.java~
 local.properties
 .settings/
 .loadpath
