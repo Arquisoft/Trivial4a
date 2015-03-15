@@ -6,12 +6,14 @@ import java.util.List;
 public class Jugador {
 	
 	private String nombre;
+	private String contrasenya;
 	List<Categoria> quesitos;
 	private int posicion;
 	
-	public Jugador(String nombre)
+	public Jugador(String nombre, String contrasenya)
 	{
 		this.nombre=nombre;
+		this.contrasenya = contrasenya;
 		quesitos = new ArrayList<Categoria>();
 		posicion=0;
 		
@@ -53,7 +55,7 @@ public class Jugador {
 	public String toString()
 	{
 		String cadena="";
-		cadena+="Jugador: "+nombre+"\nPosicion en el tablero: "+posicion+"\nQuesitos: ";
+		cadena+="Jugador: "+nombre+" contraseña: "+contrasenya+"\nPosicion en el tablero: "+posicion+"\nQuesitos: ";
 		if(quesitos.size()==0)
 			cadena+="no tiene quesitos";
 		else{
