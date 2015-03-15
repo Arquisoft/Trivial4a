@@ -86,7 +86,7 @@ public class GUIExtract extends JFrame {
 
 	protected void drop() {
 		String[] args = {"clean"};
-		Main.main(args);
+		ConsoleExtract.main(args);
 		dispose();
 		
 	}
@@ -97,7 +97,7 @@ public class GUIExtract extends JFrame {
 			args = new String[1];
 			args[0]="output";
 		}
-		Main.main(args);
+		ConsoleExtract.main(args);
 		dispose();
 		
 	}

@@ -5,16 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.net.UnknownHostException;
-
-import org.apache.log4j.Logger;
-
 import es.uniovi.asw.trivial.model.Pregunta;
 import es.uniovi.asw.trivial.persistence.JSonWriter;
 import es.uniovi.asw.trivial.persistence.MongoDB;
 
 public class Extractor {
 	
-	final static Logger logger = Logger.getLogger(Extractor.class);
 	
 	private boolean writeFiles;
 	
@@ -49,9 +45,6 @@ public class Extractor {
 	}
 
 	private void parseFile(File f) throws FileNotFoundException, UnknownHostException {
-		if(logger.isDebugEnabled()){
-			logger.debug("Loading "+f.getName()+".");
-		}
 		
 		Yylex lexico = new Yylex(new FileReader(f));
 		Parser p = new Parser(lexico);
@@ -62,9 +55,6 @@ public class Extractor {
 		arrayp = p.getPreguntas().toArray(arrayp);
 		if(writeFiles)
 			new JSonWriter().writeJSONfile(p.getPreguntas());
-		if(logger.isDebugEnabled()){
-			logger.debug(arrayp);
-		}
 		new MongoDB().addPreguntas(arrayp);
 		
 		for(Pregunta pp : arrayp)

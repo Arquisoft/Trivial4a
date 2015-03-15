@@ -8,6 +8,7 @@ package es.uniovi.asw.trivial.extractor.parser;
  * on 14/03/15 2:15 from the specification file
  * <tt>lexico.l</tt>
  */
+@SuppressWarnings("unused")
 public class Yylex {
 
   /** This character denotes the end of file */
@@ -179,7 +180,8 @@ public class Yylex {
   private int zzMarkedPos;
 
   /** the textposition at the last state to be included in yytext */
-  private int zzPushbackPos;
+
+private int zzPushbackPos;
 
   /** the current text position in the buffer */
   private int zzCurrentPos;
