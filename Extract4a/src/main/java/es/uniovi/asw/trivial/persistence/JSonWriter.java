@@ -28,16 +28,12 @@ public class JSonWriter {
 		
 		FileWriter fw;
 		try {
-			
 			fw = new FileWriter(name);
 			fw.write(sb.toString());
 			fw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-
-        
         System.out.println("Conectado");
 	}
 
