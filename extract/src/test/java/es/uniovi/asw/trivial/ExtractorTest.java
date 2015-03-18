@@ -8,17 +8,36 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+<<<<<<< HEAD
+=======
+import java.net.UnknownHostException;
+>>>>>>> develop
 
 import org.junit.Test;
 
-import es.uniovi.asw.trivial.Extractor;
+import es.uniovi.asw.trivial.extractor.Extractor;
 
 public class ExtractorTest {
 	
+//	@Test
+//	public void emptyExtractor() throws UnknownHostException {
+//		String args[] = {};
+//		Extractor ext = new Extractor();
+//	    assertThat(ext.run(args)).isEqualTo(0);
+//	  }
+	
+	
+	
+	
+	/**
+	 * Comprobar que los espacios o  saltos de linea no sean un problema
+	 * @throws IOException 
+	 */
 	@Test
-	public void emptyExtractor() {
-		String args[] = {};
+	public void caracteresEspaciadosTest() throws IOException{
+		String args[] = {"preguntasPruebas1"};
 		Extractor ext = new Extractor();
+<<<<<<< HEAD
 	    assertThat(ext.run(args)).isEqualTo(0);
 	  }
 	
@@ -33,6 +52,8 @@ public class ExtractorTest {
 	public void caracteresEspaciadosTest() throws IOException{
 		String args[] = {"preguntasPruebas1"};
 		Extractor ext = new Extractor();
+=======
+>>>>>>> develop
 		ext.run(args);
 		String ficheroSalida="",ficheroCorrecto="";
 		

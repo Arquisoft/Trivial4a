@@ -12,17 +12,29 @@ import java.util.*;
 %%
 
 s
+<<<<<<< HEAD
 	:	preguntas	{ preguntas = (ArrayList<JSonable>)$1; }
+=======
+	:	preguntas	{ preguntas = (ArrayList<Pregunta>)$1; }
+>>>>>>> develop
 	;
 
 preguntas
 	:	preguntas pregunta						{
+<<<<<<< HEAD
 													List<JSonable> preguntas = (List<JSonable>)$1;
+=======
+													List<Pregunta> preguntas = (List<Pregunta>)$1;
+>>>>>>> develop
 													preguntas.add((Pregunta)$2);
 													$$ = preguntas;
 												}
 	|	pregunta								{
+<<<<<<< HEAD
 													List<JSonable> preguntas = new ArrayList<JSonable>();
+=======
+													List<Pregunta> preguntas = new ArrayList<Pregunta>();
+>>>>>>> develop
 													preguntas.add((Pregunta)$1);
 													$$ = preguntas;
 												}
@@ -42,8 +54,13 @@ pregunta
 															respuestasCorrectas.add(r.respuesta);
 														else
 															respuestasIncorrectas.add(r.respuesta);	
+<<<<<<< HEAD
 															
 													Pregunta preguntas = new Pregunta(identificador,pregunta,respuestasCorrectas,respuestasIncorrectas);
+=======
+													String[] arrayp = new String[0];
+													Pregunta preguntas = new Pregunta(identificador,pregunta,categoria, respuestasCorrectas.toArray(arrayp),respuestasIncorrectas.toArray(arrayp));
+>>>>>>> develop
 													$$ = preguntas;	
 												}
 	;
@@ -98,7 +115,11 @@ simbolo
 %%
 
 private Yylex lex;
+<<<<<<< HEAD
 private ArrayList<JSonable> preguntas;
+=======
+private ArrayList<Pregunta> preguntas;
+>>>>>>> develop
 private int token;
 
 public Parser(Yylex lex, boolean debug) {
@@ -106,11 +127,22 @@ public Parser(Yylex lex, boolean debug) {
   this.lex = lex;
 }
 
+<<<<<<< HEAD
 
 public int parse() { return yyparse(); }
 
 
 
+=======
+public int parse() { return yyparse(); }
+
+private String categoria;
+
+public void setCategoria(String nombre) {
+	categoria = nombre;
+	
+}
+>>>>>>> develop
 // Funciones requeridas por el parser
 
 void yyerror(String s)
@@ -128,12 +160,19 @@ int yylex() {
   }
 }
 
+<<<<<<< HEAD
 public ArrayList<JSonable> getPreguntas() {
 	return preguntas;
 }
 
 
 
+=======
+public ArrayList<Pregunta> getPreguntas() {
+	return preguntas;
+}
+
+>>>>>>> develop
 public Parser(Yylex lexico) {
 	this.lex = lexico;
 	lex.setParser(this);
