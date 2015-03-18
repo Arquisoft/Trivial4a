@@ -8,7 +8,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+<<<<<<< HEAD
 import java.net.UnknownHostException;
+=======
+>>>>>>> master
 
 import org.junit.Test;
 
@@ -34,6 +37,23 @@ public class ExtractorTest {
 	public void caracteresEspaciadosTest() throws IOException{
 		String args[] = {"preguntasPruebas1"};
 		Extractor ext = new Extractor();
+<<<<<<< HEAD
+=======
+	    assertThat(ext.run(args)).isEqualTo(0);
+	  }
+	
+	
+	
+	
+	/**
+	 * Comprobar que los espacios o  saltos de linea no sean un problema
+	 * @throws IOException 
+	 */
+	@Test
+	public void caracteresEspaciadosTest() throws IOException{
+		String args[] = {"preguntasPruebas1"};
+		Extractor ext = new Extractor();
+>>>>>>> master
 		ext.run(args);
 		String ficheroSalida="",ficheroCorrecto="";
 		

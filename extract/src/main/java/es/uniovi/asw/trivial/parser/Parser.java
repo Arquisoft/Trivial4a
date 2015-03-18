@@ -285,7 +285,11 @@ final static String yyrule[] = {
 //#line 99 "sintac.y"
 
 private Yylex lex;
+<<<<<<< HEAD
 private ArrayList<Pregunta> preguntas;
+=======
+private ArrayList<JSonable> preguntas;
+>>>>>>> master
 private int token;
 
 public Parser(Yylex lex, boolean debug) {
@@ -293,6 +297,7 @@ public Parser(Yylex lex, boolean debug) {
   this.lex = lex;
 }
 
+<<<<<<< HEAD
 public int parse() { return yyparse(); }
 
 private String categoria;
@@ -301,6 +306,13 @@ public void setCategoria(String nombre) {
 	categoria = nombre;
 	
 }
+=======
+
+public int parse() { return yyparse(); }
+
+
+
+>>>>>>> master
 // Funciones requeridas por el parser
 
 void yyerror(String s)
@@ -318,15 +330,28 @@ int yylex() {
   }
 }
 
+<<<<<<< HEAD
 public ArrayList<Pregunta> getPreguntas() {
 	return preguntas;
 }
 
+=======
+public ArrayList<JSonable> getPreguntas() {
+	return preguntas;
+}
+
+
+
+>>>>>>> master
 public Parser(Yylex lexico) {
 	this.lex = lexico;
 	lex.setParser(this);
 }
+<<<<<<< HEAD
 //#line 271 "Parser.java"
+=======
+//#line 270 "Parser.java"
+>>>>>>> master
 //###############################################################
 // method: yylexdebug : check lexer state
 //###############################################################
@@ -481,12 +506,20 @@ boolean doaction;
 //########## USER-SUPPLIED ACTIONS ##########
 case 1:
 //#line 15 "sintac.y"
+<<<<<<< HEAD
 { preguntas = (ArrayList<Pregunta>)val_peek(0); }
+=======
+{ preguntas = (ArrayList<JSonable>)val_peek(0); }
+>>>>>>> master
 break;
 case 2:
 //#line 19 "sintac.y"
 {
+<<<<<<< HEAD
 													List<Pregunta> preguntas = (List<Pregunta>)val_peek(1);
+=======
+													List<JSonable> preguntas = (List<JSonable>)val_peek(1);
+>>>>>>> master
 													preguntas.add((Pregunta)val_peek(0));
 													yyval = preguntas;
 												}
@@ -494,7 +527,11 @@ break;
 case 3:
 //#line 24 "sintac.y"
 {
+<<<<<<< HEAD
 													List<Pregunta> preguntas = new ArrayList<Pregunta>();
+=======
+													List<JSonable> preguntas = new ArrayList<JSonable>();
+>>>>>>> master
 													preguntas.add((Pregunta)val_peek(0));
 													yyval = preguntas;
 												}
@@ -514,8 +551,13 @@ case 4:
 															respuestasCorrectas.add(r.respuesta);
 														else
 															respuestasIncorrectas.add(r.respuesta);	
+<<<<<<< HEAD
 													String[] arrayp = new String[0];
 													Pregunta preguntas = new Pregunta(identificador,pregunta,categoria, respuestasCorrectas.toArray(arrayp),respuestasIncorrectas.toArray(arrayp));
+=======
+															
+													Pregunta preguntas = new Pregunta(identificador,pregunta,respuestasCorrectas,respuestasIncorrectas);
+>>>>>>> master
 													yyval = preguntas;	
 												}
 break;
@@ -569,7 +611,11 @@ case 13:
 										yyval = val_peek(0);
 									}
 break;
+<<<<<<< HEAD
 //#line 509 "Parser.java"
+=======
+//#line 508 "Parser.java"
+>>>>>>> master
 //########## END OF USER-SUPPLIED ACTIONS ##########
     }//switch
     //#### Now let's reduce... ####
