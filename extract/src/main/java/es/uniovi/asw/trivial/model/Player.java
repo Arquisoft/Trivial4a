@@ -5,6 +5,14 @@ public class Player {
 	private User user;
 	private int posicion;
 	
+	
+	
+	public Player(User user, int posicion) {
+	
+		this.user = user;
+		this.posicion = posicion;
+	}
+	
 	public User getUser() {
 		return user;
 	}

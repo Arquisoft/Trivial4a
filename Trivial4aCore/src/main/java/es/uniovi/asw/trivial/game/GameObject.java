@@ -1,9 +1,12 @@
 package es.uniovi.asw.trivial.game;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import es.uniovi.asw.trivial.model.Player;
 import es.uniovi.asw.trivial.model.Pregunta;
+import es.uniovi.asw.trivial.model.Respuesta;
 import es.uniovi.asw.trivial.model.User;
 /**
  * 
@@ -19,6 +22,7 @@ public class GameObject implements Game{
 	private Player[] players;
 	private Pregunta[] preguntas;
 	private int jugadorActual;
+	private List<Respuesta> respuestas;
 	
 	//Informacion de control
 	private int tam;
@@ -37,24 +41,38 @@ public class GameObject implements Game{
 		this.max = max;
 		this.categorias = categoryCount(preguntas);
 		this.jugadorActual = 0;
+		respuestas = new ArrayList<Respuesta>();
 	}
 
 	
 	private String[] categoryCount(Pregunta[] preguntas) {
-		String[] categorias = {};
-		// TODO Devolver un array con las categorías de las preguntas
+		List<String> aux = new ArrayList<String>();
+		for(Pregunta p : preguntas)
+			if(!aux.contains(p.getCategoria()))
+				aux.add(p.getCategoria());
+		
+		String[] categorias ={};
+		categorias =  aux.toArray(categorias);
+				
+		
 		this.nCategorias=categorias.length;
 		return categorias;
 	}
 
 
 	private Player[] createPlayers(User[] usuarios) {
-		// TODO Devolver un array de jugadores
-		return null;
+		
+		Player[] players = new Player[usuarios.length];
+		for(int i=0;i<players.length;i++)
+			players[i]= new Player(usuarios[i],0);
+		
+		return players;
 	}
 
 	public int endGame() {
-		// TODO Usar MongoDB para almacenar todaslas tuplas
+		String[] auxRespuestas = {};
+		auxRespuestas = respuestas.toArray(auxRespuestas);
+		//TODO pasarlo al mongo
 		return 0;
 	}
 
@@ -90,7 +108,7 @@ public class GameObject implements Game{
 		 //		TODO añadirle los quesitos ganados a la clase jugador
 		
 		 //TODO Poner logica de negocio
-		 if( players[jugadorActual].getPosicion()==0 && todosLosQuesos(players[jugadorActual]))
+		 if( players[jugadorActual].getPosicion()==tam-1 && todosLosQuesos(players[jugadorActual]))
 			 return "End";
 		 
 		 //if( not PreguntaCorrecta)
