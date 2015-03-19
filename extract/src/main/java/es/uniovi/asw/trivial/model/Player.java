@@ -38,5 +38,32 @@ public class Player {
 		
 		return true;
 	}
+	
+	public void clearQuesitos()
+	{
+		quesitos = new ArrayList<String>();
+	}
 
+	public List<String> getQuesitos() {
+		return quesitos;
+	}
+
+	@Override
+	public String toString() {
+		return "Player [user=" + user.get_id() + ", posicion=" + posicion
+				+ ", quesitos=" + imprimirQuesitos() + "]";
+	}
+	
+	private String imprimirQuesitos(){
+		String cadena = "";
+		for(int i=0;i<quesitos.size();i++)
+			if(i<quesitos.size()-1)
+				cadena+=quesitos.get(i)+", ";
+			else
+				cadena+=quesitos.get(i);
+		return cadena;
+	}
+
+	
+	
 }
