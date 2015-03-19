@@ -15,7 +15,7 @@ public class MongoDB {
 	
 	private final static String DB_NAME = "mydb";
 	private final static String DB_HOST = "localhost";
-	private final static String DB_COLLECTION = "preguntas";
+	private final static String DB_COLLECTION_PREGUNTAS = "preguntas";
 	
 	private DB getDB() throws UnknownHostException{
 		return new MongoClient(DB_HOST).getDB(DB_NAME);
@@ -29,7 +29,7 @@ public class MongoDB {
 		Gson gson = new Gson();
 		DB db = getDB();
 		for (Pregunta p : ps) {
-			DBCollection dbCollection =db.getCollection(DB_COLLECTION);
+			DBCollection dbCollection =db.getCollection(DB_COLLECTION_PREGUNTAS);
 	        DBObject dbObject = (DBObject) JSON.parse(gson.toJson(p));
 	        dbCollection.save(dbObject);
 		}
