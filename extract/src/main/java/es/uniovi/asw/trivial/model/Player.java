@@ -1,9 +1,13 @@
 package es.uniovi.asw.trivial.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Player {
 	
 	private User user;
 	private int posicion;
+	private List<String> quesitos;
 	
 	
 	
@@ -11,6 +15,7 @@ public class Player {
 	
 		this.user = user;
 		this.posicion = posicion;
+		quesitos = new ArrayList<String>();
 	}
 	
 	public User getUser() {
@@ -24,6 +29,14 @@ public class Player {
 	}
 	public void setPosicion(int posicion) {
 		this.posicion = posicion;
+	}
+	public boolean putQuesito(String nombre)
+	{
+		if(quesitos.contains(nombre))
+			return false;
+		quesitos.add(nombre);
+		
+		return true;
 	}
 
 }

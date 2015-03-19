@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import es.uniovi.asw.trivial.model.Contestacion;
 import es.uniovi.asw.trivial.model.Player;
 import es.uniovi.asw.trivial.model.Pregunta;
-import es.uniovi.asw.trivial.model.Respuesta;
 import es.uniovi.asw.trivial.model.User;
 
 
@@ -19,7 +19,7 @@ public class GameObject implements Game{
 	private Player[] players;
 	private Pregunta[] preguntas;
 	private int jugadorActual;
-	private List<Respuesta> respuestas;
+	private List<Contestacion> respuestas;
 	
 	//Informacion de control
 	private int tam;
@@ -31,6 +31,7 @@ public class GameObject implements Game{
 
 	public void startGame(User[] usuarios, Pregunta[] preguntas, int tam,
 			int min, int max) {		
+		
 		this.players = createPlayers(usuarios);
 		this.preguntas = preguntas;
 		this.tam = tam;
@@ -38,7 +39,7 @@ public class GameObject implements Game{
 		this.max = max;
 		this.categorias = categoryCount(preguntas);
 		this.jugadorActual = 0;
-		respuestas = new ArrayList<Respuesta>();
+		respuestas = new ArrayList<Contestacion>();
 	}
 
 	
@@ -100,10 +101,12 @@ public class GameObject implements Game{
 
 	public String answerQuestionSet(Pregunta pregunta, String respuesta) {
 		 //	TODO Almacenar la respuesta de tuplas
-		 
+		 User user = getCurrentPlayer().getUser();
+		 respuestas.add(new Contestacion(user,pregunta,isCorrecta(pregunta,respuesta)));
 		 //	TODO Añadirle al jugador un quesito de la categoría acertada
 		 //		TODO añadirle los quesitos ganados a la clase jugador
-		
+		if(respuestas.get(respuestas.size()-1).isCorrecta())
+			getCurrentPlayer().putQuesito(pregunta.getCategoria());
 		 //TODO Poner logica de negocio
 		 if( players[jugadorActual].getPosicion()==tam-1 && todosLosQuesos(players[jugadorActual]))
 			 return "End";
@@ -112,6 +115,17 @@ public class GameObject implements Game{
 		 	nextPlayer();
 		return "Playing";
 	}
+
+	private boolean isCorrecta(Pregunta pregunta, String respuesta) {
+		// TODO Auto-generated method stub
+		String[] auxRespuestas = pregunta.getRespuestasCorrectas();
+		for(int i=0;i<auxRespuestas.length;i++)
+			if(auxRespuestas[i].equals(respuesta))
+				return true;
+		
+		return false;
+	}
+
 
 	private boolean todosLosQuesos(Player player) {
 		// TODO true si el jugador tiene tantos quesos como categirias hay en el juego

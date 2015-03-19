@@ -2,30 +2,40 @@ package es.uniovi.asw.trivial.model;
 
 public class Contestacion {
 
-	private String user;
-	private String pregunta;
+	private User user;
+	private Pregunta pregunta;
 	private boolean isCorrecta;
 	
-	public Contestacion(String user, String pregunta, boolean isCorrecta) {
+	public Contestacion(User user, Pregunta pregunta, boolean isCorrecta) {
 		
 		this.user = user;
 		this.pregunta = pregunta;
 		this.isCorrecta = isCorrecta;
 	}
 
-	public String getUser() {
+	
+
+	public User getUser() {
 		return user;
 	}
+	
+	public String getOnlyUser(){
+		return user.get_id();
+	}
 
-	public void setUser(String user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 
-	public String getPregunta() {
+	public Pregunta getPregunta() {
 		return pregunta;
 	}
+	
+	public String getOnlyPregunta() {
+		return pregunta.getPregunta();
+	}
 
-	public void setPregunta(String pregunta) {
+	public void setPregunta(Pregunta pregunta) {
 		this.pregunta = pregunta;
 	}
 
@@ -39,9 +49,11 @@ public class Contestacion {
 
 	@Override
 	public String toString() {
-		return "Contestacion [user=" + user + ", pregunta=" + pregunta
+		return "Contestacion [user=" + user.get_id() + ", pregunta=" + pregunta.getPregunta()
 				+ ", isCorrecta=" + isCorrecta + "]";
 	}
+
+	
 
 	
 	
