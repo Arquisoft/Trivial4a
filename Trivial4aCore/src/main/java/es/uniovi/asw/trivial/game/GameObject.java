@@ -8,11 +8,8 @@ import es.uniovi.asw.trivial.model.Player;
 import es.uniovi.asw.trivial.model.Pregunta;
 import es.uniovi.asw.trivial.model.Respuesta;
 import es.uniovi.asw.trivial.model.User;
-/**
- * 
- * @author Jorge
- *
- */
+
+
 public class GameObject implements Game{
 
 	GameObject() {}
