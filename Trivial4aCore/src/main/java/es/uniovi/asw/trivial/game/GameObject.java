@@ -100,18 +100,17 @@ public class GameObject implements Game{
 	}
 
 	public String answerQuestionSet(Pregunta pregunta, String respuesta) {
-		 //	TODO Almacenar la respuesta de tuplas
+		 
 		 User user = getCurrentPlayer().getUser();
 		 respuestas.add(new Contestacion(user,pregunta,isCorrecta(pregunta,respuesta)));
-		 //	TODO Añadirle al jugador un quesito de la categoría acertada
-		 //		TODO añadirle los quesitos ganados a la clase jugador
-		if(respuestas.get(respuestas.size()-1).isCorrecta())
+		//el añadir el quesito devuelve un booleano con si lo añadio en función de si lo tenía ya o no, por si lo queremos decir
+		if(respuestas.get(respuestas.size()-1).isCorrecta()){
 			getCurrentPlayer().putQuesito(pregunta.getCategoria());
-		 //TODO Poner logica de negocio
+	
 		 if( players[jugadorActual].getPosicion()==tam-1 && todosLosQuesos(players[jugadorActual]))
 			 return "End";
-		 
-		 //if( not PreguntaCorrecta)
+		}
+		else
 		 	nextPlayer();
 		return "Playing";
 	}
@@ -129,7 +128,7 @@ public class GameObject implements Game{
 
 	private boolean todosLosQuesos(Player player) {
 		// TODO true si el jugador tiene tantos quesos como categirias hay en el juego
-		return false;
+		return player.getQuesitos().size()==nCategorias;
 	}
 
 
@@ -144,8 +143,17 @@ public class GameObject implements Game{
 	}
 
 	public String movePlayer(int moves) {
-		players[jugadorActual].setPosicion(players[jugadorActual].getPosicion()+moves);
-		return "Player on "+players;
+		
+		int posicionFinal = players[jugadorActual].getPosicion()+moves;
+		
+		if(posicionFinal<tam)
+				players[jugadorActual].setPosicion(posicionFinal);
+		else
+		{
+			posicionFinal = posicionFinal-(tam-1);
+			players[jugadorActual].setPosicion(posicionFinal);
+		}
+		return players[jugadorActual].toString();
 	}
 
 }
