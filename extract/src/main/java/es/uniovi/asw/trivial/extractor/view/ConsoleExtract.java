@@ -1,9 +1,11 @@
-package es.uniovi.asw.trivial.extractor;
+package es.uniovi.asw.trivial.extractor.view;
 
 import java.io.FileNotFoundException;
 import java.net.UnknownHostException;
 
-public class Main {
+import es.uniovi.asw.trivial.extractor.parser.Extractor;
+
+public class ConsoleExtract {
 	
 	public static void main(String[] args){
 		try {

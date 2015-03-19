@@ -1,4 +1,4 @@
-package es.uniovi.asw.trivial.extractor;
+package es.uniovi.asw.trivial.persistence;
 
 import java.net.UnknownHostException;
 
@@ -9,7 +9,7 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.util.JSON;
 
-import es.uniovi.asw.trivial.pregunta.Pregunta;
+import es.uniovi.asw.trivial.model.Pregunta;
 
 public class MongoDB {
 	

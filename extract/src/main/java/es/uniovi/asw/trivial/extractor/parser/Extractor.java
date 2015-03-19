@@ -1,24 +1,30 @@
-package es.uniovi.asw.trivial.extractor;
+package es.uniovi.asw.trivial.extractor.parser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.net.UnknownHostException;
-import org.apache.log4j.Logger;
-import es.uniovi.asw.trivial.parser.*;
-import es.uniovi.asw.trivial.pregunta.Pregunta;
+import es.uniovi.asw.trivial.model.Pregunta;
+import es.uniovi.asw.trivial.persistence.JSonWriter;
+import es.uniovi.asw.trivial.persistence.MongoDB;
 
 public class Extractor {
 	
-	final static Logger logger = Logger.getLogger(Extractor.class);
 	
-	public void run(String[] args) throws UnknownHostException, FileNotFoundException{
-		if(args.length!=0)
+	private boolean writeFiles;
+	
+	public void run(String... args) throws UnknownHostException, FileNotFoundException{
+		
+		if(args.length!=0){
 			if(args[0].equalsIgnoreCase("clean")){
 				dropDatabase();
 				return;
 			}
+			if(args[0].equalsIgnoreCase("output")){
+				writeFiles = true;
+			}
+		}
 		loadFiles();
 	}
 
@@ -39,9 +45,6 @@ public class Extractor {
 	}
 
 	private void parseFile(File f) throws FileNotFoundException, UnknownHostException {
-		if(logger.isDebugEnabled()){
-			logger.debug("Loading "+f.getName()+".");
-		}
 		
 		Yylex lexico = new Yylex(new FileReader(f));
 		Parser p = new Parser(lexico);
@@ -50,10 +53,10 @@ public class Extractor {
 		
 		Pregunta[] arrayp = new Pregunta[0];
 		arrayp = p.getPreguntas().toArray(arrayp);
-		if(logger.isDebugEnabled()){
-			logger.debug(arrayp);
-		}
+		if(writeFiles)
+			new JSonWriter().writeJSONfile(p.getPreguntas());
 		new MongoDB().addPreguntas(arrayp);
+		
 		for(Pregunta pp : arrayp)
 			System.out.println(pp);
 	}

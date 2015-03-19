@@ -17,8 +17,9 @@
 
 
 //#line 2 "sintac.y"
-package es.uniovi.asw.trivial.parser;
-import es.uniovi.asw.trivial.pregunta.*;
+package es.uniovi.asw.trivial.extractor.parser;
+import es.uniovi.asw.trivial.model.*;
+
 import java.util.*;
 
  @SuppressWarnings("all")

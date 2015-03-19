@@ -1,7 +1,9 @@
-package es.uniovi.asw.trivial.pregunta;
+package es.uniovi.asw.trivial.model;
 
 import java.util.Arrays;
-
+/**
+ * Created by Jorge on 13/03/2015.
+ */
 public class Pregunta{
 	
 	private String _id;

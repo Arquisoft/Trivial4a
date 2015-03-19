@@ -12,7 +12,7 @@ import java.net.UnknownHostException;
 
 import org.junit.Test;
 
-import es.uniovi.asw.trivial.extractor.Extractor;
+import es.uniovi.asw.trivial.extractor.parser.Extractor;
 
 public class ExtractorTest {
 	
