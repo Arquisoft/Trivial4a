@@ -1,14 +1,14 @@
 
 package es.uniovi.asw.trivial;
 
-import static org.assertj.core.api.Assertions.*;
+//import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.*;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.UnknownHostException;
+//import java.net.UnknownHostException;
 
 import org.junit.Test;
 
