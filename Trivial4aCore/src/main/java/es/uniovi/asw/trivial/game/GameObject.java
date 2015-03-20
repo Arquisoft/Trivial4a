@@ -2,6 +2,7 @@ package es.uniovi.asw.trivial.game;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale.Category;
 import java.util.Random;
 
 import es.uniovi.asw.trivial.model.Contestacion;
@@ -127,7 +128,7 @@ public class GameObject implements Game{
 
 
 	private boolean todosLosQuesos(Player player) {
-		// TODO true si el jugador tiene tantos quesos como categirias hay en el juego
+		
 		return player.getQuesitos().size()==nCategorias;
 	}
 
@@ -154,6 +155,10 @@ public class GameObject implements Game{
 			players[jugadorActual].setPosicion(posicionFinal);
 		}
 		return players[jugadorActual].toString();
+	}
+	
+	public String[] getCategorias(){
+		return this.categorias;
 	}
 
 }

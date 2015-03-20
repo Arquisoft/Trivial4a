@@ -75,5 +75,11 @@ public interface Game {
 	 */
 	public String movePlayer(int moves);
 	
+	/**
+	 * 
+	 * @return array de categorias
+	 */
+	public String[] getCategorias();
+	
 
 }
