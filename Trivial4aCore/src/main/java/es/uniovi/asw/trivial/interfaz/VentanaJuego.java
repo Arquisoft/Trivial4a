@@ -73,34 +73,59 @@ public class VentanaJuego extends JFrame {
 	 * @param nElementos
 	 * @param panel quesitos o panel Tablero
 	 */
-	private void setTablero(int nElementos,JPanel panel){
-		double proporcion = nElementos/4;
-		int arriba=0, derecha=0, izquierda=0, abajo=0;
+	private void setOrganizacion(int nElementos,JPanel panel){
+		if(nElementos==0){
+			System.err.println("Numero de elementos = 0");
+			return;
+		}
 		
+		double proporcion = nElementos/4;
+		
+		//IMPORTANTE: una proporcion de 0,25 daria como resultado
+		//un tablero o quesito con un hueco vacio
 		if(proporcion - (int)proporcion == 0.25){
-			
+			if(nElementos>=5)
+				//Al hacer nElementos++ se crea una tabla parecida a
+				//si tuvieramos 0,5 pero con un hueco vacio
+				establecerMedidas(nElementos++, panel);
+			else //Si es igual a 1 (Siempre es 1 si entra por aqui)
+				panel.setLayout(new GridLayout(1, 0, 0, 0));
 		}
-		else if(proporcion - (int)proporcion == 0.5 && nElementos>=10){
-			int laterales = (int)proporcion/2 + proporcion - (int)proporcion;
-			
+		
+		else if(proporcion - (int)proporcion == 0.5){
+			if(nElementos>=10)
+				establecerMedidas(nElementos, panel);
+			else if(nElementos==6)	//Si es igual a 6
+				panel.setLayout(new GridLayout(2, 3, 0, 0));
+			else //Si es igual a 2 (Siempre es 2 si entra por aqui)
+				panel.setLayout(new GridLayout(0, 2, 0, 0));
 		}
+		
+		//IMPORTANTE: una proporcion de 0,25 daria como resultado
+		//un tablero o quesito con un hueco vacio
 		else if(proporcion - (int)proporcion == 0.75){
-			
+			if(nElementos>=7)
+				//Al hacer nElementos++ se crea una tabla parecida a
+				//si tuvieramos 0 pero con un hueco vacio
+				establecerMedidas(nElementos++, panel);
+			else //Si es igual a 3 (Siempre es 3 si entra por aqui)
+				panel.setLayout(new GridLayout(3, 0, 0, 0));
 		}
+		
 		else if(proporcion - (int)proporcion == 0 && nElementos>=4){
 			//Establecer proporciones iniciales
-			arriba = (int)proporcion; derecha = (int)proporcion;
-			izquierda = (int)proporcion; abajo = (int)proporcion;
-			arriba++; izquierda--; //PASO 1
-			abajo++; derecha--; //PASO 2
-			if(arriba==abajo && derecha==izquierda)
-				panel.setLayout(new GridLayout(derecha, arriba, 5, 0));
-			else
-				System.err.print("Error al estimar las proporciones "
-						+ "(Condicon inicial: p=0 y nElmentos="+nElementos+ ")");
+			int ancho = (int)proporcion; int largo = (int)proporcion;
+			ancho++; largo--;
+			panel.setLayout(new GridLayout(ancho, largo, 5, 0));
 		}
 	}
 	
+	private void establecerMedidas(int nElementos, JPanel panel){
+		int mitad = nElementos/2;
+		int ancho = (int)(mitad/2) + 1;
+		int largo = (int)(mitad/2);
+		panel.setLayout(new GridLayout(ancho, largo, 0, 0));
+	}
 	
 	private JPanel getPanelCentro() {
 		if (panelCentro == null) {
