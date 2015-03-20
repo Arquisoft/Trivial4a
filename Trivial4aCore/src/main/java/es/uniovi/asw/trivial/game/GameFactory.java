@@ -2,7 +2,7 @@ package es.uniovi.asw.trivial.game;
 
 public class GameFactory {
 	
-	public Game getNewGame(){
+	public static Game getNewGame(){
 		return new GameObject();
 	}
 

@@ -8,10 +8,11 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import es.uniovi.asw.trivial.game.Game;
+import es.uniovi.asw.trivial.game.GameFactory;
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -20,12 +21,15 @@ import java.awt.Insets;
 @SuppressWarnings("serial")
 public class VentanaJuego extends JFrame {
 
+	private int tam;
+	private Game juego;
+	
 	private JPanel contentPane;
 	private JPanel panelCentro;
 	private JPanel panelJugador;
 	private JLabel lblJugadorActual;
 	private JTextField txtJugador;
-	private JPanel panelJugar;
+	private JPanel panelNorte;
 	private JPanel panelMovimiento;
 	private JPanel panelDado;
 	private JButton btnDado;
@@ -33,6 +37,8 @@ public class VentanaJuego extends JFrame {
 	private JPanel panelFlechas;
 	private JButton btnDerecha;
 	private JButton btnIzquierda;
+	private JPanel panelQuesos;
+	private JLabel lblQuesitosGanados;
 	private JPanel panelQuesitos;
 
 	/**
@@ -42,7 +48,7 @@ public class VentanaJuego extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaJuego frame = new VentanaJuego();
+					VentanaJuego frame = new VentanaJuego(20, GameFactory.getNewGame());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -54,90 +60,28 @@ public class VentanaJuego extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaJuego() {
+	public VentanaJuego(int n, Game g) {
+		this.tam = n;
+		this.juego = g;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 636, 501);
+		setBounds(100, 100, 614, 501);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		contentPane.add(getPanelCentro());
-		contentPane.add(getPanelJugar());
-	}
-	
-	
-	/**
-	 * Establece el layout para el panel tablero
-	 * y el panel de los quesitos de forma dinamica
-	 * 
-	 * @param nElementos
-	 * @param panel quesitos o panel Tablero
-	 */
-	private void setOrganizacion(int nElementos,JPanel panel){
-		if(nElementos==0){
-			System.err.println("Numero de elementos = 0");
-			return;
-		}
-		
-		double proporcion = nElementos/4;
-		
-		//IMPORTANTE: una proporcion de 0,25 daria como resultado
-		//un tablero o quesito con un hueco vacio
-		if(proporcion - (int)proporcion == 0.25){
-			if(nElementos>=5)
-				//Al hacer nElementos++ se crea una tabla parecida a
-				//si tuvieramos 0,5 pero con un hueco vacio
-				establecerMedidas(nElementos++, panel);
-			else //Si es igual a 1 (Siempre es 1 si entra por aqui)
-				panel.setLayout(new GridLayout(1, 0, 0, 0));
-		}
-		
-		else if(proporcion - (int)proporcion == 0.5){
-			if(nElementos>=10)
-				establecerMedidas(nElementos, panel);
-			else if(nElementos==6)	//Si es igual a 6
-				panel.setLayout(new GridLayout(2, 3, 0, 0));
-			else //Si es igual a 2 (Siempre es 2 si entra por aqui)
-				panel.setLayout(new GridLayout(0, 2, 0, 0));
-		}
-		
-		//IMPORTANTE: una proporcion de 0,25 daria como resultado
-		//un tablero o quesito con un hueco vacio
-		else if(proporcion - (int)proporcion == 0.75){
-			if(nElementos>=7)
-				//Al hacer nElementos++ se crea una tabla parecida a
-				//si tuvieramos 0 pero con un hueco vacio
-				establecerMedidas(nElementos++, panel);
-			else //Si es igual a 3 (Siempre es 3 si entra por aqui)
-				panel.setLayout(new GridLayout(3, 0, 0, 0));
-		}
-		
-		else if(proporcion - (int)proporcion == 0 && nElementos>=4){
-			//Establecer proporciones iniciales
-			int ancho = (int)proporcion; int largo = (int)proporcion;
-			ancho++; largo--;
-			panel.setLayout(new GridLayout(ancho, largo, 5, 0));
-		}
-	}
-	
-	private void establecerMedidas(int nElementos, JPanel panel){
-		int mitad = nElementos/2;
-		int ancho = (int)(mitad/2) + 1;
-		int largo = (int)(mitad/2);
-		panel.setLayout(new GridLayout(ancho, largo, 0, 0));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		contentPane.add(getPanelCentro(), BorderLayout.CENTER);
+		contentPane.add(getPanelNorte(), BorderLayout.NORTH);
 	}
 	
 	private JPanel getPanelCentro() {
 		if (panelCentro == null) {
-			panelCentro = new JPanel();
-			panelCentro.setBounds(10, 244, 600, 207);
+			panelCentro = new TableroCuadrado(tam, juego);
 		}
 		return panelCentro;
 	}
 	private JPanel getPanelJugador() {
 		if (panelJugador == null) {
 			panelJugador = new JPanel();
-			panelJugador.setBounds(332, 35, 149, 94);
 			panelJugador.setLayout(new BoxLayout(panelJugador, BoxLayout.Y_AXIS));
 			panelJugador.add(getLblJugadorActual());
 			panelJugador.add(getTxtJugador());
@@ -158,21 +102,19 @@ public class VentanaJuego extends JFrame {
 		}
 		return txtJugador;
 	}
-	private JPanel getPanelJugar() {
-		if (panelJugar == null) {
-			panelJugar = new JPanel();
-			panelJugar.setBounds(10, 23, 580, 152);
-			panelJugar.setLayout(null);
-			panelJugar.add(getPanelMovimiento());
-			panelJugar.add(getPanelQuesitos());
-			panelJugar.add(getPanelJugador());
+	private JPanel getPanelNorte() {
+		if (panelNorte == null) {
+			panelNorte = new JPanel();
+			panelNorte.setLayout(new GridLayout(0, 3, 0, 0));
+			panelNorte.add(getPanelMovimiento());
+			panelNorte.add(getPanelQuesos());
+			panelNorte.add(getPanelJugador());
 		}
-		return panelJugar;
+		return panelNorte;
 	}
 	private JPanel getPanelMovimiento() {
 		if (panelMovimiento == null) {
 			panelMovimiento = new JPanel();
-			panelMovimiento.setBounds(10, 11, 141, 130);
 			GridBagLayout gbl_panelMovimiento = new GridBagLayout();
 			gbl_panelMovimiento.columnWidths = new int[]{141, 0};
 			gbl_panelMovimiento.rowHeights = new int[]{74, 45, 0};
@@ -184,7 +126,7 @@ public class VentanaJuego extends JFrame {
 			gbc_panelDado.insets = new Insets(0, 0, 5, 0);
 			gbc_panelDado.gridx = 0;
 			gbc_panelDado.gridy = 0;
-			panelMovimiento.add(getPanel_4(), gbc_panelDado);
+			panelMovimiento.add(getPanelDado(), gbc_panelDado);
 			GridBagConstraints gbc_panelFlechas = new GridBagConstraints();
 			gbc_panelFlechas.fill = GridBagConstraints.BOTH;
 			gbc_panelFlechas.gridx = 0;
@@ -193,7 +135,7 @@ public class VentanaJuego extends JFrame {
 		}
 		return panelMovimiento;
 	}
-	private JPanel getPanel_4() {
+	private JPanel getPanelDado() {
 		if (panelDado == null) {
 			panelDado = new JPanel();
 			panelDado.setLayout(new GridLayout(0, 2, 5, 0));
@@ -237,10 +179,24 @@ public class VentanaJuego extends JFrame {
 		}
 		return btnIzquierda;
 	}
+	private JPanel getPanelQuesos() {
+		if (panelQuesos == null) {
+			panelQuesos = new JPanel();
+			panelQuesos.setLayout(new BoxLayout(panelQuesos, BoxLayout.Y_AXIS));
+			panelQuesos.add(getLblQuesitosGanados());
+			panelQuesos.add(getPanelQuesitos());
+		}
+		return panelQuesos;
+	}
+	private JLabel getLblQuesitosGanados() {
+		if (lblQuesitosGanados == null) {
+			lblQuesitosGanados = new JLabel("Quesitos Ganados:");
+		}
+		return lblQuesitosGanados;
+	}
 	private JPanel getPanelQuesitos() {
 		if (panelQuesitos == null) {
 			panelQuesitos = new JPanel();
-			panelQuesitos.setBounds(160, 11, 149, 130);
 		}
 		return panelQuesitos;
 	}
