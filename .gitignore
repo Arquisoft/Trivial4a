@@ -9,6 +9,7 @@ target
 .metadata
 .gradle
 bin/
+DOCUMENTACION/
 tmp/
 *.tmp
 *.bak
