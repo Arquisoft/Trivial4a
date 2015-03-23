@@ -6,6 +6,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -13,10 +15,17 @@ import javax.swing.JTextField;
 
 import es.uniovi.asw.trivial.game.Game;
 import es.uniovi.asw.trivial.game.GameFactory;
+
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.net.URL;
+import java.util.HashMap;
 
 @SuppressWarnings("serial")
 public class VentanaJuego extends JFrame {
@@ -38,7 +47,6 @@ public class VentanaJuego extends JFrame {
 	private JButton btnIzquierda;
 	private JPanel panelQuesos;
 	private JLabel lblQuesitosGanados;
-	private JPanel panelQuesitos;
 	private JLabel lblDado;
 
 	/**
@@ -48,7 +56,7 @@ public class VentanaJuego extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaJuego frame = new VentanaJuego(20, GameFactory.getNewGame());
+					VentanaJuego frame = new VentanaJuego(40, GameFactory.getNewGame());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -75,7 +83,7 @@ public class VentanaJuego extends JFrame {
 	
 	private JPanel getPanelCentro() {
 		if (panelCentro == null) {
-			panelCentro = new TableroCuadrado(tam, juego);
+			panelCentro = new Panel_TableroCuadrado(tam, juego, new HashMap<Integer,JButton>());
 		}
 		return panelCentro;
 	}
@@ -159,31 +167,42 @@ public class VentanaJuego extends JFrame {
 					System.out.println(num);
 					switch(num){
 					case 1:
-						lblDado.setIcon(ajustarImagenDado("img/dado1.png"));
+						lblDado.setIcon(ajustarImagen("img/dado1.png",btnDado));
 						break;
 					case 2:
-						lblDado.setIcon(ajustarImagenDado("img/dado2.png"));
+						lblDado.setIcon(ajustarImagen("img/dado2.png",btnDado));
 						break;
 					case 3:
-						lblDado.setIcon(ajustarImagenDado("img/dado3.png"));
+						lblDado.setIcon(ajustarImagen("img/dado3.png",btnDado));
 						break;
 					case 4:
-						lblDado.setIcon(ajustarImagenDado("img/dado4.png"));
+						lblDado.setIcon(ajustarImagen("img/dado4.png",btnDado));
 						break;
 					case 5:
-						lblDado.setIcon(ajustarImagenDado("img/dado5.png"));
+						lblDado.setIcon(ajustarImagen("img/dado5.png",btnDado));
 						break;
 					case 6:
-						lblDado.setIcon(ajustarImagenDado("img/dado6.png"));
+						lblDado.setIcon(ajustarImagen("img/dado6.png",btnDado));
 						break;
-					}
-					
-				}
-				
+					}					
+				}				
 			});
-		}
-		
+		}		
 		return btnDado;
+	}
+	
+	
+	/**
+	 * Redimensiona una imagen para un componente dado
+	 * @param Direccion
+	 * @param Componente
+	 * @return Imagen redimensionada
+	 */
+	protected Icon ajustarImagen(String string, Component componente) {
+		URL direccion = VentanaJuego.class.getResource(string);
+		Image imgOriginal =  new ImageIcon(direccion).getImage();
+		Image imgEscalada = imgOriginal.getScaledInstance(componente.getWidth()-34,componente.getHeight()-10, Image.SCALE_SMOOTH);
+		return new ImageIcon(imgEscalada);
 	}
 	
 	private JPanel getPanelFlechas() {
@@ -212,7 +231,7 @@ public class VentanaJuego extends JFrame {
 			panelQuesos = new JPanel();
 			panelQuesos.setLayout(new BoxLayout(panelQuesos, BoxLayout.Y_AXIS));
 			panelQuesos.add(getLblQuesitosGanados());
-			panelQuesos.add(getPanelQuesitos());
+			panelQuesos.add(new Panel_Quesitos(tam,new Colores(new String[]{"A","B","C","D"}),null));
 		}
 		return panelQuesos;
 	}
@@ -222,10 +241,5 @@ public class VentanaJuego extends JFrame {
 		}
 		return lblQuesitosGanados;
 	}
-	private JPanel getPanelQuesitos() {
-		if (panelQuesitos == null) {
-			panelQuesitos = new JPanel();
-		}
-		return panelQuesitos;
-	}
+
 }

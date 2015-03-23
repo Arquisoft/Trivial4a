@@ -51,12 +51,19 @@ public class Colores {
 	// Esta clase asocia un color con una categoria
 	//////////////////////////////////////
 	public class ColorCategoria{
-		public Color color;
-		public String categoria;
+		private Color color;
+		private String categoria;
 		
 		public ColorCategoria(Color color, String categoria){
 			this.color = color;
 			this.categoria = categoria;
+		}
+		
+		public Color getColor(){
+			return color;
+		}
+		public String getCategoria(){
+			return categoria;
 		}
 	}
 }
