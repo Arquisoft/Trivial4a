@@ -49,6 +49,7 @@ public class MongoDBPlaygorund {
 		DBCollection coleccion = getDB().getCollection(DB_COLLECTION_PREGUNTAS);
 		BasicDBObject searchQuery = new BasicDBObject();
     	searchQuery.put(CATEGORIA, categoria);
+    	
     	DBCursor cursor = coleccion.find(searchQuery);
     	
     	while (cursor.hasNext()) {
@@ -59,6 +60,27 @@ public class MongoDBPlaygorund {
 		return preguntas.toArray(aux);
 	}
 	
+	/**
+	 * Conseguir todas las preguntas 
+	 * 
+	 * @return
+	 * @throws UnknownHostException
+	 */
+	public Pregunta[] getAllPreguntas() throws UnknownHostException{
+		
+		Pregunta[] aux = {};
+		List<Pregunta> preguntas = new ArrayList<Pregunta>();
+
+		
+		DBCollection coleccion = getDB().getCollection(DB_COLLECTION_PREGUNTAS);
+		
+		DBCursor cur = coleccion.find();
+		
+		while (cur.hasNext())
+			preguntas.add(preguntaFromJson(cur.next().toString()));
+		
+		return preguntas.toArray(aux);
+	}
 	//#endsection
 	
     public static void main(String [] args) throws UnknownHostException {
