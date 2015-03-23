@@ -2,7 +2,6 @@ package es.uniovi.asw.trivial.game;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale.Category;
 import java.util.Random;
 
 import es.uniovi.asw.trivial.model.Contestacion;
@@ -16,7 +15,7 @@ public class GameObject implements Game{
 	GameObject() {}
 	
 	
-	//TODO private {usuario,pregunta,isCorrect}[] tuplas
+	
 	private Player[] players;
 	private Pregunta[] preguntas;
 	private int jugadorActual;
@@ -88,12 +87,19 @@ public class GameObject implements Game{
 	}
 
 	public Pregunta getQuestionSet(int posicion) {
-		/* TODO Crear en MongoDB un metodo con un funcionamiento pareciso al siguiente:
-		ResultSet sr = db.preguntas.find(categoria, getCategoryname(posicion);
+	
+		String categoria = getCategoryname(posicion);
 		
-		TODO Obtener una pregunta aleatoria del SerultSet anterior
-		// */
-		return null;
+		List<Pregunta> preguntasAux = new ArrayList<Pregunta>();
+		
+		for(Pregunta p : preguntas)
+			if(p.getCategoria().equals(categoria))
+				preguntasAux.add(p);
+		
+		Random r = new Random();
+		
+		
+		return preguntasAux.get(r.nextInt(preguntasAux.size()));
 	}
 
 	public Pregunta getQuestionSet(String posicion) {
