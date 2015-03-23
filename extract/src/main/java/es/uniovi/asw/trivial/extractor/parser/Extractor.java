@@ -13,6 +13,7 @@ public class Extractor {
 	
 	
 	private boolean writeFiles;
+	private boolean useDB=true;
 	
 	public void run(String... args) throws UnknownHostException, FileNotFoundException{
 		
@@ -23,6 +24,11 @@ public class Extractor {
 			}
 			if(args[0].equalsIgnoreCase("output")){
 				writeFiles = true;
+			}
+			if(args[0].equalsIgnoreCase("test"))
+			{
+				writeFiles=true;
+				useDB=false;
 			}
 		}
 		loadFiles();
@@ -55,7 +61,8 @@ public class Extractor {
 		arrayp = p.getPreguntas().toArray(arrayp);
 		if(writeFiles)
 			new JSonWriter().writeJSONfile(p.getPreguntas());
-		new MongoDB().addPreguntas(arrayp);
+		if(useDB)
+			new MongoDB().addPreguntas(arrayp);
 		
 		for(Pregunta pp : arrayp)
 			System.out.println(pp);

@@ -1,7 +1,10 @@
 package es.uniovi.asw.trivial.persistence;
 
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -15,22 +18,24 @@ import es.uniovi.asw.trivial.model.Pregunta;
 
 public class JSonWriter {
 	
+	public static String ruta;
 	
 	public void writeJSONfile(ArrayList<Pregunta> preguntas) throws UnknownHostException {
 		Gson gson = new Gson();		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
 		Date date = new Date();
 		
-		String name = "output/json/"+(dateFormat.format(date)); //2014/08/06 15:59:48
-		
+		String name = "output/"+(dateFormat.format(date)+".json"); //2014/08/06 15:59:48
+		ruta=name;
 		StringBuilder sb = new StringBuilder();
 		sb.append(gson.toJson(preguntas));
 		
-		FileWriter fw;
+		BufferedWriter bw;
 		try {
-			fw = new FileWriter(name);
-			fw.write(sb.toString());
-			fw.close();
+			bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(name, true)));
+			bw.write(sb.toString());
+			bw.write("\n");
+			bw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
