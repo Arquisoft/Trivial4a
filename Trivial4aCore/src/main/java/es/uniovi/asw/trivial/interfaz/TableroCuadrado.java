@@ -10,7 +10,7 @@ import es.uniovi.asw.trivial.game.Game;
 
 @SuppressWarnings("serial")
 public class TableroCuadrado extends JPanel{
-
+Map<Integer,JButton> casillas = new HashMap<Integer,JButton>();
 	public TableroCuadrado(int tam, Game juego){
 		setOrganizacion(tam);
 		rellenarTablero(tam);
@@ -147,18 +147,22 @@ public class TableroCuadrado extends JPanel{
 		int enumeracion = 0;
 		for(int i=der.size()-1; i>=0; i--){
 			der.get(i).setText(String.valueOf(enumeracion));
+			casillas.put(enumeracion,der.get(i));
 			enumeracion++;
 		}
 		for(int i=arriba.size()-1; i>=0; i--){
 			arriba.get(i).setText(String.valueOf(enumeracion));
+			casillas.put(enumeracion,arriba.get(i));
 			enumeracion++;
 		}
 		for(int i=0; i<izq.size(); i++){
 			izq.get(i).setText(String.valueOf(enumeracion));
+			casillas.put(enumeracion,izq.get(i));
 			enumeracion++;
 		}
 		for(int i=0; i<abajo.size(); i++){
 			abajo.get(i).setText(String.valueOf(enumeracion));
+			casillas.put(enumeracion,abajo.get(i));
 			enumeracion++;
 		}
 	}

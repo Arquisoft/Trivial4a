@@ -33,13 +33,13 @@ public class VentanaJuego extends JFrame {
 	private JPanel panelMovimiento;
 	private JPanel panelDado;
 	private JButton btnDado;
-	private JTextField txtTirada;
 	private JPanel panelFlechas;
 	private JButton btnDerecha;
 	private JButton btnIzquierda;
 	private JPanel panelQuesos;
 	private JLabel lblQuesitosGanados;
 	private JPanel panelQuesitos;
+	private JLabel lblDado;
 
 	/**
 	 * Launch the application.
@@ -140,24 +140,52 @@ public class VentanaJuego extends JFrame {
 			panelDado = new JPanel();
 			panelDado.setLayout(new GridLayout(0, 2, 5, 0));
 			panelDado.add(getBtnDado());
-			panelDado.add(getTxtTirada());
+			panelDado.add(getLblDado());
 		}
 		return panelDado;
+	}
+	private JLabel getLblDado() {
+		if (lblDado == null) {
+			lblDado = new JLabel("");
+		}
+		return lblDado;
 	}
 	private JButton getBtnDado() {
 		if (btnDado == null) {
 			btnDado = new JButton("Dado");
+			btnDado.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					int num=juego.diceGetNumer();
+					System.out.println(num);
+					switch(num){
+					case 1:
+						lblDado.setIcon(ajustarImagenDado("img/dado1.png"));
+						break;
+					case 2:
+						lblDado.setIcon(ajustarImagenDado("img/dado2.png"));
+						break;
+					case 3:
+						lblDado.setIcon(ajustarImagenDado("img/dado3.png"));
+						break;
+					case 4:
+						lblDado.setIcon(ajustarImagenDado("img/dado4.png"));
+						break;
+					case 5:
+						lblDado.setIcon(ajustarImagenDado("img/dado5.png"));
+						break;
+					case 6:
+						lblDado.setIcon(ajustarImagenDado("img/dado6.png"));
+						break;
+					}
+					
+				}
+				
+			});
 		}
+		
 		return btnDado;
 	}
-	private JTextField getTxtTirada() {
-		if (txtTirada == null) {
-			txtTirada = new JTextField();
-			txtTirada.setText("Tirada");
-			txtTirada.setColumns(10);
-		}
-		return txtTirada;
-	}
+	
 	private JPanel getPanelFlechas() {
 		if (panelFlechas == null) {
 			panelFlechas = new JPanel();
