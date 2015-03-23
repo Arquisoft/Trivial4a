@@ -26,10 +26,14 @@ public class Colores {
 	private void setColores(String[] categorias){
 		Random r = new Random();
 		for(int i=0; i<coloresElegidos.length; i++){
-			int siguiente = r.nextInt(colores.length);
-			if(!elegidos[siguiente]){
-				coloresElegidos[i] = new ColorCategoria(colores[siguiente],categorias[i]);
-				elegidos[siguiente] = true;
+			boolean asociado = false;
+			while(!asociado){
+				int siguiente = r.nextInt(colores.length);
+				if(!elegidos[siguiente]){
+					coloresElegidos[i] = new ColorCategoria(colores[siguiente],categorias[i]);
+					elegidos[siguiente] = true;
+					asociado = true;
+				}
 			}
 		}
 	}

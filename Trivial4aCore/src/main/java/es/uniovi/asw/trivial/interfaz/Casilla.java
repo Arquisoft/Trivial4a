@@ -1,5 +1,10 @@
 package es.uniovi.asw.trivial.interfaz;
 
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Random;
+
 import javax.swing.JButton;
 
 import es.uniovi.asw.trivial.game.Game;
@@ -13,13 +18,38 @@ public class Casilla extends JButton{
 	private boolean ocupada;
 	private Game juego;
 	
-	public Casilla(int posicion, Game juego, Colores colores){
+	public Casilla(int posicion, Colores colores){
 		this.posicion = posicion;
-		this.juego = juego;
-		this.categoria = juego.getCategoryname(posicion);
+		
+		//Se usa para hacer pruebas
+		this.categoria = pruebaAleaotiraCategoria();
+		
+		//Esto es el codigo que debera estar
+		//this.categoria = juego.getCategoryname(posicion);
 		this.ocupada = false;
-		this.setBackground(colores.getColor(categoria));
+		setFondo(colores);
 		this.setEnabled(false);
+	}
+	
+	/*
+	 * Este metodo se usa para hacer pruebas
+	 */
+	private String pruebaAleaotiraCategoria(){
+		Random r = new Random();
+		int i = r.nextInt(VentanaJuego.pruebaCategorias.length);
+		return VentanaJuego.pruebaCategorias[i];
+	}
+	
+	public void setFondo(Colores colores){
+		//Esto se usa para hacer pruebas
+		this.setBackground(colores.getColor(categoria));
+		
+		//Esto es el codigo que debera estar
+		/*
+		if(VentanaJuego.juego.getCurrentPlayer().getPosicion() == this.posicion)
+			this.setBackground(Color.WHITE);
+		else
+			this.setBackground(colores.getColor(categoria));*/
 	}
 	
 	public boolean isOcupada(){
@@ -35,6 +65,10 @@ public class Casilla extends JButton{
 	
 	public Pregunta getPregunta(){
 		return juego.getQuestionSet(posicion);
+	}
+	
+	public void setPosicion(int index){
+		this.posicion = index;
 	}
 }
 	

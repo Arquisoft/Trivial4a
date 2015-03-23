@@ -2,6 +2,7 @@ package es.uniovi.asw.trivial.interfaz;
 
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JButton;
@@ -12,10 +13,10 @@ import es.uniovi.asw.trivial.game.Game;
 @SuppressWarnings("serial")
 public class Panel_TableroCuadrado extends JPanel{
 	
-	Map<Integer,JButton> casillas;
+	Map<Integer,Casilla> casillas;
 	
-	public Panel_TableroCuadrado(int tam, Game juego, Map<Integer,JButton> casillas){
-		this.casillas = casillas;
+	public Panel_TableroCuadrado(int tam, Game juego){
+		casillas = new HashMap<Integer,Casilla>();
 		setOrganizacion(tam);
 		rellenarTablero(tam);
 	}
@@ -111,29 +112,29 @@ public class Panel_TableroCuadrado extends JPanel{
 		int filas = gl.getRows();
 		int contadorCasillas = 0;
 		
-		ArrayList<JButton> arriba = new ArrayList<JButton>();
-		ArrayList<JButton> abajo = new ArrayList<JButton>();
-		ArrayList<JButton> izq = new ArrayList<JButton>();
-		ArrayList<JButton> der = new ArrayList<JButton>();
+		ArrayList<Casilla> arriba = new ArrayList<Casilla>();
+		ArrayList<Casilla> abajo = new ArrayList<Casilla>();
+		ArrayList<Casilla> izq = new ArrayList<Casilla>();
+		ArrayList<Casilla> der = new ArrayList<Casilla>();
  
 		for (int i = 0; i < filas; i++) {
 			for (int j = 0; j < columnas; j++) {
 				//Si la posicion forma parte del interior
 				if (i != 0 && i != filas - 1 && j != 0 && j != columnas - 1)
-					agregarBoton(false);
+					agregarBotonVacio();
 				else {
 					if (contadorCasillas < tam){						
 						if(i==0)
-							arriba.add(agregarBoton(true));
+							arriba.add(agregarCasilla());
 						else if(i>0 && i<filas-1 && j==0)
-							izq.add(agregarBoton(true));
+							izq.add(agregarCasilla());
 						else if(i>0 && i<filas-1 && j==columnas-1)
-							der.add(agregarBoton(true));
+							der.add(agregarCasilla());
 						else if(i==filas-1)
-							abajo.add(agregarBoton(true));
+							abajo.add(agregarCasilla());
 					}
 					else  //Si no quedan mas posiciones
-						agregarBoton(false);
+						agregarBotonVacio();
 					contadorCasillas++;
 				}
 			}
@@ -141,11 +142,17 @@ public class Panel_TableroCuadrado extends JPanel{
 		enumerarCasillas(der,arriba,izq,abajo);
 	}
 	
-	private JButton agregarBoton(boolean visible){
-		JButton btn = new JButton();
-		btn.setVisible(visible);
-		this.add(btn);
-		return btn;
+	private void agregarBotonVacio(){
+			JButton btn = new JButton();
+			btn.setVisible(false);
+			this.add(btn);
+	}
+	
+	private Casilla agregarCasilla(){
+		Casilla casilla = new Casilla(0,VentanaJuego.colores);
+		casilla.setVisible(true);
+		this.add(casilla);
+		return casilla;
 	}
 
 	/**
@@ -155,36 +162,32 @@ public class Panel_TableroCuadrado extends JPanel{
 	 * @param izq
 	 * @param abajo
 	 */
-	protected void enumerarCasillas (ArrayList<JButton> der, 
-			ArrayList<JButton> arriba, ArrayList<JButton> izq, 
-			ArrayList<JButton> abajo){
+	protected void enumerarCasillas (ArrayList<Casilla> der, 
+			ArrayList<Casilla> arriba, ArrayList<Casilla> izq, 
+			ArrayList<Casilla> abajo){
 		
 		int enumeracion = 0;
 		for(int i=der.size()-1; i>=0; i--){
-			remplazar(der,i,enumeracion);
-			casillas.put(enumeracion, der.get(i));
+			casillas.put(enumeracion, remplazar(der,i,enumeracion));
 			enumeracion++;
 		}
 		for(int i=arriba.size()-1; i>=0; i--){
-			remplazar(arriba,i,enumeracion);
-			casillas.put(enumeracion, arriba.get(i));
+			casillas.put(enumeracion, remplazar(arriba,i,enumeracion));
 			enumeracion++;
 		}
 		for(int i=0; i<izq.size(); i++){
-			remplazar(izq,i,enumeracion);
-			casillas.put(enumeracion,izq.get(i));
+			casillas.put(enumeracion,remplazar(izq,i,enumeracion));
 			enumeracion++;
 		}
 		for(int i=0; i<abajo.size(); i++){
-			remplazar(abajo,i,enumeracion);
-			casillas.put(enumeracion,abajo.get(i));
+			casillas.put(enumeracion,remplazar(abajo,i,enumeracion));
 			enumeracion++;
 		}
 	}
 	
-	private void remplazar(ArrayList<JButton> list, int i, int enu){
-		JButton btn = list.get(i);
-		btn.setText(""+enu);
-		list.set(i, btn);
+	private Casilla remplazar(ArrayList<Casilla> list, int i, int enu){
+		Casilla casilla = list.get(i);
+		casilla.setPosicion(enu);
+		return casilla;
 	}
 }

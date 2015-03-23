@@ -15,6 +15,8 @@ import javax.swing.JTextField;
 
 import es.uniovi.asw.trivial.game.Game;
 import es.uniovi.asw.trivial.game.GameFactory;
+import es.uniovi.asw.trivial.model.Player;
+import es.uniovi.asw.trivial.model.User;
 
 import java.awt.Component;
 import java.awt.GridLayout;
@@ -31,7 +33,11 @@ import java.util.HashMap;
 public class VentanaJuego extends JFrame {
 
 	private int tam;
-	private Game juego;
+	public static Game juego;
+	public static Colores colores;
+	public static final String[] pruebaCategorias =
+			new String[]{"Categoria A",
+		"Categoria B","Categoria C","Categoria D"};
 	
 	private JPanel contentPane;
 	private JPanel panelCentro;
@@ -56,7 +62,7 @@ public class VentanaJuego extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaJuego frame = new VentanaJuego(40, GameFactory.getNewGame());
+					VentanaJuego frame = new VentanaJuego(40, new Colores(pruebaCategorias));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -68,9 +74,10 @@ public class VentanaJuego extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaJuego(int n, Game g) {
+	public VentanaJuego(int n, Colores c) {
 		this.tam = n;
-		this.juego = g;
+		//Esto es una prueba
+		VentanaJuego.colores = c;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 614, 501);
 		contentPane = new JPanel();
@@ -83,7 +90,7 @@ public class VentanaJuego extends JFrame {
 	
 	private JPanel getPanelCentro() {
 		if (panelCentro == null) {
-			panelCentro = new Panel_TableroCuadrado(tam, juego, new HashMap<Integer,JButton>());
+			panelCentro = new Panel_TableroCuadrado(tam, juego);
 		}
 		return panelCentro;
 	}
@@ -231,7 +238,10 @@ public class VentanaJuego extends JFrame {
 			panelQuesos = new JPanel();
 			panelQuesos.setLayout(new BoxLayout(panelQuesos, BoxLayout.Y_AXIS));
 			panelQuesos.add(getLblQuesitosGanados());
-			panelQuesos.add(new Panel_Quesitos(tam,new Colores(new String[]{"A","B","C","D"}),null));
+			
+			Player prueba = new Player(new User("Pepe"),0);
+			
+			panelQuesos.add(new Panel_Quesitos(tam,prueba));
 		}
 		return panelQuesos;
 	}
