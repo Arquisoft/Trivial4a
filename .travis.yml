@@ -4,3 +4,6 @@ jdk:
   - oraclejdk7
 services:
   - mongodb
+brancher:
+  only:
+    - test
