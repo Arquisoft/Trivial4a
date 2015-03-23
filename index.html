@@ -1,74 +1,386 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+<title>Trivial4a</title>
+<meta charset="UTF-8">
+<!--Style Sheet-->
+<link rel="stylesheet" type="text/css" href="css/flexslider.css" media="screen">
+<link rel="stylesheet" type="text/css" href="css/sequence.css" media="screen">
+<link rel="stylesheet" type="text/css" href="css/lightbox.css" media="screen">
+<link rel="stylesheet" type="text/css" href="css/style.css" media="all">
+<!--Special Styles-->
+<link rel="stylesheet" type="text/css" href="css/style.css" title="default" media="screen">
+<link rel="alternate stylesheet" type="text/css" href="css/elegant.css" title="elegant" media="screen">
+<link rel="alternate stylesheet" type="text/css" href="css/modern.css" title="modern" media="screen">
+<link rel="alternate stylesheet" type="text/css" href="css/colorfull.css" title="colorfull" media="screen">
+<!--Responsive-->
+<link rel="stylesheet" type="text/css" href="css/responsitive.css" media="all">
+<!--Google fonts-->
+<link href='http://fonts.googleapis.com/css?family=Russo+One&subset=latin,latin-ext,cyrillic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
+<!--Javascript-->
+<script src="js/jquery-1.7.2.min.js"></script>
+<!--[if lt IE9]>
+<script src="js/html5.js"></script>
+<script src="js/IE7.js"></script>
+<![endif]-->
 
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Trivial4a : Trivial 4a">
-
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Trivial4a</title>
-  </head>
-
-  <body>
-
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/Arquisoft/Trivial4a">View on GitHub</a>
-
-          <h1 id="project_title">Trivial4a</h1>
-          <h2 id="project_tagline">Trivial 4a</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/Arquisoft/Trivial4a/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/Arquisoft/Trivial4a/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
+<link rel="shortcut icon" href="images/icons/favicon.png" type="image/png" />
+</head>
+<body>
+<header class="dark">
+  <nav>
+    <div id="logo">
+      <h1><font size=6>Trivial4a</font></h2>
     </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>
-<a id="práctica-del-grupo-trivial4a" class="anchor" href="#pr%C3%A1ctica-del-grupo-trivial4a" aria-hidden="true"><span class="octicon octicon-link"></span></a>Práctica del grupo Trivial4a</h3>
-
-<h1>Arquitectura del Software</h1>
-<p>Visita la <a href="https://github.com/Arquisoft/Trivial4a/wiki">wiki</a> del proyecto.</p>
-
-<h2>Autores/Contacto</h2>
-<h1>Contactos</h1>
-<dl>
-  <dt>Lucía Sánchez</dt>
-  <dd>- Skype: luzy_s</dd>
-  <dt>Jorge Sierra Miranda</dt>
-  <dd>- Skype: jorge.darnier</dd>
-  <dt>Ángel Rodríguez Bobes</dt>
-  <dd>- Skype: angelrodriguez1991</dd>
-  <dt>Santiago Marqués</dt>
-  <dd>- Skype: zzpetaz</dd>
-  <dt>Cristina Montes Rubio</dt>
-  <dd>- Skype: rinayusuri</dd>
-  <dt>Miguel Fernández Fuentes</dt>
-  <dd>- Skype: miguel.fernandez160</dd>
-  <dt>David Sariego fernández</dt>
-  <dd>- Skype: neverstopthemassacre</dd>
-</dl>
-
-
+    <div id="menu">
+      <ul>
+        <li> <a href="#slider" ><img src="images/icons/home.png"></a> <a href="#services" >Descarga</a> <a href="#work">Proyecto</a> <a href="#about">Manual</a> <a href="#blog">Equipo</a> <a href="#contact">Contacto</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+<!--<div id="switcher"> <a class="switch-button open"></a>
+  <div class="content">
+    <ul class="headercolor">
+      <span>Header color</span>
+      <li class="red"><a href="#light">Light</a></li>
+      <li class="blue"><a href="#dark">Dark</a></li>
+    </ul>
+    <ul class="theme">
+      <span>Theme</span>
+      <li><a href="#" rel="default" class="styleswitch">default</a></li>
+      <li><a href="#" rel="elegant" class="styleswitch">elegant</a></li>
+      <li><a href="#" rel="modern" class="styleswitch">modern</a></li>
+      <li><a href="#" rel="colorfull" class="styleswitch">colorfull</a></li>
+    </ul>
+  </div>
+</div>-->
+<section id="slider">
+  <div id="sequence-preloader">
+    <div class="preloading"> <img src="images/icons/loader.gif" alt=""> </div>
+  </div>
+  <div id="slideshow"> <img class="prev" src="images/prev.png" alt=""> <img class="next" src="images/next.png" alt="">
+    <ul>
+      <li> <img class="backgrd" src="images/bg/glass.jpg" alt=""> <img class="overlay" src="images/bg/ice.png" alt=""> <img class="image1" src="images/trivial4.jpg" alt=""> <img class="image2" src="images/games.png" alt="">
+        <div class="info">
+          <h2>Trivial4a</h2>
+          <p>Arquitectura del Software </p>
+        </div>
+        <a href="#services" class="more">Descarga</a> </li>
+      <li> <img class="backgrd" src="images/bg/orange.jpg" alt=""> <img class="image1" src="images/pruebaT.png" alt=""> <img class="image2" src="images/git.png" alt="">
+        <div class="info">
+          <h2>GitHub</h2>
+          <p>Visita la <br/><a href="https://github.com/Arquisoft/Trivial4a/wiki">wiki</a><br/> del proyecto.</p>
+        </div>
+        </li>
+      <li> <img class="backgrd" src="images/bg/blue.jpg" alt=""> <img class="image1" src="images/informatica2.png" alt=""> 
+        <div class="info blue">
+          <h2>Equipo</h2>
+          <p>Escuela de Ingeniería Informática<br/>
+            de Oviedo</p>
+        </div>
+      </li>
+    </ul>
+  </div>
 </section>
-</div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Trivial4a maintained by <a href="https://github.com/Arquisoft">Arquisoft</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
+<!--Aqui acaba lo de la imagen chuli dinamica   -->
+<section id="services" class="container dark">
+  <div class="content">
+    <div class="title icon-power">
+      <h1>Descarga <span>Desafía tu mente con el clásico juego de preguntas y respuestas</span></h1>
+      <div class="description"></div>
     </div>
+    <div class="full">
+      <div class="column-half">
+        <p><a href="http://es.wikipedia.org/wiki/Trivial_Pursuit">Trivial</a>, el clásico juego de preguntas y respuestas. <br/> Divertido y para toda la familia. <br/> Su sencillo funcionamiento y el hecho de combinar desafíos mentales y triviales en sus preguntas lo han hecho tremendamente popular.</p>
+      </div>
+      <div class="column-half">
+        <div class="image"><img src="images/trivialT.jpg" alt=""></div>
+      </div>
+    </div>
+    <div class="full">
+      <div class="column-one-forth">
+        <ul class="list">
+          <h3>ZIP</h3>
+          <a class="zip_download_link" href="https://github.com/Arquisoft/Trivial4a/zipball/master">Download as a .zip file</a>
+        </ul>
+      </div>
+      <div class="column-one-forth">
+        <ul class="list">
+          <h3>TAR</h3>
+          <a class="tar_download_link" href="https://github.com/Arquisoft/Trivial4a/tarball/master">Download as a tar.gz file</a>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="work" class="container light">
+  <div class="content">
+    <div class="title icon-preview">
+      <h1>Proyecto <span>Nuestras creaciones</span></h1>
+    </div>
+    <article class="portfolio">
+	
+	
+	  <ul id="stage">
+        
+        <li data-tags="Photography">
+          <div class="thumb"><a rel="lightbox" href="images/sample/proyecto_extractor.png"><img src="images/sample/proyecto_extractor.png" alt=""></a></div>
+          <div class="info">
+            <h3>Extractor</h3>
+            <p>Parser de las preguntas del juego.</p>
+          </div>
+        </li>
+		
+      </ul>
+	
+      <ul id="stage">
+        
+        <li data-tags="Photography">
+          <div class="thumb"><a rel="lightbox" href="images/sample/proyecto_trivial.jpg"><img src="images/sample/proyecto_trivial.jpg" alt=""></a></div>
+          <div class="info">
+            <h3>Trivial</h3>
+            <p>El clásico juego de mesa, ahora para PC.</p>
+          </div>
+        </li>
+		
+      </ul>
+    </article>
+	<br/><br/><br/>
+	<div class="description">
+      <h2>Desarrollado con </h2>  
+      </div>
+	  <div id="box">
+      <article class="post">
+        <figure><img src="images/sample/eclipse.png" alt=""></figure>
+        <figcaption><a href="https://eclipse.org/">Eclipse</a> <span>IDE</span></figcaption>
+      </article>
+	  <article class="post">
+        <figure><img src="images/sample/json.png" alt="">
+		<p>JSON es un formato ligero para el intercambio de datos.</p>
+        </figure>
+		<figcaption><a href="http://es.wikipedia.org/wiki/JSON">JSON</a></figcaption>
+      </article> 
+	   <article class="post">
+        <figure><img src="images/sample/gift.jpg" alt="">
+		<p>GIFT es el formato más completo para importar preguntas de cuestionario a partir de un archivo de texto. Admite preguntas de opción múltiple, verdadero-falso, respuesta corta, preguntas de emparejamiento y preguntas numéricas.</p>
+        </figure>
+		<figcaption><a href="https://docs.moodle.org/all/es/Formato_GIFT">GIFT</a> <span>El punto de partida</span></figcaption>
+      </article> 
+      <article class="post">
+        <figure><img src="images/sample/mongo.jpeg" alt="">
+          <p>MongoDB es un sistema de base de datos NoSQL orientado a documentos, desarrollado bajo el concepto de código abierto.</p>
+        </figure>
+        <figcaption><a href="https://www.mongodb.org/">MongoDB</a></figcaption>
+      </article>
+    </div>
+	  
+	  
+  </div>
+</section>
 
+
+
+
+<section id="about" class="container dark">
+  <div class="content">
+    <div class="title icon-and">
+      <h1>Manual <span> Cómo funciona</span></h1>
+      <div class="description">
+        <p>Descargar, instalar y utilizar la aplicación.</p>
+      </div>
+    </div>
+    <div class="full">
+      <div class="image"><img src="images/sample/manual.jpg" alt=""></div>
+      <div class="divider"></div>
+      <div class="column-half">
+        <div class="subtitle">
+          <h3>Resumen:</h3>
+        </div>
+        <p>El propósito de este Manual es facilitar al usuario la navegación de las diferentes pantallas de la aplicación para poder usar correctamente el Trivial.</p>
+      </div>
+      <div class="column-half last">
+        <div class="subtitle">
+          <h3>Versiones:</h3>
+        </div>
+        <ul id="skills">
+          <li><span title="100"></span>
+            <p>Parser de preguntas <strong>100%</strong></p>
+          </li>
+          <li><span title="40"></span>
+            <p>Juego para ordenador <strong>40%</strong></p>
+          </li>
+          <li><span title="0"></span>
+            <p>Juego para internet <strong>0%</strong></p>
+          </li>
+        </ul>
+        <!--END skills-->
+      </div>
+      <div class="column-half">
+        <div class="subtitle">
+          <h3>Instalación:</h3>
+        </div>
+        <div class="accordion" id="list1">
+          <!--Accordion-->
+          <a>Java</a>
+          <div>
+            <p>Dentro de su navegador Web ingrese a https://www.java.com/es/download/ para proceder a la descarga de Java, necesario para el funcionamiento de la aplicación.</p>
+			<p>A continuación, desde una consola de comandos (cmd) utilizaremos el comando “java –version” para comprobar que java está correctamente instalado.</p>
+          </div>
+          <a>MongoDB</a>
+          <div>
+            <p>Nos descargamos el software de la dirección: http://www.mongodb.org/downloads?_ga=1.54361128.1252863717.1426339425.</p>
+			<p>Descomprimimos el zip en la ubicación que queramos de nuestro sistema y creamos una carpeta data/db dentro del mismo directorio, donde se almacenará la base de datos.</p>
+			<p>Abrimos un terminal de sistema, en él nos colocaremos en la carpeta /bin de la carpeta MongoDB donde descomprimimos el zip y ejecutamos el comando mongod.exe</p>
+			<p>Una vez hecho esto ya podemos empezar a trabajar con el parser. </p>
+          </div>
+        </div>
+        <!--Accordion end-->
+      </div>
+      <div class="column-half last">
+        <div class="subtitle">
+          <h3>Funcionamiento:</h3>
+        </div>
+        <ul class="tabs-nav">
+          <li class="active-tab"><a href="#tab1">Línea de comandos</a></li>
+          <li><a href="#tab2">Interfaz gráfica</a></li>
+        </ul>
+        <!-- end tab navigation -->
+        <div class="tabs-container">
+          <div class="tab-content" id="tab1">
+            <p>En un terminal nos situamos en la carpeta del parser y ejecutamos java  -jar Console.jar </p>
+			<p>Esto nos convierte las preguntas en formato .gift que debemos tener en una carpeta llamada input junto al .jar del parser en preguntas .json, y las almacena en la base de datos, es muy importante tener abierta la base de datos.</p>
+          </div>
+          <!-- end tab1 -->
+          <div class="tab-content" id="tab2">
+            <p>Hacer doble click sobre GUI.jar, lo podemos encontrar junto al otro parser, esto nos mostrará una pequeña ventana con dos botones que nos permitirá realizar la conversión de las preguntas y almacenarlas en la base de datos o borrar la base de datos. </p>
+          </div>
+          <!-- end tab2 -->
+        </div>
+        <!-- end tab container -->
+      </div>
     
-
-  </body>
+    </div>
+  </div>
+</section>
+<section id="blog" class="container light">
+  <div class="content">
+    <div class="title icon-note">
+      <h1>Equipo <span> Los desarrolladores</span></h1>
+      <div class="description">
+        <p>Quiénes somos, de dónde venimos, a dónde vamos</p>
+      </div>
+	   <div class="column-half last">
+        <div class="subtitle">
+          <h3>Componentes:</h3>
+        </div>
+	  <ul>
+		<li><a href="https://github.com/Migferf">Miguel</a> Fernández Fuentes</li>
+		<li>Cristina <a href="https://github.com/DavidSFdez">Montes</a> Rubio</li>
+		<li>Santiago Marqués <a href="https://github.com/zzpetaz">Rivera</a></li>
+		<li>Ángel <a href="https://github.com/angelrodb">Rodríguez</a> Bobes</li>
+		<li><a href="https://github.com/PRomer">Pablo</a> Romero Martín</li>
+		<li>Lucía <a href="https://github.com/PRomer">Sánchez</a> Díaz</li>
+		<li>David Sariego <a href="https://github.com/DavidSFdez">Fernández</a></li>
+		<li>Jorge <a href="https://github.com/DavidSFdez">Sierra</a> Miranda</li>
+	  </ul>
+    </div>
+    </div>
+  </div>
+</section>
+<section id="contact" class="container dark second">
+  <div class="content">
+    <div class="title icon-phone">
+      <h1>Contacto <span>Dónde estamos</span></h1>
+      <div class="description"> <a href="https://www.facebook.com/groups/16946973197/"><img src="images/icons/facebook.png" alt="" class="social"></a> 
+								<a href="https://www.youtube.com/user/ComputingOviedo"><img src="images/icons/you.png" alt="" class="social"></a> 
+								<a href="https://www.linkedin.com/groups/Escuela-Ingenier%C3%ADa-Inform%C3%A1tica-3086665"><img src="images/icons/in.png" alt="" class="social"></a></div>
+    
+    </div>
+    <div class="full">
+      <div id="contact-form">
+        <form id="contact-us" action="#">
+          <div class="column-half">
+            
+			<div class="full">
+				<a href="https://ingenieriainformatica.uniovi.es/"><img src="images/eii.png" alt=""></a>
+			  <p>Campus de Los Catalanes<br/>
+			  Calle de Valdés Salas, 33007 Oviedo, España</p>
+			  <p>Telf.:985.10.27.96</p>
+			</div>
+          </div>
+          <div class="column-half last">
+            <div id="map"></div>
+          </div>
+        </form>
+      </div>
+    </div>
+	
+  </div>
+</section>
+<footer> <a href="https://twitter.com/computingoviedo" class="twitter"> <span class="twitter"></span>
+  <p class="twitter_status"></p>
+  </a>
+  <section class="footer">
+    <p>&copy; Copyright 2015 <a href="#">Trivial4a</a> All Rights Reserved | ASW </p>
+  </section>
+</footer>
+<!--Javascript-->
+<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+<script src="js/jquery.flexslider-min.js"></script>
+<script src="js/sequence.jquery-min.js"></script>
+<script src="js/waypoints.min.js"></script>
+<script src="js/quicksand.js"></script>
+<script src="js/jquery.masonery.js"></script>
+<script src="js/modernizr.custom.js"></script>
+<script src="js/gmaps.js"></script>
+<script src="js/jquery.accordion.js"></script>
+<script src="js/lightbox.js"></script>
+<script src="js/styleswitch.js"></script>
+<script src="js/custom.js"></script>
+<!--Sequence slider-->
+<script>
+var options = {
+    autoPlay: true,
+    nextButton: ".next",
+    prevButton: ".prev",
+    preloader: "#sequence-preloader",
+    prependPreloader: false,
+    prependPreloadingComplete: "#sequence-preloader, #slideshow",
+    animateStartingFrameIn: true,
+    transitionThreshold: 500,
+    nextButtonAlt: " ",
+    prevButtonAlt: " ",
+    afterPreload: function () {
+        $(".prev, .next").fadeIn(500);
+        if (!slideShow.transitionsSupported) {
+            $("#slideshow").animate({
+                "opacity": "1"
+            }, 1000);
+        }
+    }
+};
+var slideShow = $("#slideshow").sequence(options).data("sequence");
+if (!slideShow.transitionsSupported || slideShow.prefix == "-o-") {
+    $("#slideshow").animate({
+        "opacity": "1"
+    }, 1000);
+    slideShow.preloaderFallback();
+}
+</script>
+<script>
+new GMaps({
+    div: '#map',
+    lat: 43.354917,
+    lng: -5.851430
+});
+</script>
+<script>
+if (typeof jQuery == 'undefined') {
+    document.write(unescape("%3Cscript src='js/jquery.js'%3E%3C/script%3E"));
+}
+</script>
+</body>
 </html>
