@@ -6,7 +6,7 @@ import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
 
 
-public class GameMain {
+public class GameLoader {
 
 	public static void main(String[] args) throws UnknownHostException {
 //		new Loader().run(args[0]);
