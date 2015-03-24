@@ -10,6 +10,7 @@ target
 .gradle
 bin/
 DOCUMENTACION/
+.idea/
 tmp/
 *.tmp
 *.bak
@@ -26,3 +27,4 @@ local.properties
 .texlipse
 Thumbs.db
 Trivial4aCore/prueba.json
+*.iml

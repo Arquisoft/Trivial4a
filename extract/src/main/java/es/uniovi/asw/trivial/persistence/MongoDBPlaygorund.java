@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.mongodb.*;
 
 import es.uniovi.asw.trivial.model.Pregunta;
+import es.uniovi.asw.trivial.model.User;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class MongoDBPlaygorund {
 	private final static String DB_HOST = "localhost";
 	private final static String DB_COLLECTION_PREGUNTAS = "preguntas";
 	private final static String CATEGORIA = "categoria";
+    private final static String DB_COLLECTION_USUARIOS = "usuarios";
 	
 	private DB getDB() throws UnknownHostException{
 		return new MongoClient(DB_HOST).getDB(DB_NAME);
@@ -58,7 +60,44 @@ public class MongoDBPlaygorund {
     	
 		return preguntas.toArray(aux);
 	}
-	
+
+    /**
+     * Busca todas las preguntas de la base de datos.
+     * @return Un array de Preguntas. Si no hay preguntas en la base de datos es un array de tamaño 0.
+     * @throws UnknownHostException
+     */
+    public Pregunta[] getPreguntas() throws UnknownHostException{
+        Pregunta[] aux = {};
+        List<Pregunta> preguntas = new ArrayList<Pregunta>();
+
+        DBCollection coleccion = getDB().getCollection(DB_COLLECTION_PREGUNTAS);
+        DBCursor cursor = coleccion.find();
+
+        while (cursor.hasNext()) {
+            //Cambiar preguntaFromJson a Pregunta.fromJson
+            preguntas.add(preguntaFromJson(cursor.next().toString()));
+        }
+
+        return preguntas.toArray(aux);
+    }
+
+    /**
+     *
+     * @param _id
+     * @return
+     */
+    public User getUser(String _id) throws UnknownHostException{
+        ArrayList<User> usuario = new ArrayList<User>();
+        DBCollection collection = getDB().getCollection(DB_COLLECTION_USUARIOS);
+        BasicDBObject searchQuery = new BasicDBObject();
+        searchQuery.put("_id", _id);
+        DBCursor cursor = collection.find(searchQuery);
+        while (cursor.hasNext()) {
+            //Cambiar preguntaFromJson a Pregunta.fromJson
+            usuario.add(usuarioToJson(cursor.next().toString()));
+        }
+        //TODO seguir
+    }
 	//#endsection
 	
     public static void main(String [] args) throws UnknownHostException {
