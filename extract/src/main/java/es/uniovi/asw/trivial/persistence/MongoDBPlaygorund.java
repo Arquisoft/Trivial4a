@@ -1,7 +1,7 @@
 package es.uniovi.asw.trivial.persistence;
 
-import com.mongodb.DB;
-import com.mongodb.MongoClient;
+import com.mongodb.*;
+import com.mongodb.util.JSON;
 
 import java.net.UnknownHostException;
 
@@ -23,6 +23,30 @@ public class MongoDBPlaygorund {
     //#Section añadir a
 
     //Añadir a MongoDB.java
+
+    /**
+     * Guarda un usuario en la base de datos. No debe existir ningun otro usuario en la base de datos con ese identificador.
+     *
+     * @param _id      Identificador del usuario.
+     * @param password Constraseña del usuario.
+     * @return <i>0</i> Al guardar. <i>-1</i> si no se ha guardado el usuario.
+     * @throws UnknownHostException
+     */
+    private int guardarUsuario(String _id, String password) throws UnknownHostException {
+
+        DBCollection dbCollection = getDB().getCollection(DB_COLLECTION_USUARIOS);
+        DBObject dbObject = (DBObject) JSON.parse("{'_id':'" + _id + "', 'password':" + password + "}");
+
+        BasicDBObject searchQuery = new BasicDBObject();
+        searchQuery.put("_id", _id);
+        DBCursor cursor = dbCollection.find(searchQuery);
+        if (cursor.size() == 0) {
+            dbCollection.save(dbObject);
+            return 0;
+        }
+        return -1;
+
+    }
 
     //#endsection
 
