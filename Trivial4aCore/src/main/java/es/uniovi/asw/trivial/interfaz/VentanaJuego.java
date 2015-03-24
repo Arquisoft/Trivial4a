@@ -14,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import es.uniovi.asw.trivial.game.Game;
-import es.uniovi.asw.trivial.game.GameFactory;
 import es.uniovi.asw.trivial.model.Player;
 import es.uniovi.asw.trivial.model.User;
 
@@ -26,8 +25,14 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.net.URL;
-import java.util.HashMap;
+
+import javax.swing.border.TitledBorder;
+
+import java.awt.Font;
+
+import javax.swing.SwingConstants;
 
 @SuppressWarnings("serial")
 public class VentanaJuego extends JFrame {
@@ -53,8 +58,6 @@ public class VentanaJuego extends JFrame {
 	private JPanel panelFlechas;
 	private JButton btnDerecha;
 	private JButton btnIzquierda;
-	private JPanel panelQuesos;
-	private JLabel lblQuesitosGanados;
 	private JLabel lblDado;
 
 	/**
@@ -108,14 +111,21 @@ public class VentanaJuego extends JFrame {
 	private JLabel getLblJugadorActual() {
 		if (lblJugadorActual == null) {
 			lblJugadorActual = new JLabel("Jugador Actual:");
+			lblJugadorActual.setHorizontalAlignment(SwingConstants.CENTER);
+			lblJugadorActual.setHorizontalTextPosition(SwingConstants.CENTER);
+			lblJugadorActual.setFont(new Font("Impact", Font.PLAIN, 26));
 		}
 		return lblJugadorActual;
 	}
 	private JTextField getTxtJugador() {
 		if (txtJugador == null) {
 			txtJugador = new JTextField();
+			txtJugador.setHorizontalAlignment(SwingConstants.CENTER);
+			txtJugador.setEditable(false);
+			txtJugador.setFont(new Font("Adobe Arabic", Font.PLAIN, 34));
 			txtJugador.setText("Pepe");
 			txtJugador.setColumns(10);
+			txtJugador.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		}
 		return txtJugador;
 	}
@@ -135,6 +145,7 @@ public class VentanaJuego extends JFrame {
 		if(pq==null){
 			Player prueba = new Player(new User("Pepe"),0);
 			pq = new Panel_Quesitos(prueba,pruebaCategorias);
+			pq.setBorder(new TitledBorder(null, "Quesitos ganados", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		}
 		return pq;
 	}
@@ -180,28 +191,30 @@ public class VentanaJuego extends JFrame {
 	private JButton getBtnDado() {
 		if (btnDado == null) {
 			btnDado = new JButton("Dado");
+			/*String direccionBase = reemplazar(System.getProperty("user.dir"));
+			btnDado.setIcon(ajustarImagen(direccionBase + "img/dado.png", btnDado));*/
 			btnDado.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					int num=juego.diceGetNumer();
 					System.out.println(num);
 					switch(num){
 					case 1:
-						lblDado.setIcon(ajustarImagen("img/dado1.png",btnDado));
+						lblDado.setIcon(ajustarImagen("img/dado1.png",lblDado));
 						break;
 					case 2:
-						lblDado.setIcon(ajustarImagen("img/dado2.png",btnDado));
+						lblDado.setIcon(ajustarImagen("img/dado2.png",lblDado));
 						break;
 					case 3:
-						lblDado.setIcon(ajustarImagen("img/dado3.png",btnDado));
+						lblDado.setIcon(ajustarImagen("img/dado3.png",lblDado));
 						break;
 					case 4:
-						lblDado.setIcon(ajustarImagen("img/dado4.png",btnDado));
+						lblDado.setIcon(ajustarImagen("img/dado4.png",lblDado));
 						break;
 					case 5:
-						lblDado.setIcon(ajustarImagen("img/dado5.png",btnDado));
+						lblDado.setIcon(ajustarImagen("img/dado5.png",lblDado));
 						break;
 					case 6:
-						lblDado.setIcon(ajustarImagen("img/dado6.png",btnDado));
+						lblDado.setIcon(ajustarImagen("img/dado6.png",lblDado));
 						break;
 					}					
 				}				
@@ -209,6 +222,19 @@ public class VentanaJuego extends JFrame {
 		}		
 		return btnDado;
 	}
+	
+	/*
+	private String reemplazar(String dirBase){
+		String resultado = "";
+		String[] temp = dirBase.split("\\");
+		for(int i=0; i<temp.length; i++){
+			if(i<temp.length-1)
+				resultado+=temp[i] + "/";
+			else
+				resultado+=temp[i];
+		}
+		return resultado;
+	}*/
 	
 	
 	/**
