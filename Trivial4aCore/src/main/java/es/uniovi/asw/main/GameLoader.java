@@ -2,30 +2,34 @@ package es.uniovi.asw.main;
 
 import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
+
+import es.uniovi.asw.trivial.model.Dado;
 import es.uniovi.asw.trivial.model.Pregunta;
 import es.uniovi.asw.trivial.model.User;
+import es.uniovi.asw.trivial.persistence.MongoDB;
 
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class GameLoader {
 
-	/*
-     * 3 métodos de acceso a base de datos
-	 * getPreguntas, que saque todas las preguntas de la base de datos
-	 * getUser, que se le pase un nombre y devuelva el usuario o null si no existe
-	 * addUser para guardar un nuevo usuario en bbdd
-	 * 
-	 * @param args
-	 * @throws UnknownHostException
-	 */
+	
+		private MongoDB bd;
+		private Pregunta[] preguntas;
+		private List<User> users; 
+		private int nCategorias;
+		private Dado dado;
+		
+    
+    public GameLoader() {
+    	 bd = new MongoDB();
+    	 nCategorias=0;
+    	 users = new ArrayList<User>();
+		}
 
-    /*
-     * private Pregunta[] preguntas;
-     * private User[] users; ??
-     *
-     */
-    public static void main(String[] args) throws UnknownHostException {
+	public static void main(String[] args) throws UnknownHostException {
 //		new Loader().run(args[0]);
         MongoClient m = new MongoClient("localhost");
         DBCursor cursor = m.getDB("mydb").getCollection("preguntas").find();
@@ -36,10 +40,23 @@ public class GameLoader {
     }
 
     /**
-     * Coge todas las preguntas y usuarios de la base de datos y los guarda en los atributos
+     * Coge todas las preguntas de la base de datos y los guarda en los atributos
+     * @throws UnknownHostException 
      */
-    private void cargarDatos() {
-        //TODO
+    private void cargarDatos() throws UnknownHostException {
+       
+        preguntas = bd.getPreguntas();
+        
+      
+        List<String> categorias = new ArrayList<String>();
+        
+        for(int i=0;i<preguntas.length;i++)
+        	if(!categorias.contains(preguntas[i].getCategoria())){
+        		categorias.add(preguntas[i].getCategoria());
+        		nCategorias++;
+        	}
+        	
+    	
     }
 
     /**
@@ -49,9 +66,32 @@ public class GameLoader {
      *
      * @param usuario, pass
      * @return true si login correcto
+     * @throws UnknownHostException 
      */
-    public boolean comprobarLogin(String usuario, String pass) {
-        //TODO
+    public boolean comprobarLogin(String usuario, String pass) throws UnknownHostException {
+        
+    	
+    	if(users.size()<nCategorias)
+    	{
+    		User user = bd.getUser(usuario);
+    		
+    		if(user==null)
+    		{
+    			System.err.println("No existe usuario");
+    			return false;
+    		}
+    		
+    		if(!user.getContrasena().equals(pass))
+    		{
+    			System.err.println("Pass incorrecta");
+    			return false;
+    		}
+    		else{
+    			users.add(user);
+    			return true;
+    		}
+    			
+    	}
 
         return false;
     }
@@ -65,12 +105,28 @@ public class GameLoader {
      *
      * @param usuario, pass
      * @return true si lo registra correctamente
+     * @throws UnknownHostException 
      */
-    public boolean registroNuevoUser(String usuario, String pass) {
-        //TODO 1)Comprueba que el usuario no exista 2)Crea nuevo usuario 3)Guarda el usuario en bbdd
-
-        return false;
-
+    public boolean registroNuevoUser(String usuario, String pass) throws UnknownHostException {
+      
+    	User user = bd.getUser(usuario);
+    	
+        if(user==null)
+        {
+        	bd.guardarUsuario(user.get_id(),user.getContrasena());
+        	
+        	if(users.size()<nCategorias)
+        	{
+        		users.add(user);
+        		return true;
+        	}
+        	else
+        		System.err.println("Superado limite de usuarios, se anhade a bd pero no podra jugar");       	
+        }else
+           	System.err.println("El usuario ya existe");
+        
+    	return false;
+        
     }
 
 
@@ -81,11 +137,20 @@ public class GameLoader {
      */
     public void deletePlayer(User p) {
 
-        //TODO
+       if(!users.remove(p))
+    	   System.err.println("El usuario no esta jugando");
 
     }
 
+    public void DadoSize(int min, int max)
+    {
+    	dado.getInstance(min, max);
+    }
 
+    public void cambiarDado(int min,int max)
+    {
+    	dado.setDado(min, max);
+    }
     /**
      * Empezar partida.
      * Debe ejecutarse este metodo antes de empezar a jugar.
@@ -96,7 +161,7 @@ public class GameLoader {
      * @param min       numero maximo del dado
      * @param max       numero minimo del dado
      */
-    public void startGame(User[] usuarios, Pregunta[] preguntas, int tam, int min, int max) {
+    public void startGame(User[] usuarios, Pregunta[] preguntas, int tam, Dado dado) {
 
     }
 

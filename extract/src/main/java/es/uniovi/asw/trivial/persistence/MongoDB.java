@@ -101,7 +101,7 @@ public class MongoDB {
      * @return <i>0</i> Al guardar. <i>-1</i> si no se ha guardado el usuario.
      * @throws UnknownHostException
      */
-    private int guardarUsuario(String _id, String password) throws UnknownHostException {
+    public int guardarUsuario(String _id, String password) throws UnknownHostException {
 
         DBCollection dbCollection = getDB().getCollection(DB_COLLECTION_USUARIOS);
         DBObject dbObject = (DBObject) JSON.parse("{'_id':'" + _id + "', 'password':" + password + "}");
@@ -122,7 +122,7 @@ public class MongoDB {
      * @param respuesta La Contestacion del suusario.
      * @throws UnknownHostException
      */
-    private void guardarRespuesta(Contestacion respuesta) throws UnknownHostException {
+    public void guardarRespuesta(Contestacion respuesta) throws UnknownHostException {
         DBCollection dbCollection = getDB().getCollection(DB_COLLECTION_RESPUESTAS);
         String _idUsuario = respuesta.getUser().get_id();
         String _idPregunta = respuesta.getPregunta().get_id();
