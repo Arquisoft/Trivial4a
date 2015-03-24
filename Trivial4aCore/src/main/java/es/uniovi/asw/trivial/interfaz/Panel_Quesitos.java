@@ -1,18 +1,13 @@
 package es.uniovi.asw.trivial.interfaz;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.GridLayout;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import es.uniovi.asw.trivial.interfaz.Colores.ColorCategoria;
 import es.uniovi.asw.trivial.model.Player;
-import es.uniovi.asw.trivial.model.User;
 
 @SuppressWarnings("serial")
 public class Panel_Quesitos extends JPanel{
@@ -31,6 +26,8 @@ public class Panel_Quesitos extends JPanel{
 	}
 	
 	private void setOrganizacion(int tam){
+		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		/*
 		if(tam==1)
 			this.setLayout(new GridLayout(1,1));
 		else if(tam==2)
@@ -38,7 +35,7 @@ public class Panel_Quesitos extends JPanel{
 		else if(tam==3 || tam==4)
 			this.setLayout(new GridLayout(2,2));
 		else if(tam==5 || tam==6)
-			this.setLayout(new GridLayout(3,2));
+			this.setLayout(new GridLayout(3,2));*/
 	}
 	
 	public void addQuesitos(String[] categorias){
@@ -54,30 +51,8 @@ public class Panel_Quesitos extends JPanel{
 		if(acierto){
 			jugadorActual.putQuesito(categoria);
 			quesitos.get(categoria).setColor();
-		}
-	}
-	
-	public class Quesito extends JLabel{
-		String categoria;
-		JLabel lbl;
-		Color color;
-		private boolean coloreado = false;
-		
-		public Quesito(String ct, Color c){
-			this.categoria=ct;
-			this.color=c;
-			setColor();
-		}
-		
-		public void setColor(){
-			if(!coloreado){
-				this.setBackground(color);
-				this.setVisible(true);
-			}
-		}
-		
-		public JLabel getLabel(){
-			return lbl;
+			this.revalidate();
+			this.repaint();
 		}
 	}
 }
