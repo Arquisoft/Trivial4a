@@ -26,6 +26,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.swing.border.TitledBorder;
@@ -33,6 +34,8 @@ import javax.swing.border.TitledBorder;
 import java.awt.Font;
 
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import java.awt.Color;
 
 @SuppressWarnings("serial")
 public class VentanaJuego extends JFrame {
@@ -49,7 +52,6 @@ public class VentanaJuego extends JFrame {
 	private JPanel contentPane;
 	private JPanel panelCentro;
 	private JPanel panelJugador;
-	private JLabel lblJugadorActual;
 	private JTextField txtJugador;
 	private JPanel panelNorte;
 	private JPanel panelMovimiento;
@@ -102,20 +104,11 @@ public class VentanaJuego extends JFrame {
 	private JPanel getPanelJugador() {
 		if (panelJugador == null) {
 			panelJugador = new JPanel();
+			panelJugador.setBorder(new TitledBorder(null, "Jugador Actual:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			panelJugador.setLayout(new BoxLayout(panelJugador, BoxLayout.Y_AXIS));
-			panelJugador.add(getLblJugadorActual());
 			panelJugador.add(getTxtJugador());
 		}
 		return panelJugador;
-	}
-	private JLabel getLblJugadorActual() {
-		if (lblJugadorActual == null) {
-			lblJugadorActual = new JLabel("Jugador Actual:");
-			lblJugadorActual.setHorizontalAlignment(SwingConstants.CENTER);
-			lblJugadorActual.setHorizontalTextPosition(SwingConstants.CENTER);
-			lblJugadorActual.setFont(new Font("Impact", Font.PLAIN, 26));
-		}
-		return lblJugadorActual;
 	}
 	private JTextField getTxtJugador() {
 		if (txtJugador == null) {
@@ -145,7 +138,7 @@ public class VentanaJuego extends JFrame {
 		if(pq==null){
 			Player prueba = new Player(new User("Pepe"),0);
 			pq = new Panel_Quesitos(prueba,pruebaCategorias);
-			pq.setBorder(new TitledBorder(null, "Quesitos ganados", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			pq.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Quesitos ganados:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		}
 		return pq;
 	}
@@ -153,23 +146,9 @@ public class VentanaJuego extends JFrame {
 	private JPanel getPanelMovimiento() {
 		if (panelMovimiento == null) {
 			panelMovimiento = new JPanel();
-			GridBagLayout gbl_panelMovimiento = new GridBagLayout();
-			gbl_panelMovimiento.columnWidths = new int[]{141, 0};
-			gbl_panelMovimiento.rowHeights = new int[]{74, 45, 0};
-			gbl_panelMovimiento.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-			gbl_panelMovimiento.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-			panelMovimiento.setLayout(gbl_panelMovimiento);
-			GridBagConstraints gbc_panelDado = new GridBagConstraints();
-			gbc_panelDado.fill = GridBagConstraints.BOTH;
-			gbc_panelDado.insets = new Insets(0, 0, 5, 0);
-			gbc_panelDado.gridx = 0;
-			gbc_panelDado.gridy = 0;
-			panelMovimiento.add(getPanelDado(), gbc_panelDado);
-			GridBagConstraints gbc_panelFlechas = new GridBagConstraints();
-			gbc_panelFlechas.fill = GridBagConstraints.BOTH;
-			gbc_panelFlechas.gridx = 0;
-			gbc_panelFlechas.gridy = 1;
-			panelMovimiento.add(getPanelFlechas(), gbc_panelFlechas);
+			panelMovimiento.setLayout(new GridLayout(0, 1, 0, 0));
+			panelMovimiento.add(getPanelDado());
+			panelMovimiento.add(getPanelFlechas());
 		}
 		return panelMovimiento;
 	}
@@ -185,14 +164,17 @@ public class VentanaJuego extends JFrame {
 	private JLabel getLblDado() {
 		if (lblDado == null) {
 			lblDado = new JLabel("");
+			lblDado.setOpaque(true);
+			lblDado.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		}
 		return lblDado;
 	}
 	private JButton getBtnDado() {
 		if (btnDado == null) {
-			btnDado = new JButton("Dado");
-			/*String direccionBase = reemplazar(System.getProperty("user.dir"));
-			btnDado.setIcon(ajustarImagen(direccionBase + "img/dado.png", btnDado));*/
+			btnDado = new JButton();
+			btnDado.setIcon(ajustarImagen("img/dado.png", btnDado));
+			btnDado.setContentAreaFilled(false);
+			btnDado.setBorderPainted(false);
 			btnDado.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					int num=juego.diceGetNumer();
@@ -223,28 +205,13 @@ public class VentanaJuego extends JFrame {
 		return btnDado;
 	}
 	
-	/*
-	private String reemplazar(String dirBase){
-		String resultado = "";
-		String[] temp = dirBase.split("\\");
-		for(int i=0; i<temp.length; i++){
-			if(i<temp.length-1)
-				resultado+=temp[i] + "/";
-			else
-				resultado+=temp[i];
-		}
-		return resultado;
-	}*/
-	
-	
 	/**
 	 * Redimensiona una imagen para un componente dado
 	 * @param Direccion
 	 * @param Componente
 	 * @return Imagen redimensionada
 	 */
-	protected Icon ajustarImagen(String string, Component componente) {
-		URL direccion = VentanaJuego.class.getResource(string);
+	protected Icon ajustarImagen(String direccion, Component componente) {
 		Image imgOriginal =  new ImageIcon(direccion).getImage();
 		Image imgEscalada = imgOriginal.getScaledInstance(componente.getWidth()-34,componente.getHeight()-10, Image.SCALE_SMOOTH);
 		return new ImageIcon(imgEscalada);
@@ -261,13 +228,20 @@ public class VentanaJuego extends JFrame {
 	}
 	private JButton getBtnDerecha() {
 		if (btnDerecha == null) {
-			btnDerecha = new JButton("->");
+			btnDerecha = new JButton();
+			btnDerecha.setIcon(ajustarImagen("img/flecha_derecha.png",btnDerecha));
+			btnDerecha.setContentAreaFilled(false);
+			btnDerecha.setBorderPainted(false);
+			
 		}
 		return btnDerecha;
 	}
 	private JButton getBtnIzquierda() {
 		if (btnIzquierda == null) {
-			btnIzquierda = new JButton("<-");
+			btnIzquierda = new JButton();
+			btnIzquierda.setIcon(ajustarImagen("img/flecha_izquierda.png",btnIzquierda));
+			btnIzquierda.setContentAreaFilled(false);
+			btnIzquierda.setBorderPainted(false);
 		}
 		return btnIzquierda;
 	}
