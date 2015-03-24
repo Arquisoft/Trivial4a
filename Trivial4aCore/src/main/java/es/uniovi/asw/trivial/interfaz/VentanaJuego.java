@@ -39,6 +39,8 @@ public class VentanaJuego extends JFrame {
 			new String[]{"Categoria A",
 		"Categoria B","Categoria C","Categoria D"};
 	
+	private Panel_Quesitos pq;
+	
 	private JPanel contentPane;
 	private JPanel panelCentro;
 	private JPanel panelJugador;
@@ -122,11 +124,21 @@ public class VentanaJuego extends JFrame {
 			panelNorte = new JPanel();
 			panelNorte.setLayout(new GridLayout(0, 3, 0, 0));
 			panelNorte.add(getPanelMovimiento());
-			panelNorte.add(getPanelQuesos());
+			panelNorte.add(getQuesitos());
 			panelNorte.add(getPanelJugador());
 		}
 		return panelNorte;
 	}
+	
+	
+	private Panel_Quesitos getQuesitos(){
+		if(pq==null){
+			Player prueba = new Player(new User("Pepe"),0);
+			pq = new Panel_Quesitos(prueba,pruebaCategorias);
+		}
+		return pq;
+	}
+	
 	private JPanel getPanelMovimiento() {
 		if (panelMovimiento == null) {
 			panelMovimiento = new JPanel();
@@ -232,24 +244,6 @@ public class VentanaJuego extends JFrame {
 			btnIzquierda = new JButton("<-");
 		}
 		return btnIzquierda;
-	}
-	private JPanel getPanelQuesos() {
-		if (panelQuesos == null) {
-			panelQuesos = new JPanel();
-			panelQuesos.setLayout(new BoxLayout(panelQuesos, BoxLayout.Y_AXIS));
-			panelQuesos.add(getLblQuesitosGanados());
-			
-			Player prueba = new Player(new User("Pepe"),0);
-			
-			panelQuesos.add(new Panel_Quesitos(tam,prueba));
-		}
-		return panelQuesos;
-	}
-	private JLabel getLblQuesitosGanados() {
-		if (lblQuesitosGanados == null) {
-			lblQuesitosGanados = new JLabel("Quesitos Ganados:");
-		}
-		return lblQuesitosGanados;
 	}
 
 }

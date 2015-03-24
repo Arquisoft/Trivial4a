@@ -1,10 +1,12 @@
 package es.uniovi.asw.trivial.interfaz;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -18,34 +20,50 @@ public class Panel_Quesitos extends JPanel{
 	Map<String,Quesito> quesitos = new HashMap<String,Quesito>();
 	Player jugadorActual;
 	
-	public Panel_Quesitos(int tam, Player p){
+	public Panel_Quesitos(Player p, String[] categorias){
 		this.jugadorActual = p;
-		this.setLayout(new GridLayout());
+		setOrganizacion(categorias.length);
 		
 		//Esto son pruebas
-		agregarQuesito(true);
+		addQuesitos(categorias);
+		agregarQuesito(true,"Categoria A");
+		this.setVisible(true);
 	}
 	
-	public void agregarQuesito(boolean acierto){
-		if(acierto){
-			jugadorActual.putQuesito("Categoria A");
-			for(int i=0; i<jugadorActual.getQuesitos().size(); i++){
-				String categoria = jugadorActual.getQuesitos().get(i);
-				Quesito quesito = new Quesito( categoria,
-						VentanaJuego.colores.getColor(categoria));
-				quesitos.put(categoria, quesito);
-			}
+	private void setOrganizacion(int tam){
+		if(tam==1)
+			this.setLayout(new GridLayout(1,1));
+		else if(tam==2)
+			this.setLayout(new GridLayout(2,1));
+		else if(tam==3 || tam==4)
+			this.setLayout(new GridLayout(2,2));
+		else if(tam==5 || tam==6)
+			this.setLayout(new GridLayout(3,2));
+	}
+	
+	public void addQuesitos(String[] categorias){
+		for(int i=0; i<categorias.length; i++){
+			Quesito quesito = new Quesito(categorias[i],
+					VentanaJuego.colores.getColor(categorias[i]));
+			quesitos.put(categorias[i], quesito);
+			this.add(quesito);			
 		}
 	}
 	
-	public class Quesito{
+	public void agregarQuesito(boolean acierto, String categoria){
+		if(acierto){
+			jugadorActual.putQuesito(categoria);
+			quesitos.get(categoria).setColor();
+		}
+	}
+	
+	public class Quesito extends JLabel{
 		String categoria;
 		JLabel lbl;
 		Color color;
 		private boolean coloreado = false;
 		
 		public Quesito(String ct, Color c){
-			this.lbl=new JLabel();
 			this.categoria=ct;
 			this.color=c;
 			setColor();
@@ -53,9 +71,13 @@ public class Panel_Quesitos extends JPanel{
 		
 		public void setColor(){
 			if(!coloreado){
-				lbl.setBackground(color);
-				lbl.setVisible(true);
+				this.setBackground(color);
+				this.setVisible(true);
 			}
+		}
+		
+		public JLabel getLabel(){
+			return lbl;
 		}
 	}
 }
