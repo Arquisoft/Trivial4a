@@ -160,5 +160,9 @@ public class GameObject implements Game {
     public String[] getCategorias() {
         return this.categorias;
     }
+    
+    public int getNumCasillas(){
+    	return tam;
+    }
 
 }

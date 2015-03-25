@@ -68,8 +68,8 @@ public class VentanaJuego extends JFrame {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				try {
-					VentanaJuego frame = new VentanaJuego(50, new Colores(pruebaCategorias));
+				try {						//50, new Colores(pruebaCategorias)
+					VentanaJuego frame = new VentanaJuego(ClaseParaPruebas.juegoPrueba(20, 2, 1, 6));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -81,10 +81,10 @@ public class VentanaJuego extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaJuego(int n, Colores c) {
-		this.tam = n;
+	public VentanaJuego(Game g) {
+		this.tam = g.getNumCasillas();
 		//Esto es una prueba
-		VentanaJuego.colores = c;
+		VentanaJuego.colores = new Colores(g.getCategorias());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 614, 501);
 		contentPane = new JPanel();

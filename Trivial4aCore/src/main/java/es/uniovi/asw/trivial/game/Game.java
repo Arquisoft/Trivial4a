@@ -84,6 +84,11 @@ public interface Game {
      * @return array de categorias
      */
     public String[] getCategorias();
+    
+    /**
+     * @return numero total de casillas
+     */
+    public int getNumCasillas();
 
 
 }
