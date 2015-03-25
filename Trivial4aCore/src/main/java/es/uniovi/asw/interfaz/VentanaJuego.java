@@ -1,4 +1,4 @@
-package es.uniovi.asw.trivial.interfaz;
+package es.uniovi.asw.interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -6,28 +6,52 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import es.uniovi.asw.trivial.game.Game;
-import es.uniovi.asw.trivial.game.GameFactory;
+import es.uniovi.asw.trivial.model.Player;
+import es.uniovi.asw.trivial.model.User;
+
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import javax.swing.border.TitledBorder;
+
+import java.awt.Font;
+
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import java.awt.Color;
 
 @SuppressWarnings("serial")
 public class VentanaJuego extends JFrame {
 
 	private int tam;
-	private Game juego;
+	public static Game juego;
+	public static Colores colores;
+	public static final String[] pruebaCategorias =
+			new String[]{"Categoria A",
+		"Categoria B","Categoria C","Categoria D"};
+	
+	private Panel_Quesitos pq;
 	
 	private JPanel contentPane;
 	private JPanel panelCentro;
 	private JPanel panelJugador;
-	private JLabel lblJugadorActual;
 	private JTextField txtJugador;
 	private JPanel panelNorte;
 	private JPanel panelMovimiento;
@@ -36,9 +60,6 @@ public class VentanaJuego extends JFrame {
 	private JPanel panelFlechas;
 	private JButton btnDerecha;
 	private JButton btnIzquierda;
-	private JPanel panelQuesos;
-	private JLabel lblQuesitosGanados;
-	private JPanel panelQuesitos;
 	private JLabel lblDado;
 
 	/**
@@ -48,7 +69,7 @@ public class VentanaJuego extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaJuego frame = new VentanaJuego(20, GameFactory.getNewGame());
+					VentanaJuego frame = new VentanaJuego(38, new Colores(pruebaCategorias));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -60,9 +81,10 @@ public class VentanaJuego extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaJuego(int n, Game g) {
+	public VentanaJuego(int n, Colores c) {
 		this.tam = n;
-		this.juego = g;
+		//Esto es una prueba
+		VentanaJuego.colores = c;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 614, 501);
 		contentPane = new JPanel();
@@ -75,30 +97,28 @@ public class VentanaJuego extends JFrame {
 	
 	private JPanel getPanelCentro() {
 		if (panelCentro == null) {
-			panelCentro = new TableroCuadrado(tam, juego);
+			panelCentro = new Panel_TableroCuadrado(tam, juego);
 		}
 		return panelCentro;
 	}
 	private JPanel getPanelJugador() {
 		if (panelJugador == null) {
 			panelJugador = new JPanel();
+			panelJugador.setBorder(new TitledBorder(null, "Jugador Actual:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			panelJugador.setLayout(new BoxLayout(panelJugador, BoxLayout.Y_AXIS));
-			panelJugador.add(getLblJugadorActual());
 			panelJugador.add(getTxtJugador());
 		}
 		return panelJugador;
 	}
-	private JLabel getLblJugadorActual() {
-		if (lblJugadorActual == null) {
-			lblJugadorActual = new JLabel("Jugador Actual:");
-		}
-		return lblJugadorActual;
-	}
 	private JTextField getTxtJugador() {
 		if (txtJugador == null) {
 			txtJugador = new JTextField();
+			txtJugador.setHorizontalAlignment(SwingConstants.CENTER);
+			txtJugador.setEditable(false);
+			txtJugador.setFont(new Font("Adobe Arabic", Font.PLAIN, 34));
 			txtJugador.setText("Pepe");
 			txtJugador.setColumns(10);
+			txtJugador.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		}
 		return txtJugador;
 	}
@@ -107,31 +127,28 @@ public class VentanaJuego extends JFrame {
 			panelNorte = new JPanel();
 			panelNorte.setLayout(new GridLayout(0, 3, 0, 0));
 			panelNorte.add(getPanelMovimiento());
-			panelNorte.add(getPanelQuesos());
+			panelNorte.add(getQuesitos());
 			panelNorte.add(getPanelJugador());
 		}
 		return panelNorte;
 	}
+	
+	
+	private Panel_Quesitos getQuesitos(){
+		if(pq==null){
+			Player prueba = new Player(new User("Pepe"),0);
+			pq = new Panel_Quesitos(prueba,pruebaCategorias);
+			pq.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Quesitos ganados:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		}
+		return pq;
+	}
+	
 	private JPanel getPanelMovimiento() {
 		if (panelMovimiento == null) {
 			panelMovimiento = new JPanel();
-			GridBagLayout gbl_panelMovimiento = new GridBagLayout();
-			gbl_panelMovimiento.columnWidths = new int[]{141, 0};
-			gbl_panelMovimiento.rowHeights = new int[]{74, 45, 0};
-			gbl_panelMovimiento.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-			gbl_panelMovimiento.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-			panelMovimiento.setLayout(gbl_panelMovimiento);
-			GridBagConstraints gbc_panelDado = new GridBagConstraints();
-			gbc_panelDado.fill = GridBagConstraints.BOTH;
-			gbc_panelDado.insets = new Insets(0, 0, 5, 0);
-			gbc_panelDado.gridx = 0;
-			gbc_panelDado.gridy = 0;
-			panelMovimiento.add(getPanelDado(), gbc_panelDado);
-			GridBagConstraints gbc_panelFlechas = new GridBagConstraints();
-			gbc_panelFlechas.fill = GridBagConstraints.BOTH;
-			gbc_panelFlechas.gridx = 0;
-			gbc_panelFlechas.gridy = 1;
-			panelMovimiento.add(getPanelFlechas(), gbc_panelFlechas);
+			panelMovimiento.setLayout(new GridLayout(0, 1, 0, 0));
+			panelMovimiento.add(getPanelDado());
+			panelMovimiento.add(getPanelFlechas());
 		}
 		return panelMovimiento;
 	}
@@ -147,43 +164,57 @@ public class VentanaJuego extends JFrame {
 	private JLabel getLblDado() {
 		if (lblDado == null) {
 			lblDado = new JLabel("");
+			lblDado.setOpaque(true);
+			lblDado.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		}
 		return lblDado;
 	}
 	private JButton getBtnDado() {
 		if (btnDado == null) {
-			btnDado = new JButton("Dado");
+			btnDado = new JButton();
+			btnDado.setIcon(ajustarImagen("img/dado.png", btnDado));
+			btnDado.setContentAreaFilled(false);
+			btnDado.setBorderPainted(false);
 			btnDado.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					int num=juego.diceGetNumer();
 					System.out.println(num);
 					switch(num){
 					case 1:
-						lblDado.setIcon(ajustarImagenDado("img/dado1.png"));
+						lblDado.setIcon(ajustarImagen("img/dado1.png",lblDado));
 						break;
 					case 2:
-						lblDado.setIcon(ajustarImagenDado("img/dado2.png"));
+						lblDado.setIcon(ajustarImagen("img/dado2.png",lblDado));
 						break;
 					case 3:
-						lblDado.setIcon(ajustarImagenDado("img/dado3.png"));
+						lblDado.setIcon(ajustarImagen("img/dado3.png",lblDado));
 						break;
 					case 4:
-						lblDado.setIcon(ajustarImagenDado("img/dado4.png"));
+						lblDado.setIcon(ajustarImagen("img/dado4.png",lblDado));
 						break;
 					case 5:
-						lblDado.setIcon(ajustarImagenDado("img/dado5.png"));
+						lblDado.setIcon(ajustarImagen("img/dado5.png",lblDado));
 						break;
 					case 6:
-						lblDado.setIcon(ajustarImagenDado("img/dado6.png"));
+						lblDado.setIcon(ajustarImagen("img/dado6.png",lblDado));
 						break;
-					}
-					
-				}
-				
+					}					
+				}				
 			});
-		}
-		
+		}		
 		return btnDado;
+	}
+	
+	/**
+	 * Redimensiona una imagen para un componente dado
+	 * @param Direccion
+	 * @param Componente
+	 * @return Imagen redimensionada
+	 */
+	protected Icon ajustarImagen(String direccion, Component componente) {
+		Image imgOriginal =  new ImageIcon(direccion).getImage();
+		Image imgEscalada = imgOriginal.getScaledInstance(componente.getWidth()-34,componente.getHeight()-10, Image.SCALE_SMOOTH);
+		return new ImageIcon(imgEscalada);
 	}
 	
 	private JPanel getPanelFlechas() {
@@ -197,35 +228,22 @@ public class VentanaJuego extends JFrame {
 	}
 	private JButton getBtnDerecha() {
 		if (btnDerecha == null) {
-			btnDerecha = new JButton("->");
+			btnDerecha = new JButton();
+			btnDerecha.setIcon(ajustarImagen("img/flecha_derecha.png",btnDerecha));
+			btnDerecha.setContentAreaFilled(false);
+			btnDerecha.setBorderPainted(false);
+			
 		}
 		return btnDerecha;
 	}
 	private JButton getBtnIzquierda() {
 		if (btnIzquierda == null) {
-			btnIzquierda = new JButton("<-");
+			btnIzquierda = new JButton();
+			btnIzquierda.setIcon(ajustarImagen("img/flecha_izquierda.png",btnIzquierda));
+			btnIzquierda.setContentAreaFilled(false);
+			btnIzquierda.setBorderPainted(false);
 		}
 		return btnIzquierda;
 	}
-	private JPanel getPanelQuesos() {
-		if (panelQuesos == null) {
-			panelQuesos = new JPanel();
-			panelQuesos.setLayout(new BoxLayout(panelQuesos, BoxLayout.Y_AXIS));
-			panelQuesos.add(getLblQuesitosGanados());
-			panelQuesos.add(getPanelQuesitos());
-		}
-		return panelQuesos;
-	}
-	private JLabel getLblQuesitosGanados() {
-		if (lblQuesitosGanados == null) {
-			lblQuesitosGanados = new JLabel("Quesitos Ganados:");
-		}
-		return lblQuesitosGanados;
-	}
-	private JPanel getPanelQuesitos() {
-		if (panelQuesitos == null) {
-			panelQuesitos = new JPanel();
-		}
-		return panelQuesitos;
-	}
+
 }

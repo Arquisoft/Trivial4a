@@ -1,7 +1,9 @@
-package es.uniovi.asw.trivial.interfaz;
+package es.uniovi.asw.interfaz;
 
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -9,13 +11,15 @@ import javax.swing.JPanel;
 import es.uniovi.asw.trivial.game.Game;
 
 @SuppressWarnings("serial")
-public class TableroCuadrado extends JPanel{
-Map<Integer,JButton> casillas = new HashMap<Integer,JButton>();
-	public TableroCuadrado(int tam, Game juego){
+public class Panel_TableroCuadrado extends JPanel{
+	
+	Map<Integer,Casilla> casillas;
+	
+	public Panel_TableroCuadrado(int tam, Game juego){
+		casillas = new HashMap<Integer,Casilla>();
 		setOrganizacion(tam);
 		rellenarTablero(tam);
 	}
-
 	/**
 	 * Establece el layout para el panel tablero y el panel de los quesitos de
 	 * forma dinamica
@@ -71,7 +75,12 @@ Map<Integer,JButton> casillas = new HashMap<Integer,JButton>();
 			this.setLayout(new GridLayout(ancho, largo, 5, 0));
 		}
 	}
-
+	
+	/**
+	 * Establece el layout si el resultado de dividir
+	 * nElementos/4 es igual a X'0, X'5 o X'25
+	 * @param nElementos
+	 */
 	private void set_0_5_25(int nElementos) {
 		int mitad = nElementos / 2;
 		int ancho = (int) (mitad / 2) + 1;
@@ -79,53 +88,53 @@ Map<Integer,JButton> casillas = new HashMap<Integer,JButton>();
 		this.setLayout(new GridLayout(ancho, largo, 0, 0));
 	}
 
+	/**
+	 * Establece el layout si el resultado de dividir
+	 * nElementos/4 es igual a X'0, X'5 o X'25
+	 * @param nElementos
+	 */
 	private void set_75(int nElementos) {
 		int mitad = nElementos / 2;
 		int ancho = (int) (mitad / 2) + 1;
 		int largo = (int) (mitad / 2) + 1;
 		this.setLayout(new GridLayout(ancho, largo, 0, 0));
 	}
-
-	/*
-	 * private void rellenarTablero(){ Colores colores = new
-	 * Colores(juego.getCategorias()); for(int i=0; i<tam; i++)
-	 * panelCentro.add(new Casilla(i,juego,colores)); }
-	 */
-
+	
+	
 	/**
 	 * Rellena el tablero segun un tamaño
 	 * Ordenando las casillas al final
 	 * @param tam
 	 */
-	private void rellenarTablero(int tam) {
+	protected void rellenarTablero(int tam) {
 		GridLayout gl = (GridLayout) this.getLayout();
 		int columnas = gl.getColumns();
 		int filas = gl.getRows();
 		int contadorCasillas = 0;
 		
-		ArrayList<JButton> arriba = new ArrayList<JButton>();
-		ArrayList<JButton> abajo = new ArrayList<JButton>();
-		ArrayList<JButton> izq = new ArrayList<JButton>();
-		ArrayList<JButton> der = new ArrayList<JButton>();
+		ArrayList<Casilla> arriba = new ArrayList<Casilla>();
+		ArrayList<Casilla> abajo = new ArrayList<Casilla>();
+		ArrayList<Casilla> izq = new ArrayList<Casilla>();
+		ArrayList<Casilla> der = new ArrayList<Casilla>();
  
 		for (int i = 0; i < filas; i++) {
 			for (int j = 0; j < columnas; j++) {
 				//Si la posicion forma parte del interior
 				if (i != 0 && i != filas - 1 && j != 0 && j != columnas - 1)
-					agregarBoton(false);
+					agregarBotonVacio();
 				else {
 					if (contadorCasillas < tam){						
 						if(i==0)
-							arriba.add(agregarBoton(true));
+							arriba.add(agregarCasilla());
 						else if(i>0 && i<filas-1 && j==0)
-							izq.add(agregarBoton(true));
+							izq.add(agregarCasilla());
 						else if(i>0 && i<filas-1 && j==columnas-1)
-							der.add(agregarBoton(true));
+							der.add(agregarCasilla());
 						else if(i==filas-1)
-							abajo.add(agregarBoton(true));
+							abajo.add(agregarCasilla());
 					}
 					else  //Si no quedan mas posiciones
-						agregarBoton(false);
+						agregarBotonVacio();
 					contadorCasillas++;
 				}
 			}
@@ -133,39 +142,52 @@ Map<Integer,JButton> casillas = new HashMap<Integer,JButton>();
 		enumerarCasillas(der,arriba,izq,abajo);
 	}
 	
-	private JButton agregarBoton(boolean visible){
-		JButton btn = new JButton();
-		btn.setVisible(visible);
-		this.add(btn);
-		return btn;
+	private void agregarBotonVacio(){
+			JButton btn = new JButton();
+			btn.setVisible(false);
+			this.add(btn);
 	}
 	
-	private void enumerarCasillas(ArrayList<JButton> der, 
-			ArrayList<JButton> arriba, ArrayList<JButton> izq, 
-			ArrayList<JButton> abajo){		
+	private Casilla agregarCasilla(){
+		Casilla casilla = new Casilla(0,VentanaJuego.colores);
+		casilla.setVisible(true);
+		this.add(casilla);
+		return casilla;
+	}
+
+	/**
+	 * Enumera correctamente las casillas
+	 * @param der
+	 * @param arriba
+	 * @param izq
+	 * @param abajo
+	 */
+	protected void enumerarCasillas (ArrayList<Casilla> der, 
+			ArrayList<Casilla> arriba, ArrayList<Casilla> izq, 
+			ArrayList<Casilla> abajo){
 		
 		int enumeracion = 0;
 		for(int i=der.size()-1; i>=0; i--){
-			der.get(i).setText(String.valueOf(enumeracion));
-			casillas.put(enumeracion,der.get(i));
+			casillas.put(enumeracion, remplazar(der,i,enumeracion));
 			enumeracion++;
 		}
 		for(int i=arriba.size()-1; i>=0; i--){
-			arriba.get(i).setText(String.valueOf(enumeracion));
-			casillas.put(enumeracion,arriba.get(i));
+			casillas.put(enumeracion, remplazar(arriba,i,enumeracion));
 			enumeracion++;
 		}
 		for(int i=0; i<izq.size(); i++){
-			izq.get(i).setText(String.valueOf(enumeracion));
-			casillas.put(enumeracion,izq.get(i));
+			casillas.put(enumeracion,remplazar(izq,i,enumeracion));
 			enumeracion++;
 		}
 		for(int i=0; i<abajo.size(); i++){
-			abajo.get(i).setText(String.valueOf(enumeracion));
-			casillas.put(enumeracion,abajo.get(i));
+			casillas.put(enumeracion,remplazar(abajo,i,enumeracion));
 			enumeracion++;
 		}
 	}
-
-	// /////////////////////////
+	
+	private Casilla remplazar(ArrayList<Casilla> list, int i, int enu){
+		Casilla casilla = list.get(i);
+		casilla.setPosicion(enu);
+		return casilla;
+	}
 }

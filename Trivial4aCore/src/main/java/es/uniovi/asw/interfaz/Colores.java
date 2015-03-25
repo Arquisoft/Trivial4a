@@ -1,4 +1,4 @@
-package es.uniovi.asw.trivial.interfaz;
+package es.uniovi.asw.interfaz;
 
 import java.awt.Color;
 import java.util.Random;
@@ -26,10 +26,14 @@ public class Colores {
 	private void setColores(String[] categorias){
 		Random r = new Random();
 		for(int i=0; i<coloresElegidos.length; i++){
-			int siguiente = r.nextInt(colores.length);
-			if(!elegidos[siguiente]){
-				coloresElegidos[i] = new ColorCategoria(colores[siguiente],categorias[i]);
-				elegidos[siguiente] = true;
+			boolean asociado = false;
+			while(!asociado){
+				int siguiente = r.nextInt(colores.length);
+				if(!elegidos[siguiente]){
+					coloresElegidos[i] = new ColorCategoria(colores[siguiente],categorias[i]);
+					elegidos[siguiente] = true;
+					asociado = true;
+				}
 			}
 		}
 	}
@@ -51,12 +55,19 @@ public class Colores {
 	// Esta clase asocia un color con una categoria
 	//////////////////////////////////////
 	public class ColorCategoria{
-		public Color color;
-		public String categoria;
+		private Color color;
+		private String categoria;
 		
 		public ColorCategoria(Color color, String categoria){
 			this.color = color;
 			this.categoria = categoria;
+		}
+		
+		public Color getColor(){
+			return color;
+		}
+		public String getCategoria(){
+			return categoria;
 		}
 	}
 }
