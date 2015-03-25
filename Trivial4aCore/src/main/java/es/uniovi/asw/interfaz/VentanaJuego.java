@@ -69,7 +69,7 @@ public class VentanaJuego extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaJuego frame = new VentanaJuego(38, new Colores(pruebaCategorias));
+					VentanaJuego frame = new VentanaJuego(50, new Colores(pruebaCategorias));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -3,11 +3,13 @@ package es.uniovi.asw.trivial.persistence;
 import com.google.gson.Gson;
 import com.mongodb.*;
 import com.mongodb.util.JSON;
+
 import es.uniovi.asw.trivial.model.Contestacion;
 import es.uniovi.asw.trivial.model.Pregunta;
 import es.uniovi.asw.trivial.model.User;
 
 import java.net.UnknownHostException;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,9 +87,12 @@ public class MongoDB {
     public User getUser(String _id) throws UnknownHostException {
         ArrayList<User> usuario = new ArrayList<User>();
         DBCollection collection = getDB().getCollection(DB_COLLECTION_USUARIOS);
+        
         BasicDBObject searchQuery = new BasicDBObject();
         searchQuery.put("_id", _id);
+        
         DBCursor cursor = collection.find(searchQuery);
+        
         while (cursor.hasNext())
             usuario.add(JSonObjectBuilder.UserFromJson(cursor.next().toString()));
         return usuario.get(0);
@@ -102,7 +107,6 @@ public class MongoDB {
      * @throws UnknownHostException
      */
     public int guardarUsuario(String _id, String password) throws UnknownHostException {
-
         DBCollection dbCollection = getDB().getCollection(DB_COLLECTION_USUARIOS);
         DBObject dbObject = (DBObject) JSON.parse("{'_id':'" + _id + "', 'password':" + password + "}");
         BasicDBObject searchQuery = new BasicDBObject();
