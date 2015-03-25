@@ -8,7 +8,7 @@
     <artifactId>Trivial4a</artifactId>
     <packaging>pom</packaging>
     <version>1.0</version>
-    <name>Trivial4a</name>
+    <name>Prueba</name>
 
     <modules>
         <module>extract</module>
