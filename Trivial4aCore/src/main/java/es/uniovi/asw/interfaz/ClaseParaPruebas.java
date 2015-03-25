@@ -1,12 +1,9 @@
 package es.uniovi.asw.interfaz;
 
-import java.net.UnknownHostException;
-
 import es.uniovi.asw.trivial.game.Game;
 import es.uniovi.asw.trivial.game.GameFactory;
 import es.uniovi.asw.trivial.model.Pregunta;
 import es.uniovi.asw.trivial.model.User;
-import es.uniovi.asw.trivial.persistence.MongoDB;
 
 /**
  * Esta clase solo se usara para hacer pruebas
@@ -34,10 +31,10 @@ public class ClaseParaPruebas {
 	 */
 	private static void generarUsuarios(int n){
 		usuarios = new User[n];
-		for(int i=0; i<n; i++){
+		for(int i=80; i<(n+80); i++){
 			char[] caracter = new char[]{(char)i};
 			String letra = new String(caracter);
-			usuarios[i] = new User(letra);
+			usuarios[(i-80)] = new User(letra);
 		}
 	}
 	

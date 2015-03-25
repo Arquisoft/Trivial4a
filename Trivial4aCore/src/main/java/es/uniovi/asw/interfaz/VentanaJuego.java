@@ -15,19 +15,14 @@ import javax.swing.JTextField;
 
 import es.uniovi.asw.trivial.game.Game;
 import es.uniovi.asw.trivial.model.Player;
+import es.uniovi.asw.trivial.model.Pregunta;
 import es.uniovi.asw.trivial.model.User;
 
 import java.awt.Component;
 import java.awt.GridLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import javax.swing.border.TitledBorder;
 
@@ -35,17 +30,17 @@ import java.awt.Font;
 
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+
 import java.awt.Color;
 
 @SuppressWarnings("serial")
 public class VentanaJuego extends JFrame {
 
-	private int tam;
 	public static Game juego;
 	public static Colores colores;
-	public static final String[] pruebaCategorias =
-			new String[]{"Categoria A",
-		"Categoria B","Categoria C","Categoria D"};
+	
+	private static Player[] jugadores;
+	private static Player jugadorActual;
 	
 	private Panel_Quesitos pq;
 	
@@ -64,6 +59,7 @@ public class VentanaJuego extends JFrame {
 
 	/**
 	 * Launch the application.
+	 * 
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -82,9 +78,8 @@ public class VentanaJuego extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaJuego(Game g) {
-		this.tam = g.getNumCasillas();
-		//Esto es una prueba
-		VentanaJuego.colores = new Colores(g.getCategorias());
+		inicializarJuego(g);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 614, 501);
 		contentPane = new JPanel();
@@ -95,9 +90,20 @@ public class VentanaJuego extends JFrame {
 		contentPane.add(getPanelNorte(), BorderLayout.NORTH);
 	}
 	
+	/**
+	 * Inicializa el juego
+	 * @param Game g habiendo ejecutado el metodo start game
+	 */
+	private void inicializarJuego(Game g){
+		juego = g;
+		VentanaJuego.colores = new Colores(g.getCategorias());
+		jugadores = juego.getPlayers();
+		jugadorActual = juego.getCurrentPlayer();
+	}
+	
 	private JPanel getPanelCentro() {
 		if (panelCentro == null) {
-			panelCentro = new Panel_TableroCuadrado(tam, juego);
+			panelCentro = new Panel_TableroCuadrado();
 		}
 		return panelCentro;
 	}
@@ -116,7 +122,7 @@ public class VentanaJuego extends JFrame {
 			txtJugador.setHorizontalAlignment(SwingConstants.CENTER);
 			txtJugador.setEditable(false);
 			txtJugador.setFont(new Font("Adobe Arabic", Font.PLAIN, 34));
-			txtJugador.setText("Pepe");
+			txtJugador.setText(jugadorActual.getUser().get_id());
 			txtJugador.setColumns(10);
 			txtJugador.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		}
@@ -137,8 +143,10 @@ public class VentanaJuego extends JFrame {
 	private Panel_Quesitos getQuesitos(){
 		if(pq==null){
 			Player prueba = new Player(new User("Pepe"),0);
-			pq = new Panel_Quesitos(prueba,pruebaCategorias);
-			pq.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Quesitos ganados:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+			pq = new Panel_Quesitos(prueba,juego.getCategorias());
+			pq.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), 
+					"Quesitos ganados:", TitledBorder.LEADING, 
+					TitledBorder.TOP, null, new Color(0, 0, 0)));
 		}
 		return pq;
 	}
@@ -178,27 +186,8 @@ public class VentanaJuego extends JFrame {
 			btnDado.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					int num=juego.diceGetNumer();
-					System.out.println(num);
-					switch(num){
-					case 1:
-						lblDado.setIcon(ajustarImagen("img/dado1.png",lblDado));
-						break;
-					case 2:
-						lblDado.setIcon(ajustarImagen("img/dado2.png",lblDado));
-						break;
-					case 3:
-						lblDado.setIcon(ajustarImagen("img/dado3.png",lblDado));
-						break;
-					case 4:
-						lblDado.setIcon(ajustarImagen("img/dado4.png",lblDado));
-						break;
-					case 5:
-						lblDado.setIcon(ajustarImagen("img/dado5.png",lblDado));
-						break;
-					case 6:
-						lblDado.setIcon(ajustarImagen("img/dado6.png",lblDado));
-						break;
-					}					
+					lblDado.setText(String.valueOf(num));
+					btnDado.setEnabled(false);
 				}				
 			});
 		}		
@@ -232,6 +221,11 @@ public class VentanaJuego extends JFrame {
 			btnDerecha.setIcon(ajustarImagen("img/flecha_derecha.png",btnDerecha));
 			btnDerecha.setContentAreaFilled(false);
 			btnDerecha.setBorderPainted(false);
+			btnDerecha.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					moverse(1);
+				}
+			});
 			
 		}
 		return btnDerecha;
@@ -242,8 +236,33 @@ public class VentanaJuego extends JFrame {
 			btnIzquierda.setIcon(ajustarImagen("img/flecha_izquierda.png",btnIzquierda));
 			btnIzquierda.setContentAreaFilled(false);
 			btnIzquierda.setBorderPainted(false);
+			btnIzquierda.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					moverse(-1);
+				}
+			});
 		}
 		return btnIzquierda;
+	}
+	
+	/**
+	 * Mueve al jugador segun:
+	 * 	Orientacion (IZQ -1   DER 1)
+	 *  Valor de la tirada del dado
+	 * @param orientacion
+	 */
+	private void moverse(int orientacion){
+		if(orientacion!=-1 || orientacion!=1)
+			return;
+		try{
+			int movimientos = Integer.parseInt(getLblDado().getText());
+			juego.movePlayer(movimientos*orientacion);
+		}
+		catch(NumberFormatException e){}
+	}
+	
+	private void mostrarPregunta(){
+		Pregunta p = juego.getQuestionSet(juego.getCurrentPlayer().getPosicion());
 	}
 
 }

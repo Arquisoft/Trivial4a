@@ -164,5 +164,13 @@ public class GameObject implements Game {
     public int getNumCasillas(){
     	return tam;
     }
+    
+    public Player siguienteJugador(){
+    	if(jugadorActual<(players.length-1))
+    		jugadorActual++;
+    	else
+    		jugadorActual = 0;
+    	return players[jugadorActual];
+    }
 
 }
