@@ -13,6 +13,10 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import es.uniovi.asw.componentesDeInterfaz.ClaseParaPruebas;
+import es.uniovi.asw.componentesDeInterfaz.Colores;
+import es.uniovi.asw.componentesDeInterfaz.Panel_Quesitos;
+import es.uniovi.asw.componentesDeInterfaz.Panel_TableroCuadrado;
 import es.uniovi.asw.trivial.game.Game;
 import es.uniovi.asw.trivial.model.Player;
 import es.uniovi.asw.trivial.model.Pregunta;
@@ -252,17 +256,25 @@ public class VentanaJuego extends JFrame {
 	 * @param orientacion
 	 */
 	private void moverse(int orientacion){
-		if(orientacion!=-1 || orientacion!=1)
+		if(orientacion!=-1 && orientacion!=1)
 			return;
 		try{
 			int movimientos = Integer.parseInt(getLblDado().getText());
 			juego.movePlayer(movimientos*orientacion);
+			mostrarVentanaPregunta();
 		}
 		catch(NumberFormatException e){}
 	}
 	
-	private void mostrarPregunta(){
+	/**
+	 * Muestra una ventana con la pregunta y una serie de respuestas a elegir
+	 */
+	private void mostrarVentanaPregunta(){
 		Pregunta p = juego.getQuestionSet(juego.getCurrentPlayer().getPosicion());
+		VentanaPreguntaRespuesta vpr = new VentanaPreguntaRespuesta(p);
+		vpr.setLocationRelativeTo(this);
+		vpr.setModal(true);
+		vpr.setVisible(true);
 	}
 
 }

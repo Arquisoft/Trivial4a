@@ -148,8 +148,11 @@ public class GameObject implements Game {
 
         int posicionFinal = players[jugadorActual].getPosicion() + moves;
 
-        if (posicionFinal < tam)
+        if (posicionFinal < tam && posicionFinal>=0)
             players[jugadorActual].setPosicion(posicionFinal);
+        else if(posicionFinal<0){
+        	players[jugadorActual].setPosicion(tam-1+posicionFinal);
+        }
         else {
             posicionFinal = posicionFinal - (tam - 1);
             players[jugadorActual].setPosicion(posicionFinal);

@@ -1,9 +1,10 @@
-package es.uniovi.asw.interfaz;
+package es.uniovi.asw.componentesDeInterfaz;
 
 import java.awt.Color;
 
 import javax.swing.JButton;
 
+import es.uniovi.asw.interfaz.VentanaJuego;
 import es.uniovi.asw.trivial.model.*;
 
 @SuppressWarnings("serial")

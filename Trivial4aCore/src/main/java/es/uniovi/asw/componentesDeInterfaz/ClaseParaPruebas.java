@@ -1,4 +1,4 @@
-package es.uniovi.asw.interfaz;
+package es.uniovi.asw.componentesDeInterfaz;
 
 import es.uniovi.asw.trivial.game.Game;
 import es.uniovi.asw.trivial.game.GameFactory;

@@ -1,4 +1,4 @@
-package es.uniovi.asw.interfaz;
+package es.uniovi.asw.componentesDeInterfaz;
 
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import es.uniovi.asw.interfaz.VentanaJuego;
 import es.uniovi.asw.trivial.game.Game;
 
 /**

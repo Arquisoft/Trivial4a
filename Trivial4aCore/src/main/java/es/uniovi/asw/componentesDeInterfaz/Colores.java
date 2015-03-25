@@ -1,4 +1,4 @@
-package es.uniovi.asw.interfaz;
+package es.uniovi.asw.componentesDeInterfaz;
 
 import java.awt.Color;
 import java.util.Random;
