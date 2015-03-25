@@ -89,10 +89,5 @@ public interface Game {
      * @return numero total de casillas
      */
     public int getNumCasillas();
-    
-    /**
-     * @return el jugador que le toca en el siguiente turno
-     */
-    public Player siguienteJugador();
 
 }

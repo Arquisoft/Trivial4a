@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import es.uniovi.asw.componentesDeInterfaz.ClaseParaPruebas;
@@ -43,10 +44,10 @@ public class VentanaJuego extends JFrame {
 	public static Game juego;
 	public static Colores colores;
 	
-	private static Player[] jugadores;
 	private static Player jugadorActual;
 	
-	private Panel_Quesitos pq;
+	private Panel_Quesitos panelQuesitos;
+	private Panel_TableroCuadrado panelTablero;
 	
 	private JPanel contentPane;
 	private JPanel panelCentro;
@@ -68,7 +69,7 @@ public class VentanaJuego extends JFrame {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				try {						//50, new Colores(pruebaCategorias)
+				try {
 					VentanaJuego frame = new VentanaJuego(ClaseParaPruebas.juegoPrueba(20, 2, 1, 6));
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -83,7 +84,6 @@ public class VentanaJuego extends JFrame {
 	 */
 	public VentanaJuego(Game g) {
 		inicializarJuego(g);
-		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 614, 501);
 		contentPane = new JPanel();
@@ -101,13 +101,14 @@ public class VentanaJuego extends JFrame {
 	private void inicializarJuego(Game g){
 		juego = g;
 		VentanaJuego.colores = new Colores(g.getCategorias());
-		jugadores = juego.getPlayers();
+		juego.getPlayers();
 		jugadorActual = juego.getCurrentPlayer();
 	}
 	
 	private JPanel getPanelCentro() {
 		if (panelCentro == null) {
-			panelCentro = new Panel_TableroCuadrado();
+			this.panelTablero = new Panel_TableroCuadrado();
+			panelCentro = this.panelTablero;
 		}
 		return panelCentro;
 	}
@@ -145,14 +146,13 @@ public class VentanaJuego extends JFrame {
 	
 	
 	private Panel_Quesitos getQuesitos(){
-		if(pq==null){
-			Player prueba = new Player(new User("Pepe"),0);
-			pq = new Panel_Quesitos(prueba,juego.getCategorias());
-			pq.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), 
+		if(panelQuesitos==null){
+			panelQuesitos = new Panel_Quesitos();
+			panelQuesitos.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), 
 					"Quesitos ganados:", TitledBorder.LEADING, 
 					TitledBorder.TOP, null, new Color(0, 0, 0)));
 		}
-		return pq;
+		return panelQuesitos;
 	}
 	
 	private JPanel getPanelMovimiento() {
@@ -260,7 +260,9 @@ public class VentanaJuego extends JFrame {
 			return;
 		try{
 			int movimientos = Integer.parseInt(getLblDado().getText());
+			getLblDado().setText("");
 			juego.movePlayer(movimientos*orientacion);
+			actualizarPanelesDeJugador();
 			mostrarVentanaPregunta();
 		}
 		catch(NumberFormatException e){}
@@ -275,6 +277,49 @@ public class VentanaJuego extends JFrame {
 		vpr.setLocationRelativeTo(this);
 		vpr.setModal(true);
 		vpr.setVisible(true);
+		String veredicto = juego.answerQuestionSet(p, vpr.getRespElegida());
+		siJuegoAcabado(veredicto);
+		jugadorActual = juego.getCurrentPlayer();
+		actualizarPanelesDeJugador();
+	}
+	
+	/**
+	 * Actualiza los paneles Tablero, Quesito
+	 * y campo de texto de jugador
+	 */
+	private void actualizarPanelesDeJugador(){
+		this.panelTablero.actualizarCasillas();
+		this.panelQuesitos.actualizarQuesitos(jugadorActual);
+		getTxtJugador().setText(jugadorActual.getUser().get_id());
+		actualizarPaneles(this.panelTablero);
+		actualizarPaneles(this.panelQuesitos);
+		getBtnDado().setEnabled(true);
+	}
+	
+	/**
+	 * Actualiza cualquier panel
+	 * @param panel actualizado
+	 */
+	private void actualizarPaneles(JPanel panel){
+		panel.revalidate();
+		panel.repaint();
+	}
+	
+	/**
+	 * Al finalizar el juego:
+	 * 	devuelve un mensaje diciendo quien gano
+	 * 	llama a endGame() de juego
+	 * 	y cierra la aplicacion
+	 * @param veredicto (mensaje que decide si acaba el juego o no)
+	 */
+	private void siJuegoAcabado(String veredicto) {
+		if (veredicto.equals("End")) {
+			JOptionPane.showMessageDialog(this, "¡¡Jugador "
+					+ jugadorActual.getUser().get_id() + " ha ganado!!", "Fin",
+					JOptionPane.INFORMATION_MESSAGE);
+			juego.endGame();
+			System.exit(0);
+		}
 	}
 
 }

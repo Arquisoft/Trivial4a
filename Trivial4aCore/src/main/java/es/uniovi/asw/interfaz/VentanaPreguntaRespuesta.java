@@ -258,6 +258,11 @@ public class VentanaPreguntaRespuesta extends JDialog {
 			return chckbxMarcada;
 		}
 		
+		/**
+		 * Notifica a la clase VentanaPreguntaRespuesta para
+		 * que desmarque las otras respuestas (ya que solo
+		 * puede haber una marcada)
+		 */
 		private void notificar(){
 			vpr.actualizarCheckRespuestas(respuesta);
 		}

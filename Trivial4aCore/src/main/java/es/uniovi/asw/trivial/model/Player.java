@@ -47,6 +47,13 @@ public class Player {
 	public List<String> getQuesitos() {
 		return quesitos;
 	}
+	
+	public boolean findQuesitos(String categoria){
+		for(String cat : quesitos)
+			if(cat.equals(categoria))
+				return true;
+		return false;
+	}
 
 	@Override
 	public String toString() {

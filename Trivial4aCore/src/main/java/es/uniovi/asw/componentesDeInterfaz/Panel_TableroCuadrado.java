@@ -9,7 +9,6 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import es.uniovi.asw.interfaz.VentanaJuego;
-import es.uniovi.asw.trivial.game.Game;
 
 /**
  * Esta clase es el panel donde se moveran los jugadores
@@ -25,6 +24,15 @@ public class Panel_TableroCuadrado extends JPanel{
 		casillas = new HashMap<Integer,Casilla>();
 		setOrganizacion(VentanaJuego.juego.getNumCasillas());
 		rellenarTablero(VentanaJuego.juego.getNumCasillas());
+	}
+	
+	/**
+	 * Actualiza las casillas cuando cambian 
+	 * los jugadores o sus posiciones
+	 */
+	public void actualizarCasillas(){
+		for(Casilla casilla : casillas.values())
+			casilla.setFondo();
 	}
 	
 	/**

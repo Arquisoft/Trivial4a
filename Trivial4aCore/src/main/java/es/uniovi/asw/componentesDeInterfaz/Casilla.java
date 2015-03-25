@@ -26,11 +26,11 @@ public class Casilla extends JButton{
 		return this.posicion;
 	}
 	
-	public void setFondo(Colores colores){
+	public void setFondo(){
 		if(VentanaJuego.juego.getCurrentPlayer().getPosicion() == this.posicion)
 			this.setBackground(Color.WHITE);
 		else
-			this.setBackground(colores.getColor(categoria));
+			this.setBackground(VentanaJuego.colores.getColor(categoria));
 	}
 	
 	public boolean isOcupada(){
@@ -51,7 +51,7 @@ public class Casilla extends JButton{
 	public void setPosicion(int index){
 		this.posicion = index;
 		this.categoria = VentanaJuego.juego.getCategoryname(posicion);
-		setFondo(VentanaJuego.colores);
+		setFondo();
 	}
 }
 	

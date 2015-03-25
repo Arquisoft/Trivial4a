@@ -13,17 +13,32 @@ import es.uniovi.asw.trivial.model.Player;
 public class Panel_Quesitos extends JPanel{
 
 	Map<String,Quesito> quesitos = new HashMap<String,Quesito>();
-	Player jugadorActual;
 	
-	public Panel_Quesitos(Player p, String[] categorias){
-		this.jugadorActual = p;
-		setOrganizacion(categorias.length);
-		
-		//Esto son pruebas
-		addQuesitos(categorias);
+	public Panel_Quesitos(){
+		setOrganizacion();
+		generarQuesitos();
 	}
 	
-	private void setOrganizacion(int tam){
+	/**
+	 * Actualiza el panel de los quesitos
+	 * mostrando aquellos que el jugador
+	 * actual tenga
+	 */
+	public void actualizarQuesitos(Player jugadorActual){
+		for(Quesito quesito : quesitos.values()){
+			if(jugadorActual.findQuesitos(quesito.getCategoria()))
+					quesito.setColor(true);
+			else
+				quesito.setColor(false);
+		}
+	}
+	
+	/**
+	 * Indica que layout tendra
+	 * en funcion de su tamanyo
+	 */
+	private void setOrganizacion(){
+		int tam = VentanaJuego.juego.getCategorias().length;
 		if(tam==1)
 			this.setLayout(new GridLayout(1,1));
 		else if(tam==2)
@@ -34,21 +49,18 @@ public class Panel_Quesitos extends JPanel{
 			this.setLayout(new GridLayout(3,2));
 	}
 	
-	public void addQuesitos(String[] categorias){
+	/**
+	 * Genera botones quesito sin color
+	 * (ya que aun no estan asignados
+	 * a ningun jugador)
+	 */
+	private void generarQuesitos(){
+		String[] categorias = VentanaJuego.juego.getCategorias();
 		for(int i=0; i<categorias.length; i++){
 			Quesito quesito = new Quesito(categorias[i],
 					VentanaJuego.colores.getColor(categorias[i]));
 			quesitos.put(categorias[i], quesito);
-			this.add(quesito.get());			
-		}
-	}
-	
-	public void agregarQuesito(boolean acierto, String categoria){
-		if(acierto){
-			jugadorActual.putQuesito(categoria);
-			quesitos.get(categoria).setColor();
-			this.revalidate();
-			this.repaint();
+			this.add(quesito);			
 		}
 	}
 }
