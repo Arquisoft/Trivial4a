@@ -37,6 +37,8 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class VentanaJuego extends JFrame {
@@ -61,6 +63,8 @@ public class VentanaJuego extends JFrame {
 	private JButton btnDerecha;
 	private JButton btnIzquierda;
 	private JLabel lblDado;
+	private JPanel panelSur;
+	private JButton btnSalir;
 
 	/**
 	 * Launch the application.
@@ -70,7 +74,7 @@ public class VentanaJuego extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaJuego frame = new VentanaJuego(ClaseParaPruebas.juegoPrueba(20, 2, 1, 6));
+					VentanaJuego frame = new VentanaJuego(ClaseParaPruebas.juegoPruebaSinBBDD(20, 2, 1, 6));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -83,15 +87,18 @@ public class VentanaJuego extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaJuego(Game g) {
+		setIconImage(new ImageIcon("img/trivial_logo.png").getImage());
+		setTitle("Trivial Pursuit");
 		inicializarJuego(g);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 614, 501);
+		setBounds(100, 100, 700, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		contentPane.add(getPanelCentro(), BorderLayout.CENTER);
 		contentPane.add(getPanelNorte(), BorderLayout.NORTH);
+		contentPane.add(getPanelSur(), BorderLayout.SOUTH);
 	}
 	
 	/**
@@ -158,6 +165,7 @@ public class VentanaJuego extends JFrame {
 	private JPanel getPanelMovimiento() {
 		if (panelMovimiento == null) {
 			panelMovimiento = new JPanel();
+			panelMovimiento.setBorder(new TitledBorder(null, "Tirada", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			panelMovimiento.setLayout(new GridLayout(0, 1, 0, 0));
 			panelMovimiento.add(getPanelDado());
 			panelMovimiento.add(getPanelFlechas());
@@ -176,6 +184,9 @@ public class VentanaJuego extends JFrame {
 	private JLabel getLblDado() {
 		if (lblDado == null) {
 			lblDado = new JLabel("");
+			lblDado.setForeground(Color.ORANGE);
+			lblDado.setHorizontalAlignment(SwingConstants.CENTER);
+			lblDado.setFont(new Font("Wide Latin", Font.PLAIN, 30));
 			lblDado.setOpaque(true);
 			lblDado.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		}
@@ -322,4 +333,24 @@ public class VentanaJuego extends JFrame {
 		}
 	}
 
+	private JPanel getPanelSur() {
+		if (panelSur == null) {
+			panelSur = new JPanel();
+			FlowLayout flowLayout = (FlowLayout) panelSur.getLayout();
+			flowLayout.setAlignment(FlowLayout.RIGHT);
+			panelSur.add(getBtnSalir());
+		}
+		return panelSur;
+	}
+	private JButton getBtnSalir() {
+		if (btnSalir == null) {
+			btnSalir = new JButton("Salir");
+			btnSalir.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					System.exit(0);
+				}
+			});
+		}
+		return btnSalir;
+	}
 }

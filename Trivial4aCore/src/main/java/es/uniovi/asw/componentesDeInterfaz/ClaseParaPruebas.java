@@ -1,9 +1,12 @@
 package es.uniovi.asw.componentesDeInterfaz;
 
+import java.net.UnknownHostException;
+
 import es.uniovi.asw.trivial.game.Game;
 import es.uniovi.asw.trivial.game.GameFactory;
 import es.uniovi.asw.trivial.model.Pregunta;
 import es.uniovi.asw.trivial.model.User;
+import es.uniovi.asw.trivial.persistence.MongoDB;
 
 /**
  * Esta clase solo se usara para hacer pruebas
@@ -14,15 +17,31 @@ public class ClaseParaPruebas {
 	
 	private static User[] usuarios;
 	private static Pregunta[] preguntas;
+	private static MongoDB bd;
 	
 	
-	public static Game juegoPrueba(int nCasillas, int nUsuarios, int min, int max){
+	public static Game juegoPruebaSinBBDD(int nCasillas, int nUsuarios, int min, int max){
 		generarUsuarios(nUsuarios);
 		crearPreguntas(40,2);
 		g.startGame(usuarios, preguntas, nCasillas, min, max);
 		return g;
 	}
 	
+	
+	public static Game juegoPruebaConBBDD(int nCasillas, int nUsuarios, int min, int max){
+		generarUsuarios(nUsuarios);
+		g.startGame(usuarios, cargarPreguntas(), nCasillas, min, max);
+		return g;
+	}
+	
+	private static Pregunta[] cargarPreguntas(){
+		try {
+			return bd.getPreguntas();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	/**
 	 * Genera usuarios que tienen como nombre
@@ -47,14 +66,16 @@ public class ClaseParaPruebas {
 			String[] respIncorrectas = new String[resp];
 			String categoria = "Categoria ";
 			
-			if(i<n/4)
+			if(i<n/5)
 				categoria += "A";
-			else if(i<(n/4*2))
+			else if(i<(n/5*2))
 				categoria += "B";
-			else if(i<(n/4*3))
+			else if(i<(n/5*3))
 				categoria += "C";
-			else
+			else if(i<(n/5*4))
 				categoria += "D";
+			else
+				categoria += "E";
 			
 			for(int k=0; k<resp; k++){
 				respCorrectas[k] = "Respuesta Correcta " + k;
