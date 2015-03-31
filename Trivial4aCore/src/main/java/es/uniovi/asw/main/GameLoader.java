@@ -15,7 +15,8 @@ import java.util.List;
 
 public class GameLoader {
 
-	
+		private static final String ADMINISTRADOR = "admin";
+		private User admin;
 		private MongoDB bd;
 		private Pregunta[] preguntas;
 		private List<User> users; 
@@ -23,10 +24,11 @@ public class GameLoader {
 		private Dado dado;
 		
     
-    public GameLoader() {
+    public GameLoader() throws UnknownHostException {
     	 bd = new MongoDB();
     	 nCategorias=0;
     	 users = new ArrayList<User>();
+    	 admin = bd.getUser(ADMINISTRADOR);
 		}
 
 	public static void main(String[] args) throws UnknownHostException {
@@ -94,6 +96,23 @@ public class GameLoader {
     	}
 
         return false;
+    }
+    
+    
+    /**
+     * Comprueba si el usuario administrador ha sido logueado correctamente
+     * 
+     * @param user
+     * @param pass
+     * @return
+     */
+    private boolean loginAdmin(String user, String pass)
+    {
+    	if(admin.get_id().equals(user) && admin.getContrasena().equals(pass))
+    	return true;
+    	
+    	System.err.println("Usuario o pass incorrectas");
+    	return false;
     }
 
     /**

@@ -135,4 +135,14 @@ public class MongoDB {
         dbCollection.insert(doc);
     }
 
+	public User[] getUsers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Contestacion[] getRespuestas() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
