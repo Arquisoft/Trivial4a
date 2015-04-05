@@ -30,15 +30,16 @@ import es.uniovi.asw.componentesDeInterfaz.ClaseParaPruebas;
 import es.uniovi.asw.trivial.game.Game;
 import es.uniovi.asw.trivial.game.GameFactory;
 import es.uniovi.asw.trivial.model.Player;
+import es.uniovi.asw.trivial.model.User;
 
 public class VentanaConfig extends JFrame {
 
 	private JPanel contentPane;
 	private Game game;
 	private JList lsJugadores;
-	private JPanel pnBotones;
 	private VentanaConfig ventana;
 	private DefaultListModel model;
+	private ArrayList<User> jugadores;
 	/**
 	 * Launch the application.
 	 */
@@ -82,12 +83,19 @@ public class VentanaConfig extends JFrame {
 	    lsJugadores = new JList();
 		scJugadores.setViewportView(lsJugadores);
 		
-		JScrollPane scBotonesJugadores = new JScrollPane();
-		scBotonesJugadores.setBounds(198, 31, 162, 249);
-		pnJugadores.add(scBotonesJugadores);
-		
-		 pnBotones = new JPanel();
-		scBotonesJugadores.setViewportView(pnBotones);
+		JButton btBorrarJugador = new JButton("Borrar");
+		btBorrarJugador.setBounds(229, 143, 89, 23);
+		btBorrarJugador.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if(lsJugadores.getSelectedIndex()!=-1){
+				model.remove(lsJugadores.getSelectedIndex());
+				lsJugadores.setModel(model);
+				}
+			}
+		});
+		pnJugadores.add(btBorrarJugador);
 		
 		JLabel lblJugadores = new JLabel("Jugadores");
 		lblJugadores.setBounds(68, 21, 68, 14);
@@ -146,6 +154,13 @@ public class VentanaConfig extends JFrame {
 		
 		JButton btJugar = new JButton("Jugar");
 		btJugar.setBounds(476, 435, 89, 23);
+		btJugar.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				VentanaJuego j= new VentanaJuego(GameFactory.getNewGame().startGame((User[])jugadores.toArray(), preguntas, , spnMin.getValue(), spnMax.getValue().);)
+			}
+		});
 		contentPane.add(btJugar);
 		
 		JButton btAdmin = new JButton("Admin");
@@ -159,14 +174,12 @@ public class VentanaConfig extends JFrame {
 		JSpinner spnTablero = new JSpinner();
 		spnTablero.setBounds(680, 322, 52, 20);
 		contentPane.add(spnTablero);
-		//setPlayers();
+		
 	}
 	
 	protected void setPlayers(String id){
 		
 			model.addElement(id);
-			pnBotones.add(new JButton());
-		
 		lsJugadores.setModel(model);
 		
 	

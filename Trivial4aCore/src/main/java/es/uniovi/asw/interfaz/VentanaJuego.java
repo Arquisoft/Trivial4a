@@ -65,6 +65,7 @@ public class VentanaJuego extends JFrame {
 	private JLabel lblDado;
 	private JPanel panelSur;
 	private JButton btnSalir;
+	
 
 	/**
 	 * Launch the application.
@@ -74,7 +75,7 @@ public class VentanaJuego extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaJuego frame = new VentanaJuego(ClaseParaPruebas.juegoPruebaSinBBDD(20, 2, 1, 6));
+					VentanaJuego frame = new VentanaJuego(juego);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

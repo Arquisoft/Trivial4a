@@ -26,7 +26,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [_id=" + _id + "]";
+        return "User [_id=" + _id + "\n contrasena="+contrasena+"]";
     }
 
     public String getContrasena() {

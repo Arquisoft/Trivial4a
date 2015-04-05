@@ -94,7 +94,6 @@ public class VentanaLogin extends JFrame {
 	public boolean isLogued(String user){
 		try {
 			User usuario=mdb.getUser(user);
-			System.out.println(usuario.toString());
 			if(usuario!=null&&usuario.getContrasena().compareTo(txtPass.getText())==0)
 				return true;
 				return false;
