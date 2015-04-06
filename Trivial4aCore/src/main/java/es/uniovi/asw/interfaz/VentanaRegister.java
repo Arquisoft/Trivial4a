@@ -91,6 +91,7 @@ public class VentanaRegister extends JFrame {
 				if(!isRegistered(txtUser.getText())){
 					try {
 						mdb.guardarUsuario(txtUser.getText(), txtPass.getText());
+						dispose();
 					} catch (UnknownHostException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
