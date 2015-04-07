@@ -28,8 +28,9 @@ public interface Game {
     /**
      * Finalizar partida.
      * Debe ejecutarse esta funcion para guardar los resutados en la base de datos.
+     * Si se produce algún error devuelve false
      */
-    public int endGame();
+    public boolean endGame();
 
     /**
      * @return La lista de los jugadores.

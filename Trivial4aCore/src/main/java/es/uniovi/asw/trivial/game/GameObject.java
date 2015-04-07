@@ -69,7 +69,8 @@ public class GameObject extends GameLoader implements Game {
         return players;
     }
 
-    public int endGame() {
+    
+    public boolean endGame() {
     	
     	
 			try {
@@ -78,9 +79,10 @@ public class GameObject extends GameLoader implements Game {
 			} catch (UnknownHostException e) {
 				
 				System.err.println(e.getMessage());
+				return false;
 			}
         
-        return 0;
+        return true;
     }
 
     public Player[] getPlayers() {
