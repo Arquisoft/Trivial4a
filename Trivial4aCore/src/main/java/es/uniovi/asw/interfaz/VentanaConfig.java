@@ -225,6 +225,7 @@ public class VentanaConfig extends JFrame {
 	private JButton getBtnAdmin() {
 		if (btnAdmin == null) {
 			btnAdmin = new JButton("Admin");
+			btnAdmin.setEnabled(false);
 		}
 		return btnAdmin;
 	}
