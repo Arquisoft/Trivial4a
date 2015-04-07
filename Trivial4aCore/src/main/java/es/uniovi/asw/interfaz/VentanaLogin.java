@@ -183,6 +183,7 @@ public class VentanaLogin extends JDialog {
 	private JTextField getTextUsuario() {
 		if (textUsuario == null) {
 			textUsuario = new JTextField();
+			textUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 			textUsuario.setColumns(10);
 		}
 		return textUsuario;
@@ -190,6 +191,7 @@ public class VentanaLogin extends JDialog {
 	private JPasswordField getPwdContrasenya() {
 		if (pwdContrasenya == null) {
 			pwdContrasenya = new JPasswordField();
+			pwdContrasenya.setHorizontalAlignment(SwingConstants.CENTER);
 		}
 		return pwdContrasenya;
 	}
