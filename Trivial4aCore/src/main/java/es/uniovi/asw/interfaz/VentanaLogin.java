@@ -2,6 +2,7 @@ package es.uniovi.asw.interfaz;
 
 import java.awt.BorderLayout;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -51,6 +52,7 @@ public class VentanaLogin extends JDialog {
 	 * Create the dialog.
 	 */
 	public VentanaLogin(VentanaConfig vc) {
+		setIconImage(new ImageIcon("img/trivial_logo.png").getImage());
 		this.vConfiguracion = vc;
 		setBounds(100, 100, 313, 300);
 		getContentPane().setLayout(new BorderLayout(0, 10));

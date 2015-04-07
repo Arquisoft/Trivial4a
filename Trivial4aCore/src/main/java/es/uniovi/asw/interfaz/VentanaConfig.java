@@ -2,6 +2,7 @@ package es.uniovi.asw.interfaz;
 
 import java.awt.EventQueue;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -76,8 +77,9 @@ public class VentanaConfig extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaConfig() {
+		setIconImage(new ImageIcon("img/trivial_logo.png").getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 527, 311);
+		setBounds(100, 100, 527, 272);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
