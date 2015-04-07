@@ -1,10 +1,13 @@
 package es.uniovi.asw.trivial.game;
 
 import es.uniovi.asw.trivial.model.Contestacion;
+import es.uniovi.asw.trivial.model.Dado;
 import es.uniovi.asw.trivial.model.Player;
 import es.uniovi.asw.trivial.model.Pregunta;
 import es.uniovi.asw.trivial.model.User;
+import es.uniovi.asw.trivial.persistence.MongoDB;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -18,24 +21,24 @@ public class GameObject implements Game {
     private List<Contestacion> respuestas;
     //Informacion de control
     private int tam;
-    private int min;
-    private int max;
+    private Dado dado;
     private String[] categorias;
     private int nCategorias;
+    private MongoDB bd;
     GameObject() {
     }
 
     public void startGame(User[] usuarios, Pregunta[] preguntas, int tam,
-                          int min, int max) {
+                          Dado dado,MongoDB conexion) {
 
         this.players = createPlayers(usuarios);
         this.preguntas = preguntas;
         this.tam = tam;
-        this.min = min;
-        this.max = max;
+        this.dado=dado;
         this.categorias = categoryCount(preguntas);
         this.jugadorActual = 0;
         respuestas = new ArrayList<Contestacion>();
+        this.bd = conexion;
     }
 
 
@@ -64,9 +67,16 @@ public class GameObject implements Game {
     }
 
     public int endGame() {
-        String[] auxRespuestas = {};
-        auxRespuestas = respuestas.toArray(auxRespuestas);
-        //TODO pasarlo al mongo
+    	
+    	
+			try {
+				for(Contestacion respuesta : respuestas)
+				bd.guardarRespuesta(respuesta);
+			} catch (UnknownHostException e) {
+				
+				System.err.println(e.getMessage());
+			}
+        
         return 0;
     }
 
@@ -118,7 +128,7 @@ public class GameObject implements Game {
     }
 
     private boolean isCorrecta(Pregunta pregunta, String respuesta) {
-        // TODO Auto-generated method stub
+        
         String[] auxRespuestas = pregunta.getRespuestasCorrectas();
         for (int i = 0; i < auxRespuestas.length; i++)
             if (auxRespuestas[i].equals(respuesta))
@@ -140,7 +150,7 @@ public class GameObject implements Game {
 
     public int diceGetNumer() {
         Random r = new Random();
-        int valorDado = r.nextInt(max) + min;
+        int valorDado = r.nextInt(dado.getMax()) + dado.getMin();
         return valorDado;
     }
 

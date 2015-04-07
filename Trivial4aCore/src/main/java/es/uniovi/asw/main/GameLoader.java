@@ -180,7 +180,7 @@ public class GameLoader {
      * @param min       numero maximo del dado
      * @param max       numero minimo del dado
      */
-    public void startGame(User[] usuarios, Pregunta[] preguntas, int tam, Dado dado) {
+    public void startGame(User[] usuarios, Pregunta[] preguntas, int tam, Dado dado,MongoDB conexion) {
 
     }
 

@@ -1,8 +1,10 @@
 package es.uniovi.asw.trivial.game;
 
+import es.uniovi.asw.trivial.model.Dado;
 import es.uniovi.asw.trivial.model.Player;
 import es.uniovi.asw.trivial.model.Pregunta;
 import es.uniovi.asw.trivial.model.User;
+import es.uniovi.asw.trivial.persistence.MongoDB;
 
 /**
  * Para usar una clase Game debe usarse GameFactory para obtener una referencia.
@@ -21,7 +23,7 @@ public interface Game {
      * @param min       numero maximo del dado
      * @param max       numero minimo del dado
      */
-    public void startGame(User[] usuarios, Pregunta[] preguntas, int tam, int min, int max);
+    public void startGame(User[] usuarios, Pregunta[] preguntas, int tam, Dado dado,MongoDB conexion);
 
     /**
      * Finalizar partida.
