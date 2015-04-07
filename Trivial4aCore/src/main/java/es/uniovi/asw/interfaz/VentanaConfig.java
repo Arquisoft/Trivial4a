@@ -1,56 +1,56 @@
 package es.uniovi.asw.interfaz;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import java.awt.FlowLayout;
-import java.awt.Color;
-
-import javax.swing.border.CompoundBorder;
-
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-
 import javax.swing.DefaultListModel;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JSpinner;
-import javax.swing.JButton;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
-import javax.swing.JScrollPane;
-import javax.swing.JList;
 
-import es.uniovi.asw.componentesDeInterfaz.ClaseParaPruebas;
+import es.uniovi.asw.componentesDeInterfaz.Panel_Jugador;
+import es.uniovi.asw.main.ConfiguracionPartida;
 import es.uniovi.asw.trivial.game.Game;
-import es.uniovi.asw.trivial.game.GameFactory;
-import es.uniovi.asw.trivial.model.Player;
-import es.uniovi.asw.trivial.model.Pregunta;
 import es.uniovi.asw.trivial.model.User;
 import es.uniovi.asw.trivial.persistence.MongoDB;
 
+import javax.swing.JScrollPane;
+import javax.swing.JButton;
+import javax.swing.BoxLayout;
+
+import java.awt.GridLayout;
+
+import javax.swing.JLabel;
+import javax.swing.JSpinner;
+import javax.swing.border.TitledBorder;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.SpinnerNumberModel;
+
+@SuppressWarnings("serial")
 public class VentanaConfig extends JFrame {
 
 	private JPanel contentPane;
-	private Game game;
-	private JList lsJugadores;
-	private VentanaConfig ventana;
-	private DefaultListModel model;
-	private User[] jugadores = new User[4];
-	private int counter = 0;
-	private MongoDB mdb = new MongoDB();
-	private JSpinner spntablero;
-	private JSpinner spnMin;
-	private JSpinner spnMax;
-	private JButton btJugar;
-	private JOptionPane option;
+	public static ConfiguracionPartida configuracion;
+	private JPanel panelCentro;
+	private JPanel panelTamanyos;
+	private JPanel panelSur;
+	private JScrollPane scrJugadores;
+	private JPanel panelJugadores;
+	private JButton btnJugar;
+	private JButton btnLogin;
+	private JButton btnAdmin;
+	private JButton btnSalir;
+	private JPanel panelDado;
+	private JPanel panelTamanyo;
+	private JPanel panelMax;
+	private JPanel panelMin;
+	private JLabel lblMaximo;
+	private JLabel lblMinimo;
+	private JSpinner spMax;
+	private JSpinner spMin;
+	private JSpinner spCasillas;
 
 	/**
 	 * Launch the application.
@@ -73,168 +73,206 @@ public class VentanaConfig extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaConfig() {
-		ventana = this;
-		option = new JOptionPane();
-		model = new DefaultListModel();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 801, 564);
+		setBounds(100, 100, 684, 425);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-
-		JPanel pnJugadores = new JPanel();
-		pnJugadores.setBounds(43, 49, 385, 305);
-		contentPane.add(pnJugadores);
-		pnJugadores.setLayout(null);
-
-		JScrollPane scJugadores = new JScrollPane();
-		scJugadores.setBounds(21, 31, 167, 249);
-		pnJugadores.add(scJugadores);
-
-		lsJugadores = new JList();
-		scJugadores.setViewportView(lsJugadores);
-
-		JButton btBorrarJugador = new JButton("Borrar");
-		btBorrarJugador.setBounds(229, 143, 89, 23);
-		btBorrarJugador.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				if (lsJugadores.getSelectedIndex() != -1) {
-					model.remove(lsJugadores.getSelectedIndex());
-					for (int i = lsJugadores.getSelectedIndex(); i < jugadores.length - 1; i++) {
-						jugadores[i] = jugadores[i + 1];
-					}
-					jugadores[jugadores.length] = null;
-					lsJugadores.setModel(model);
-					if (lsJugadores.getModel().getSize() < 2)
-						btJugar.setEnabled(false);
-				}
-			}
-		});
-		pnJugadores.add(btBorrarJugador);
-
-		JLabel lblJugadores = new JLabel("Jugadores");
-		lblJugadores.setBounds(68, 21, 68, 14);
-		contentPane.add(lblJugadores);
-
-		JPanel panel = new JPanel();
-		panel.setBounds(617, 69, 115, 182);
-		contentPane.add(panel);
-		panel.setLayout(null);
-
-		JLabel lblMin = new JLabel("Min");
-		lblMin.setBounds(10, 63, 25, 14);
-		panel.add(lblMin);
-
-		spnMin = new JSpinner();
-		spnMin.setBounds(42, 60, 50, 20);
-		panel.add(spnMin);
-
-		JLabel lblMax = new JLabel("Max");
-		lblMax.setBounds(10, 120, 25, 14);
-		panel.add(lblMax);
-
-		spnMax = new JSpinner();
-		spnMax.setBounds(46, 117, 46, 20);
-		panel.add(spnMax);
-
-		JLabel lblTamDado = new JLabel("Tamaño del dado");
-		lblTamDado.setBounds(10, 11, 95, 14);
-		panel.add(lblTamDado);
-
-		JButton btLogin = new JButton("Login");
-		btLogin.setBounds(81, 435, 89, 23);
-		btLogin.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				VentanaLogin l = new VentanaLogin(ventana);
-				l.setVisible(true);
-			}
-		});
-		contentPane.add(btLogin);
-
-		JButton btRegister = new JButton("Register");
-		btRegister.setBounds(284, 435, 89, 23);
-
-		btRegister.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				VentanaRegister r = new VentanaRegister();
-				r.setVisible(true);
-
-			}
-		});
-		contentPane.add(btRegister);
-
-		btJugar = new JButton("Jugar");
-		btJugar.setBounds(476, 435, 89, 23);
-		btJugar.setEnabled(false);
-
-		btJugar.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				Game juego = GameFactory.getNewGame();
-
-				try {
-					Pregunta[] preguntas = mdb.getPreguntas();
-					int tam = (Integer) spntablero.getValue();
-					int min = (Integer) spnMin.getValue();
-					int max = (Integer) spnMax.getValue();
-					if (tam < 20) {
-						option.showMessageDialog(ventana,
-								"El tamaño del tablero debe ser mayor que 20");
-					} else if (min < 1) {
-						option.showMessageDialog(ventana,
-								"El numero minimo del dado debe ser 1");
-					} else if (max <= min) {
-						option.showMessageDialog(ventana,
-								"el maximo del dado no puede ser igual que el minimo");
-					} else {
-						juego.startGame(jugadores, preguntas, tam, min, max);
-						VentanaJuego j = new VentanaJuego(juego);
-						j.setVisible(true);
-					}
-				} catch (UnknownHostException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-
-			}
-		});
-		contentPane.add(btJugar);
-
-		JButton btAdmin = new JButton("Admin");
-		btAdmin.setBounds(643, 435, 89, 23);
-		contentPane.add(btAdmin);
-
-		JLabel lblTamTablero = new JLabel("Tamaño del tablero");
-		lblTamTablero.setBounds(566, 325, 104, 14);
-		contentPane.add(lblTamTablero);
-
-		spntablero = new JSpinner();
-		spntablero.setBounds(680, 322, 52, 20);
-		contentPane.add(spntablero);
+		contentPane.add(getPanelCentro());
+		contentPane.add(getPanelSur());
 
 	}
-
-	protected void setPlayers(String id) {
-		try {
-			model.addElement(id);
-			lsJugadores.setModel(model);
-			if (lsJugadores.getModel().getSize() >= 2)
-				btJugar.setEnabled(true);
-			if (counter < jugadores.length)
-				jugadores[counter] = mdb.getUser(id);
-			counter++;
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	private JPanel getPanelCentro() {
+		if (panelCentro == null) {
+			panelCentro = new JPanel();
+			panelCentro.setBounds(10, 11, 629, 272);
+			panelCentro.setLayout(null);
+			panelCentro.add(getPanelTamanyos());
+			panelCentro.add(getScrJugadores());
 		}
-
+		return panelCentro;
+	}
+	private JPanel getPanelTamanyos() {
+		if (panelTamanyos == null) {
+			panelTamanyos = new JPanel();
+			panelTamanyos.setBounds(508, 11, 111, 250);
+			panelTamanyos.setLayout(null);
+			panelTamanyos.add(getPanelDado());
+			panelTamanyos.add(getPanelTamanyo());
+		}
+		return panelTamanyos;
+	}
+	private JPanel getPanelSur() {
+		if (panelSur == null) {
+			panelSur = new JPanel();
+			panelSur.setBounds(10, 352, 629, 23);
+			panelSur.setLayout(new GridLayout(0, 4, 50, 0));
+			panelSur.add(getBtnJugar());
+			panelSur.add(getBtnLogin());
+			panelSur.add(getBtnAdmin());
+			panelSur.add(getBtnSalir());
+		}
+		return panelSur;
+	}
+	private JScrollPane getScrJugadores() {
+		if (scrJugadores == null) {
+			scrJugadores = new JScrollPane();
+			scrJugadores.setBounds(10, 11, 488, 250);
+			scrJugadores.setViewportView(getPanelJugadores());
+		}
+		return scrJugadores;
+	}
+	private JPanel getPanelJugadores() {
+		if (panelJugadores == null) {
+			panelJugadores = new JPanel();
+		}
+		return panelJugadores;
+	}
+	
+	/**
+	 * Anyade jugadores a la interfaz
+	 */
+	public void anyadirJugadores(){
+		panelJugadores.removeAll();
+		for(int i=0; i<configuracion.getUsuarios().size(); i++)
+			panelJugadores.add(new Panel_Jugador(configuracion.getUsuarios().get(i).get_id()));
+		panelJugadores.revalidate();
+		panelJugadores.repaint();
+	}
+	
+	private JButton getBtnJugar() {
+		if (btnJugar == null) {
+			btnJugar = new JButton("Jugar");
+			btnJugar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					if(configuracionValida()){
+						
+					}
+				}
+			});
+		}
+		return btnJugar;
+	}
+	
+	private boolean configuracionValida(){
+		int max = (Integer) getSpMax().getValue();
+		int min = (Integer) getSpMin().getValue();
+		int tam = (Integer) getSpCasillas().getValue();
+		
+		if(max<min){
+			JOptionPane.showMessageDialog(this, "Numero maximo del dado tiene que ser"
+					+ "\nigual o mayor que el minimo", "Atencion", JOptionPane.WARNING_MESSAGE);
+			return false;
+		}
+		
+		configuracion.setMax(max);
+		configuracion.setMin(min);
+		configuracion.setTam(tam);
+		return configuracion.isCorrecto();
+	}
+	
+	
+	private JButton getBtnLogin() {
+		if (btnLogin == null) {
+			btnLogin = new JButton("Login");
+			btnLogin.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					mostrarVentanaLogin();
+				}
+			});
+		}
+		return btnLogin;
+	}
+	
+	private void mostrarVentanaLogin(){*
+		
+	}
+	
+	private JButton getBtnAdmin() {
+		if (btnAdmin == null) {
+			btnAdmin = new JButton("Admin");
+		}
+		return btnAdmin;
+	}
+	private JButton getBtnSalir() {
+		if (btnSalir == null) {
+			btnSalir = new JButton("Salir");
+		}
+		return btnSalir;
+	}
+	private JPanel getPanelDado() {
+		if (panelDado == null) {
+			panelDado = new JPanel();
+			panelDado.setBorder(new TitledBorder(null, "Dado", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			panelDado.setBounds(10, 11, 82, 158);
+			panelDado.setLayout(null);
+			panelDado.add(getPanelMax());
+			panelDado.add(getPanelMin());
+		}
+		return panelDado;
+	}
+	private JPanel getPanelTamanyo() {
+		if (panelTamanyo == null) {
+			panelTamanyo = new JPanel();
+			panelTamanyo.setBorder(new TitledBorder(null, "Casillas", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			panelTamanyo.setBounds(10, 196, 82, 43);
+			panelTamanyo.setLayout(new GridLayout(0, 1, 0, 0));
+			panelTamanyo.add(getSpCasillas());
+		}
+		return panelTamanyo;
+	}
+	private JPanel getPanelMax() {
+		if (panelMax == null) {
+			panelMax = new JPanel();
+			panelMax.setBounds(10, 11, 61, 60);
+			panelMax.setLayout(new GridLayout(0, 1, 0, 0));
+			panelMax.add(getLblMaximo());
+			panelMax.add(getSpMax());
+		}
+		return panelMax;
+	}
+	private JPanel getPanelMin() {
+		if (panelMin == null) {
+			panelMin = new JPanel();
+			panelMin.setBounds(10, 82, 61, 65);
+			panelMin.setLayout(new GridLayout(0, 1, 0, 0));
+			panelMin.add(getLblMinimo());
+			panelMin.add(getSpMin());
+		}
+		return panelMin;
+	}
+	private JLabel getLblMaximo() {
+		if (lblMaximo == null) {
+			lblMaximo = new JLabel("Maximo");
+		}
+		return lblMaximo;
+	}
+	private JLabel getLblMinimo() {
+		if (lblMinimo == null) {
+			lblMinimo = new JLabel("Minimo");
+		}
+		return lblMinimo;
+	}
+	private JSpinner getSpMax() {
+		if (spMax == null) {
+			spMax = new JSpinner();
+			spMax.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+		}
+		return spMax;
+	}
+	private JSpinner getSpMin() {
+		if (spMin == null) {
+			spMin = new JSpinner();
+			spMin.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+		}
+		return spMin;
+	}
+	private JSpinner getSpCasillas() {
+		if (spCasillas == null) {
+			spCasillas = new JSpinner();
+			spCasillas.setModel(new SpinnerNumberModel(new Integer(10), new Integer(10), null, new Integer(1)));
+		}
+		return spCasillas;
 	}
 }
