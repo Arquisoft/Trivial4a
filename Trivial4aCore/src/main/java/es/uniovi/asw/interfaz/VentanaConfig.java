@@ -103,12 +103,12 @@ public class VentanaConfig extends JFrame {
 				// TODO Auto-generated method stub
 				if (lsJugadores.getSelectedIndex() != -1) {
 					model.remove(lsJugadores.getSelectedIndex());
-					for(int i= lsJugadores.getSelectedIndex();i<jugadores.length-1;i++){
-					jugadores[i]=jugadores[i+1];
+					for (int i = lsJugadores.getSelectedIndex(); i < jugadores.length - 1; i++) {
+						jugadores[i] = jugadores[i + 1];
 					}
-					jugadores[jugadores.length]=null;
+					jugadores[jugadores.length] = null;
 					lsJugadores.setModel(model);
-					if(lsJugadores.getModel().getSize()<2)
+					if (lsJugadores.getModel().getSize() < 2)
 						btJugar.setEnabled(false);
 				}
 			}
