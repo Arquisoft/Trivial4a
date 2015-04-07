@@ -13,16 +13,16 @@ public class Dado {
 		
 	}
 
-	public Dado getInstance(int min,int max)
+	public static Dado getInstance(int min,int max)
 	{
 		if(instance==null)
-			new Dado(min,max);
+			instance = new Dado(min,max);
 		return instance;
 	}
-	public Dado getInstance()
+	public static Dado getInstance()
 	{
 		if(instance==null)
-			new Dado(1,6);
+			instance = new Dado(1,6);
 		return instance;
 	}
 	

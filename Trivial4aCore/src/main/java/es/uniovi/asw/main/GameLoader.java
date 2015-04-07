@@ -3,6 +3,8 @@ package es.uniovi.asw.main;
 import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
 
+import es.uniovi.asw.trivial.game.Game;
+import es.uniovi.asw.trivial.game.GameFactory;
 import es.uniovi.asw.trivial.model.Dado;
 import es.uniovi.asw.trivial.model.Pregunta;
 import es.uniovi.asw.trivial.model.User;
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public abstract class GameLoader {
+public class GameLoader {
 
 		private static final String ADMINISTRADOR = "admin";
 		private User admin;
@@ -32,15 +34,15 @@ public abstract class GameLoader {
     	 cargarDatos();
 		}
 
-	public static void main(String[] args) throws UnknownHostException {
+//	public static void main(String[] args) throws UnknownHostException {
 //		new Loader().run(args[0]);
-        MongoClient m = new MongoClient("localhost");
-        DBCursor cursor = m.getDB("mydb").getCollection("preguntas").find();
-
-        while (cursor.hasNext()) {
-            System.out.println(cursor.next().get("respuestas"));
-        }
-    }
+//        MongoClient m = new MongoClient("localhost");
+//        DBCursor cursor = m.getDB("mydb").getCollection("preguntas").find();
+//
+//        while (cursor.hasNext()) {
+//            System.out.println(cursor.next().get("respuestas"));
+//        }
+//    }
 
 	public Dado getDado(){
 		return dado;
@@ -48,9 +50,8 @@ public abstract class GameLoader {
 	public MongoDB getConexion(){
 		return bd;
 	}
-	public User[] getUsuarios(){
-		User[] usuarios = new User[users.size()];
-		return users.toArray(usuarios);
+	public List<User> getUsuarios(){
+		return users;
 	}	
 	public Pregunta[] getPreguntas(){
 		return preguntas;
@@ -152,7 +153,7 @@ public abstract class GameLoader {
         	
         	if(users.size()<nCategorias)
         	{
-        		users.add(user);
+        		users.add(new User(usuario,pass));
         		return true;
         	}
         	else
@@ -170,16 +171,21 @@ public abstract class GameLoader {
      *
      * @param p
      */
-    public void deletePlayer(User p) {
+    public boolean deletePlayer(String nombre) {
 
-       if(!users.remove(p))
-    	   System.err.println("El usuario no esta jugando");
-
+       for(User usuario : users){
+    	   if(usuario.get_id().equals(nombre)){
+    		   users.remove(usuario);
+    		   return true;
+    	   }
+       }
+       System.err.println("El usuario no esta jugando");
+       return false;
     }
 
     public void DadoSize(int min, int max)
     {
-    	dado.getInstance(min, max);
+    	dado = Dado.getInstance(min, max);
     }
 
     public void cambiarDado(int min,int max)
@@ -195,7 +201,10 @@ public abstract class GameLoader {
      * @param tam       numero de casillas del tablero
      * @param min       numero maximo del dado
      * @param max       numero minimo del dado
+     * @throws UnknownHostException 
      */
-    public abstract void startGame(User[] usuarios, Pregunta[] preguntas, int tam, Dado dado,MongoDB conexion);
+    public void startGame(User[] usuarios, Pregunta[] preguntas, int tam, Dado dado,MongoDB conexion) throws UnknownHostException{
+    	Game g = GameFactory.getNewGame();
+    }
 
 }

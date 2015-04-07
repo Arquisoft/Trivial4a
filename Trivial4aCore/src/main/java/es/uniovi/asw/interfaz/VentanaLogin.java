@@ -87,6 +87,7 @@ public class VentanaLogin extends JDialog {
 						String pass = new String(getPwdContrasenya().getPassword());
 						try {
 							boolean acceder = vConfiguracion.configuracion.comprobarLogin(nombre, pass);
+							vConfiguracion.actualizarJugadores();
 							if(acceder)
 								atras();
 							else
@@ -112,6 +113,7 @@ public class VentanaLogin extends JDialog {
 						String pass = new String(getPwdContrasenya().getPassword());
 						try {
 							boolean registro = vConfiguracion.configuracion.registroNuevoUser(nombre, pass);
+							vConfiguracion.actualizarJugadores();
 							if(registro)
 								atras();
 							else

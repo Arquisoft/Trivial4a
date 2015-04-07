@@ -11,6 +11,7 @@ import es.uniovi.asw.componentesDeInterfaz.Panel_Jugador;
 import es.uniovi.asw.main.GameLoader;
 import es.uniovi.asw.trivial.game.Game;
 import es.uniovi.asw.trivial.game.GameFactory;
+import es.uniovi.asw.trivial.model.User;
 
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
@@ -26,6 +27,8 @@ import java.awt.event.ActionEvent;
 import java.net.UnknownHostException;
 
 import javax.swing.SpinnerNumberModel;
+
+import java.awt.BorderLayout;
 
 @SuppressWarnings("serial")
 public class VentanaConfig extends JFrame {
@@ -50,6 +53,7 @@ public class VentanaConfig extends JFrame {
 	private JSpinner spMax;
 	private JSpinner spMin;
 	private JSpinner spCasillas;
+	private JLabel lblCasillas;
 
 	/**
 	 * Launch the application.
@@ -73,21 +77,27 @@ public class VentanaConfig extends JFrame {
 	 */
 	public VentanaConfig() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 684, 425);
+		setBounds(100, 100, 527, 311);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		contentPane.setLayout(new BorderLayout(0, 0));
 		contentPane.add(getPanelCentro());
-		contentPane.add(getPanelSur());
+		contentPane.add(getPanelSur(), BorderLayout.SOUTH);
 
+		try {
+			configuracion = new GameLoader();
+		} catch (UnknownHostException e) {
+			JOptionPane.showMessageDialog(this, "Error en la base de datos",
+					"Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
+	
 	private JPanel getPanelCentro() {
 		if (panelCentro == null) {
 			panelCentro = new JPanel();
-			panelCentro.setBounds(10, 11, 629, 272);
-			panelCentro.setLayout(null);
-			panelCentro.add(getPanelTamanyos());
+			panelCentro.setLayout(new BorderLayout(0, 0));
+			panelCentro.add(getPanelTamanyos(), BorderLayout.EAST);
 			panelCentro.add(getScrJugadores());
 		}
 		return panelCentro;
@@ -95,17 +105,15 @@ public class VentanaConfig extends JFrame {
 	private JPanel getPanelTamanyos() {
 		if (panelTamanyos == null) {
 			panelTamanyos = new JPanel();
-			panelTamanyos.setBounds(508, 11, 111, 250);
-			panelTamanyos.setLayout(null);
+			panelTamanyos.setLayout(new BorderLayout(0, 0));
 			panelTamanyos.add(getPanelDado());
-			panelTamanyos.add(getPanelTamanyo());
+			panelTamanyos.add(getPanelTamanyo(), BorderLayout.SOUTH);
 		}
 		return panelTamanyos;
 	}
 	private JPanel getPanelSur() {
 		if (panelSur == null) {
 			panelSur = new JPanel();
-			panelSur.setBounds(10, 352, 629, 23);
 			panelSur.setLayout(new GridLayout(0, 4, 50, 0));
 			panelSur.add(getBtnJugar());
 			panelSur.add(getBtnLogin());
@@ -117,7 +125,6 @@ public class VentanaConfig extends JFrame {
 	private JScrollPane getScrJugadores() {
 		if (scrJugadores == null) {
 			scrJugadores = new JScrollPane();
-			scrJugadores.setBounds(10, 11, 488, 250);
 			scrJugadores.setViewportView(getPanelJugadores());
 		}
 		return scrJugadores;
@@ -125,6 +132,7 @@ public class VentanaConfig extends JFrame {
 	private JPanel getPanelJugadores() {
 		if (panelJugadores == null) {
 			panelJugadores = new JPanel();
+			panelJugadores.setLayout(new GridLayout(50, 0, 0, 0));
 		}
 		return panelJugadores;
 	}
@@ -132,10 +140,10 @@ public class VentanaConfig extends JFrame {
 	/**
 	 * Anyade jugadores a la interfaz
 	 */
-	public void anyadirJugadores(){
+	public void actualizarJugadores(){
 		panelJugadores.removeAll();
-		for(int i=0; i<configuracion.getUsuarios().length; i++)
-			panelJugadores.add(new Panel_Jugador(configuracion.getUsuarios()[i].get_id()));
+		for(int i=0; i<configuracion.getUsuarios().size(); i++)
+			panelJugadores.add(new Panel_Jugador(configuracion.getUsuarios().get(i).get_id(),this));
 		panelJugadores.revalidate();
 		panelJugadores.repaint();
 	}
@@ -230,8 +238,7 @@ public class VentanaConfig extends JFrame {
 		if (panelDado == null) {
 			panelDado = new JPanel();
 			panelDado.setBorder(new TitledBorder(null, "Dado", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-			panelDado.setBounds(10, 11, 82, 158);
-			panelDado.setLayout(null);
+			panelDado.setLayout(new GridLayout(0, 1, 0, 0));
 			panelDado.add(getPanelMax());
 			panelDado.add(getPanelMin());
 		}
@@ -240,9 +247,9 @@ public class VentanaConfig extends JFrame {
 	private JPanel getPanelTamanyo() {
 		if (panelTamanyo == null) {
 			panelTamanyo = new JPanel();
-			panelTamanyo.setBorder(new TitledBorder(null, "Casillas", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-			panelTamanyo.setBounds(10, 196, 82, 43);
+			panelTamanyo.setBorder(null);
 			panelTamanyo.setLayout(new GridLayout(0, 1, 0, 0));
+			panelTamanyo.add(getLblCasillas());
 			panelTamanyo.add(getSpCasillas());
 		}
 		return panelTamanyo;
@@ -250,7 +257,6 @@ public class VentanaConfig extends JFrame {
 	private JPanel getPanelMax() {
 		if (panelMax == null) {
 			panelMax = new JPanel();
-			panelMax.setBounds(10, 11, 61, 60);
 			panelMax.setLayout(new GridLayout(0, 1, 0, 0));
 			panelMax.add(getLblMaximo());
 			panelMax.add(getSpMax());
@@ -260,7 +266,6 @@ public class VentanaConfig extends JFrame {
 	private JPanel getPanelMin() {
 		if (panelMin == null) {
 			panelMin = new JPanel();
-			panelMin.setBounds(10, 82, 61, 65);
 			panelMin.setLayout(new GridLayout(0, 1, 0, 0));
 			panelMin.add(getLblMinimo());
 			panelMin.add(getSpMin());
@@ -282,7 +287,7 @@ public class VentanaConfig extends JFrame {
 	private JSpinner getSpMax() {
 		if (spMax == null) {
 			spMax = new JSpinner();
-			spMax.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+			spMax.setModel(new SpinnerNumberModel(new Integer(6), new Integer(1), null, new Integer(1)));
 		}
 		return spMax;
 	}
@@ -299,5 +304,11 @@ public class VentanaConfig extends JFrame {
 			spCasillas.setModel(new SpinnerNumberModel(new Integer(10), new Integer(10), null, new Integer(1)));
 		}
 		return spCasillas;
+	}
+	private JLabel getLblCasillas() {
+		if (lblCasillas == null) {
+			lblCasillas = new JLabel("Casillas");
+		}
+		return lblCasillas;
 	}
 }

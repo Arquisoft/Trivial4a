@@ -1,5 +1,7 @@
 package es.uniovi.asw.trivial.game;
 
+import java.util.List;
+
 import es.uniovi.asw.trivial.model.Dado;
 import es.uniovi.asw.trivial.model.Player;
 import es.uniovi.asw.trivial.model.Pregunta;
@@ -23,7 +25,7 @@ public interface Game {
      * @param min       numero maximo del dado
      * @param max       numero minimo del dado
      */
-    public void startGame(User[] usuarios, Pregunta[] preguntas, int tam, Dado dado,MongoDB conexion);
+    public void startGame(List<User> usuarios, Pregunta[] preguntas, int tam, Dado dado,MongoDB conexion);
 
     /**
      * Finalizar partida.

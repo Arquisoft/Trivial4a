@@ -31,7 +31,7 @@ public class GameObject extends GameLoader implements Game {
     private int nCategorias;
     private MongoDB bd;
 
-    public void startGame(User[] usuarios, Pregunta[] preguntas, int tam,
+    public void startGame(List<User> usuarios, Pregunta[] preguntas, int tam,
                           Dado dado,MongoDB conexion) {
 
         this.players = createPlayers(usuarios);
@@ -60,11 +60,11 @@ public class GameObject extends GameLoader implements Game {
     }
 
 
-    private Player[] createPlayers(User[] usuarios) {
+    private Player[] createPlayers(List<User> usuarios) {
 
-        Player[] players = new Player[usuarios.length];
+        Player[] players = new Player[usuarios.size()];
         for (int i = 0; i < players.length; i++)
-            players[i] = new Player(usuarios[i], 0);
+            players[i] = new Player(usuarios.get(i), 0);
 
         return players;
     }
