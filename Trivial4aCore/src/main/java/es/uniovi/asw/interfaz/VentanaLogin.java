@@ -1,21 +1,27 @@
 package es.uniovi.asw.interfaz;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+
 import java.awt.GridLayout;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.net.UnknownHostException;
+
+import javax.swing.JPasswordField;
 
 @SuppressWarnings("serial")
 public class VentanaLogin extends JDialog {
+	private VentanaConfig vConfiguracion;
 	private JPanel panelCentro;
 	private JPanel panelSur;
 	private JButton btnAcceder;
@@ -26,14 +32,14 @@ public class VentanaLogin extends JDialog {
 	private JLabel lblUsuario;
 	private JLabel lblContrasenya;
 	private JTextField textUsuario;
-	private JTextField txtContrasenya;
+	private JPasswordField pwdContrasenya;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			VentanaLogin dialog = new VentanaLogin();
+			VentanaLogin dialog = new VentanaLogin(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -44,7 +50,8 @@ public class VentanaLogin extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public VentanaLogin() {
+	public VentanaLogin(VentanaConfig vc) {
+		this.vConfiguracion = vc;
 		setBounds(100, 100, 313, 300);
 		getContentPane().setLayout(new BorderLayout(0, 10));
 		getContentPane().add(getPanelCentro());
@@ -75,6 +82,21 @@ public class VentanaLogin extends JDialog {
 			btnAcceder = new JButton("Acceder");
 			btnAcceder.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					if(!isCamposVacios()){
+						String nombre = getTextUsuario().getText();
+						String pass = new String(getPwdContrasenya().getPassword());
+						try {
+							boolean acceder = vConfiguracion.configuracion.comprobarLogin(nombre, pass);
+							if(acceder)
+								atras();
+							else
+								JOptionPane.showMessageDialog(get(), "No puede iniciar sesion",
+										"Atencion", JOptionPane.WARNING_MESSAGE);
+						} catch (UnknownHostException e1) {
+							JOptionPane.showMessageDialog(get(), "La base de datos no funciona",
+									"Atencion", JOptionPane.ERROR_MESSAGE);
+						}
+					}
 				}
 			});
 		}
@@ -85,11 +107,31 @@ public class VentanaLogin extends JDialog {
 			btnRegistrar = new JButton("Registrar");
 			btnRegistrar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					if(!isCamposVacios()){
+						String nombre = getTextUsuario().getText();
+						String pass = new String(getPwdContrasenya().getPassword());
+						try {
+							boolean registro = vConfiguracion.configuracion.registroNuevoUser(nombre, pass);
+							if(registro)
+								atras();
+							else
+								JOptionPane.showMessageDialog(get(), "No puede registrarse",
+										"Atencion", JOptionPane.WARNING_MESSAGE);
+						} catch (UnknownHostException e1) {
+							JOptionPane.showMessageDialog(get(), "La base de datos no funciona",
+									"Atencion", JOptionPane.ERROR_MESSAGE);
+						}
+					}
 				}
 			});
 		}
 		return btnRegistrar;
 	}
+	
+	private VentanaLogin get(){
+		return this;
+	}
+	
 	private JButton getBtnCancelar() {
 		if (btnCancelar == null) {
 			btnCancelar = new JButton("Cancelar");
@@ -120,7 +162,7 @@ public class VentanaLogin extends JDialog {
 			panelContrasenya = new JPanel();
 			panelContrasenya.setLayout(new GridLayout(0, 1, 0, 0));
 			panelContrasenya.add(getLblContrasenya());
-			panelContrasenya.add(getTextField_1());
+			panelContrasenya.add(getPwdContrasenya());
 		}
 		return panelContrasenya;
 	}
@@ -145,11 +187,23 @@ public class VentanaLogin extends JDialog {
 		}
 		return textUsuario;
 	}
-	private JTextField getTextField_1() {
-		if (txtContrasenya == null) {
-			txtContrasenya = new JTextField();
-			txtContrasenya.setColumns(10);
+	private JPasswordField getPwdContrasenya() {
+		if (pwdContrasenya == null) {
+			pwdContrasenya = new JPasswordField();
 		}
-		return txtContrasenya;
+		return pwdContrasenya;
 	}
+	
+	private boolean isCamposVacios(){
+		if(getTextUsuario().getText()==null || getPwdContrasenya().getPassword()==null){
+			return true;
+		}
+		else{
+			String contrasenya = new String(getPwdContrasenya().getPassword());
+			if(getTextUsuario().getText().trim().equals("") || contrasenya.trim().equals(""))
+				return true;
+		}
+		return false;
+	}
+	
 }

@@ -1,5 +1,6 @@
 package es.uniovi.asw.trivial.game;
 
+import es.uniovi.asw.main.GameLoader;
 import es.uniovi.asw.trivial.model.Contestacion;
 import es.uniovi.asw.trivial.model.Dado;
 import es.uniovi.asw.trivial.model.Player;
@@ -13,9 +14,13 @@ import java.util.List;
 import java.util.Random;
 
 
-public class GameObject implements Game {
+public class GameObject extends GameLoader implements Game {
 
-    private Player[] players;
+    public GameObject() throws UnknownHostException {
+		super();
+	}
+
+	private Player[] players;
     private Pregunta[] preguntas;
     private int jugadorActual;
     private List<Contestacion> respuestas;
@@ -25,8 +30,6 @@ public class GameObject implements Game {
     private String[] categorias;
     private int nCategorias;
     private MongoDB bd;
-    GameObject() {
-    }
 
     public void startGame(User[] usuarios, Pregunta[] preguntas, int tam,
                           Dado dado,MongoDB conexion) {

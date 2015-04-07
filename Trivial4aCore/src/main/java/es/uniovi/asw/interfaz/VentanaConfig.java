@@ -5,18 +5,15 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 import es.uniovi.asw.componentesDeInterfaz.Panel_Jugador;
-import es.uniovi.asw.main.ConfiguracionPartida;
+import es.uniovi.asw.main.GameLoader;
 import es.uniovi.asw.trivial.game.Game;
-import es.uniovi.asw.trivial.model.User;
-import es.uniovi.asw.trivial.persistence.MongoDB;
+import es.uniovi.asw.trivial.game.GameFactory;
 
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
-import javax.swing.BoxLayout;
 
 import java.awt.GridLayout;
 
@@ -26,13 +23,15 @@ import javax.swing.border.TitledBorder;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.net.UnknownHostException;
+
 import javax.swing.SpinnerNumberModel;
 
 @SuppressWarnings("serial")
 public class VentanaConfig extends JFrame {
 
 	private JPanel contentPane;
-	public static ConfiguracionPartida configuracion;
+	public GameLoader configuracion;
 	private JPanel panelCentro;
 	private JPanel panelTamanyos;
 	private JPanel panelSur;
@@ -135,8 +134,8 @@ public class VentanaConfig extends JFrame {
 	 */
 	public void anyadirJugadores(){
 		panelJugadores.removeAll();
-		for(int i=0; i<configuracion.getUsuarios().size(); i++)
-			panelJugadores.add(new Panel_Jugador(configuracion.getUsuarios().get(i).get_id()));
+		for(int i=0; i<configuracion.getUsuarios().length; i++)
+			panelJugadores.add(new Panel_Jugador(configuracion.getUsuarios()[i].get_id()));
 		panelJugadores.revalidate();
 		panelJugadores.repaint();
 	}
@@ -146,30 +145,54 @@ public class VentanaConfig extends JFrame {
 			btnJugar = new JButton("Jugar");
 			btnJugar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					if(configuracionValida()){
-						
-					}
+					mostrarVentanaJuego();
 				}
 			});
 		}
 		return btnJugar;
 	}
 	
+	private void mostrarVentanaJuego(){
+		Game juego = jugar();
+		if(juego!=null){
+			VentanaJuego vj = new VentanaJuego(juego);
+			vj.setLocationRelativeTo(this);
+			vj.setVisible(true);
+			cerrar();
+		}
+	}
+	
+	private Game jugar(){
+		if(configuracionValida()){
+			try {
+				Game juego = GameFactory.getNewGame();
+				int tam = (Integer) getSpCasillas().getValue();
+				juego.startGame(configuracion.getUsuarios(), configuracion.getPreguntas(),
+						tam, configuracion.getDado(), configuracion.getConexion());
+				return juego;
+			} catch (UnknownHostException e) {
+				JOptionPane.showMessageDialog(this, "La base de datos esta vacia", 
+						"Atencion", JOptionPane.ERROR_MESSAGE);
+				return null;
+			}
+		}
+		return null;
+	}
+	
 	private boolean configuracionValida(){
 		int max = (Integer) getSpMax().getValue();
-		int min = (Integer) getSpMin().getValue();
-		int tam = (Integer) getSpCasillas().getValue();
-		
+		int min = (Integer) getSpMin().getValue();		
 		if(max<min){
 			JOptionPane.showMessageDialog(this, "Numero maximo del dado tiene que ser"
 					+ "\nigual o mayor que el minimo", "Atencion", JOptionPane.WARNING_MESSAGE);
 			return false;
-		}
-		
-		configuracion.setMax(max);
-		configuracion.setMin(min);
-		configuracion.setTam(tam);
-		return configuracion.isCorrecto();
+		}		
+		configuracion.DadoSize(min,max);
+		return true;
+	}
+	
+	private void cerrar(){
+		this.dispose();
 	}
 	
 	
@@ -185,8 +208,10 @@ public class VentanaConfig extends JFrame {
 		return btnLogin;
 	}
 	
-	private void mostrarVentanaLogin(){*
-		
+	private void mostrarVentanaLogin(){
+		VentanaLogin vl = new VentanaLogin(this);
+		vl.setVisible(true);
+		vl.setLocationRelativeTo(this);
 	}
 	
 	private JButton getBtnAdmin() {

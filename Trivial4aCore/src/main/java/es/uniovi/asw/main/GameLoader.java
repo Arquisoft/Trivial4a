@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class GameLoader {
+public abstract class GameLoader {
 
 		private static final String ADMINISTRADOR = "admin";
 		private User admin;
@@ -29,6 +29,7 @@ public class GameLoader {
     	 nCategorias=0;
     	 users = new ArrayList<User>();
     	 admin = bd.getUser(ADMINISTRADOR);
+    	 cargarDatos();
 		}
 
 	public static void main(String[] args) throws UnknownHostException {
@@ -41,6 +42,20 @@ public class GameLoader {
         }
     }
 
+	public Dado getDado(){
+		return dado;
+	}
+	public MongoDB getConexion(){
+		return bd;
+	}
+	public User[] getUsuarios(){
+		User[] usuarios = new User[users.size()];
+		return users.toArray(usuarios);
+	}	
+	public Pregunta[] getPreguntas(){
+		return preguntas;
+	}
+	
     /**
      * Coge todas las preguntas de la base de datos y los guarda en los atributos
      * @throws UnknownHostException 
@@ -132,7 +147,8 @@ public class GameLoader {
     	
         if(user==null)
         {
-        	bd.guardarUsuario(user.get_id(),user.getContrasena());
+        	
+        	bd.guardarUsuario(usuario,pass);
         	
         	if(users.size()<nCategorias)
         	{
@@ -180,8 +196,6 @@ public class GameLoader {
      * @param min       numero maximo del dado
      * @param max       numero minimo del dado
      */
-    public void startGame(User[] usuarios, Pregunta[] preguntas, int tam, Dado dado,MongoDB conexion) {
-
-    }
+    public abstract void startGame(User[] usuarios, Pregunta[] preguntas, int tam, Dado dado,MongoDB conexion);
 
 }
