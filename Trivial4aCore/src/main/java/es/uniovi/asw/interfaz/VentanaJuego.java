@@ -14,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import es.uniovi.asw.componentesDeInterfaz.ClaseParaPruebas;
 import es.uniovi.asw.componentesDeInterfaz.Colores;
 import es.uniovi.asw.componentesDeInterfaz.Panel_Quesitos;
 import es.uniovi.asw.componentesDeInterfaz.Panel_TableroCuadrado;

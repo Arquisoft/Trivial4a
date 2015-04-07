@@ -74,6 +74,8 @@ public class VentanaPreguntaRespuesta extends JDialog {
 	private JTextArea getTxtrPregunta() {
 		if (txtrPregunta == null) {
 			txtrPregunta = new JTextArea(pregunta.getPregunta());
+			txtrPregunta.setLineWrap(true);
+			txtrPregunta.setWrapStyleWord(true);
 		}
 		return txtrPregunta;
 	}
