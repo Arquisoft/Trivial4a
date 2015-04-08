@@ -1,6 +1,6 @@
 # Trivial4a
 
-* https://travis-ci.org/Arquisoft/Trivial4a.svg?branch=master
+[![Build Status](https://travis-ci.org/Arquisoft/Trivial4a.svg?branch=test)](https://travis-ci.org/Arquisoft/Trivial4a)
 
 ## Equipo formado por: 
 
