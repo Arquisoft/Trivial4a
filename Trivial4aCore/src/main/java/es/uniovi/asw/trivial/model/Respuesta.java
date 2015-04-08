@@ -1,5 +1,9 @@
 package es.uniovi.asw.trivial.model;
 
+/**
+ * Esta es una clase auxiliar para el parser
+ *
+ */
 public class Respuesta {
 	
 	

@@ -1,4 +1,4 @@
-package es.uniovi.asw.trivial.interfaz;
+package es.uniovi.asw.componentesDeInterfaz;
 
 import java.awt.Color;
 
@@ -15,18 +15,23 @@ public class Quesito extends JButton{
 		this.categoria=ct;
 		this.color=c;
 		this.setOpaque(true);
-		setColor();
+		this.setVisible(false);
 	}
 	
-	public void setColor(){
-		if(!coloreado){
+	public String getCategoria(){
+		return this.categoria;
+	}
+	
+	public void setColor(boolean colorear){
+		if(colorear && !coloreado){
 			this.setBackground(color);
 			this.setVisible(true);
 			coloreado = true;
 		}
-	}
-	
-	public JButton get(){
-		return this;
+		else{
+			this.setBackground(new JButton().getBackground());
+			this.setVisible(false);
+			coloreado = false;
+		}
 	}
 }

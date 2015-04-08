@@ -4,4 +4,4 @@ jdk:
   - oraclejdk7
 branches:
   only:
-    -test
+    - test

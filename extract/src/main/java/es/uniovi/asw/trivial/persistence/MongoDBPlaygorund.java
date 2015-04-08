@@ -1,79 +1,68 @@
 package es.uniovi.asw.trivial.persistence;
 
-import com.google.gson.Gson;
 import com.mongodb.*;
-
-import es.uniovi.asw.trivial.model.Pregunta;
+import com.mongodb.util.JSON;
 
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Jorge on 13/03/2015.
  */
 public class MongoDBPlaygorund {
-	
-	private final static String DB_NAME = "mydb";
-	private final static String DB_HOST = "localhost";
-	private final static String DB_COLLECTION_PREGUNTAS = "preguntas";
-	private final static String CATEGORIA = "categoria";
-	
-	private DB getDB() throws UnknownHostException{
-		return new MongoClient(DB_HOST).getDB(DB_NAME);
-	}	
 
-	//#Section añadir a
-	//TODO Añadir a Pregunta.java 
-	/**
-	 * Tranformar de json a Pregunta.
-	 * @param json Cadena en formato json.
-	 * @return Objeto Pregunta con los datos de entrada.
-	 */
-	public static Pregunta fromJson(String json){
-		 return new Gson().fromJson(json, Pregunta.class);
-	}
-	
-	//TODO Añadir a MongoDB.java
-	/**
-	 * Busca en la base de datos preguntas de determinada categoria. Si no se encuentra ninguna
-	 * pregunta se devuelve un array vacio.
-	 * @param categoria
-	 * @return Array con las preguntas de la consulta.
-	 * @throws UnknownHostException
-	 */
-	public Pregunta[] getPreguntas_Categoria(String categoria) throws UnknownHostException{
-		Pregunta[] aux = {};
-		List<Pregunta> preguntas = new ArrayList<Pregunta>();
+    private final static String DB_NAME = "mydb";
+    private final static String DB_HOST = "localhost";
+    private final static String DB_COLLECTION_PREGUNTAS = "preguntas";
+    private final static String CATEGORIA = "categoria";
+    private final static String DB_COLLECTION_USUARIOS = "usuarios";
 
-		DBCollection coleccion = getDB().getCollection(DB_COLLECTION_PREGUNTAS);
-		BasicDBObject searchQuery = new BasicDBObject();
-    	searchQuery.put(CATEGORIA, categoria);
-    	DBCursor cursor = coleccion.find(searchQuery);
-    	
-    	while (cursor.hasNext()) {
-    		//Cambiar preguntaFromJson a Pregunta.fromJson
-    		preguntas.add(preguntaFromJson(cursor.next().toString()));
-    	}
-    	
-		return preguntas.toArray(aux);
-	}
-	
-	//#endsection
-	
-    public static void main(String [] args) throws UnknownHostException {
+    public static void main(String[] args) throws UnknownHostException {
+
+    }
+
+    //#Section añadir a
+
+    //Añadir a MongoDB.java
+
+    /**
+     * Guarda un usuario en la base de datos. No debe existir ningun otro usuario en la base de datos con ese identificador.
+     *
+     * @param _id      Identificador del usuario.
+     * @param password Constraseña del usuario.
+     * @return <i>0</i> Al guardar. <i>-1</i> si no se ha guardado el usuario.
+     * @throws UnknownHostException
+     */
+    private int guardarUsuario(String _id, String password) throws UnknownHostException {
+
+        DBCollection dbCollection = getDB().getCollection(DB_COLLECTION_USUARIOS);
+        DBObject dbObject = (DBObject) JSON.parse("{'_id':'" + _id + "', 'password':" + password + "}");
+
+        BasicDBObject searchQuery = new BasicDBObject();
+        searchQuery.put("_id", _id);
+        DBCursor cursor = dbCollection.find(searchQuery);
+        if (cursor.size() == 0) {
+            dbCollection.save(dbObject);
+            return 0;
+        }
+        return -1;
+
+    }
+
+    //#endsection
+
+    private DB getDB() throws UnknownHostException {
+        return new MongoClient(DB_HOST).getDB(DB_NAME);
+    }
+
+
+    //#Section basura
+        /*
+
     	Pregunta[] p = new MongoDBPlaygorund().getPreguntas_Categoria("Paco");
     	System.out.println(p.length);
     	for(Pregunta pp:p)
     		System.out.println(pp);
-    }
-    
-    private static Pregunta preguntaFromJson(String string) {
-		return fromJson(string);
-	}
-    
-    //#Section basura
-    	/*
+
 
         MongoClient mongo = new MongoClient("localhost");
         System.out.println("Conectado");
@@ -125,17 +114,5 @@ public class MongoDBPlaygorund {
     	*/
     //#endsection
 
-    	
-    	
-    	
-    	
-    	
-    	
-  
 
-
-
-	
-    
-   
 }

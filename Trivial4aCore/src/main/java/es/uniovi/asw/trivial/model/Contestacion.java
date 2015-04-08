@@ -1,5 +1,6 @@
 package es.uniovi.asw.trivial.model;
 
+
 public class Contestacion {
 
 	private User user;

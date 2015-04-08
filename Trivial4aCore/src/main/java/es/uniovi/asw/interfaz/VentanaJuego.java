@@ -1,4 +1,4 @@
-package es.uniovi.asw.trivial.interfaz;
+package es.uniovi.asw.interfaz;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -11,23 +11,22 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import es.uniovi.asw.componentesDeInterfaz.Colores;
+import es.uniovi.asw.componentesDeInterfaz.Panel_Quesitos;
+import es.uniovi.asw.componentesDeInterfaz.Panel_TableroCuadrado;
 import es.uniovi.asw.trivial.game.Game;
 import es.uniovi.asw.trivial.model.Player;
+import es.uniovi.asw.trivial.model.Pregunta;
 import es.uniovi.asw.trivial.model.User;
 
 import java.awt.Component;
 import java.awt.GridLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import javax.swing.border.TitledBorder;
 
@@ -35,19 +34,21 @@ import java.awt.Font;
 
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+
 import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class VentanaJuego extends JFrame {
 
-	private int tam;
 	public static Game juego;
 	public static Colores colores;
-	public static final String[] pruebaCategorias =
-			new String[]{"Categoria A",
-		"Categoria B","Categoria C","Categoria D"};
 	
-	private Panel_Quesitos pq;
+	private static Player jugadorActual;
+	
+	private Panel_Quesitos panelQuesitos;
+	private Panel_TableroCuadrado panelTablero;
 	
 	private JPanel contentPane;
 	private JPanel panelCentro;
@@ -61,15 +62,19 @@ public class VentanaJuego extends JFrame {
 	private JButton btnDerecha;
 	private JButton btnIzquierda;
 	private JLabel lblDado;
+	private JPanel panelSur;
+	private JButton btnSalir;
+	
 
 	/**
 	 * Launch the application.
+	 * 
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaJuego frame = new VentanaJuego(40, new Colores(pruebaCategorias));
+					VentanaJuego frame = new VentanaJuego(juego);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -81,23 +86,36 @@ public class VentanaJuego extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VentanaJuego(int n, Colores c) {
-		this.tam = n;
-		//Esto es una prueba
-		VentanaJuego.colores = c;
+	public VentanaJuego(Game g) {
+		setIconImage(new ImageIcon("img/trivial_logo.png").getImage());
+		setTitle("Trivial Pursuit");
+		inicializarJuego(g);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 614, 501);
+		setBounds(100, 100, 700, 600);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		contentPane.add(getPanelCentro(), BorderLayout.CENTER);
 		contentPane.add(getPanelNorte(), BorderLayout.NORTH);
+		contentPane.add(getPanelSur(), BorderLayout.SOUTH);
+	}
+	
+	/**
+	 * Inicializa el juego
+	 * @param Game g habiendo ejecutado el metodo start game
+	 */
+	private void inicializarJuego(Game g){
+		juego = g;
+		VentanaJuego.colores = new Colores(g.getCategorias());
+		juego.getPlayers();
+		jugadorActual = juego.getCurrentPlayer();
 	}
 	
 	private JPanel getPanelCentro() {
 		if (panelCentro == null) {
-			panelCentro = new Panel_TableroCuadrado(tam, juego);
+			this.panelTablero = new Panel_TableroCuadrado();
+			panelCentro = this.panelTablero;
 		}
 		return panelCentro;
 	}
@@ -116,7 +134,7 @@ public class VentanaJuego extends JFrame {
 			txtJugador.setHorizontalAlignment(SwingConstants.CENTER);
 			txtJugador.setEditable(false);
 			txtJugador.setFont(new Font("Adobe Arabic", Font.PLAIN, 34));
-			txtJugador.setText("Pepe");
+			txtJugador.setText(jugadorActual.getUser().get_id());
 			txtJugador.setColumns(10);
 			txtJugador.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		}
@@ -135,17 +153,19 @@ public class VentanaJuego extends JFrame {
 	
 	
 	private Panel_Quesitos getQuesitos(){
-		if(pq==null){
-			Player prueba = new Player(new User("Pepe"),0);
-			pq = new Panel_Quesitos(prueba,pruebaCategorias);
-			pq.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Quesitos ganados:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		if(panelQuesitos==null){
+			panelQuesitos = new Panel_Quesitos();
+			panelQuesitos.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), 
+					"Quesitos ganados:", TitledBorder.LEADING, 
+					TitledBorder.TOP, null, new Color(0, 0, 0)));
 		}
-		return pq;
+		return panelQuesitos;
 	}
 	
 	private JPanel getPanelMovimiento() {
 		if (panelMovimiento == null) {
 			panelMovimiento = new JPanel();
+			panelMovimiento.setBorder(new TitledBorder(null, "Tirada", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			panelMovimiento.setLayout(new GridLayout(0, 1, 0, 0));
 			panelMovimiento.add(getPanelDado());
 			panelMovimiento.add(getPanelFlechas());
@@ -164,6 +184,9 @@ public class VentanaJuego extends JFrame {
 	private JLabel getLblDado() {
 		if (lblDado == null) {
 			lblDado = new JLabel("");
+			lblDado.setForeground(Color.ORANGE);
+			lblDado.setHorizontalAlignment(SwingConstants.CENTER);
+			lblDado.setFont(new Font("Wide Latin", Font.PLAIN, 30));
 			lblDado.setOpaque(true);
 			lblDado.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		}
@@ -178,27 +201,8 @@ public class VentanaJuego extends JFrame {
 			btnDado.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					int num=juego.diceGetNumer();
-					System.out.println(num);
-					switch(num){
-					case 1:
-						lblDado.setIcon(ajustarImagen("img/dado1.png",lblDado));
-						break;
-					case 2:
-						lblDado.setIcon(ajustarImagen("img/dado2.png",lblDado));
-						break;
-					case 3:
-						lblDado.setIcon(ajustarImagen("img/dado3.png",lblDado));
-						break;
-					case 4:
-						lblDado.setIcon(ajustarImagen("img/dado4.png",lblDado));
-						break;
-					case 5:
-						lblDado.setIcon(ajustarImagen("img/dado5.png",lblDado));
-						break;
-					case 6:
-						lblDado.setIcon(ajustarImagen("img/dado6.png",lblDado));
-						break;
-					}					
+					lblDado.setText(String.valueOf(num));
+					btnDado.setEnabled(false);
 				}				
 			});
 		}		
@@ -232,6 +236,11 @@ public class VentanaJuego extends JFrame {
 			btnDerecha.setIcon(ajustarImagen("img/flecha_derecha.png",btnDerecha));
 			btnDerecha.setContentAreaFilled(false);
 			btnDerecha.setBorderPainted(false);
+			btnDerecha.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					moverse(1);
+				}
+			});
 			
 		}
 		return btnDerecha;
@@ -242,8 +251,106 @@ public class VentanaJuego extends JFrame {
 			btnIzquierda.setIcon(ajustarImagen("img/flecha_izquierda.png",btnIzquierda));
 			btnIzquierda.setContentAreaFilled(false);
 			btnIzquierda.setBorderPainted(false);
+			btnIzquierda.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					moverse(-1);
+				}
+			});
 		}
 		return btnIzquierda;
 	}
+	
+	/**
+	 * Mueve al jugador segun:
+	 * 	Orientacion (IZQ -1   DER 1)
+	 *  Valor de la tirada del dado
+	 * @param orientacion
+	 */
+	private void moverse(int orientacion){
+		if(orientacion!=-1 && orientacion!=1)
+			return;
+		try{
+			int movimientos = Integer.parseInt(getLblDado().getText());
+			getLblDado().setText("");
+			juego.movePlayer(movimientos*orientacion);
+			actualizarPanelesDeJugador();
+			mostrarVentanaPregunta();
+		}
+		catch(NumberFormatException e){}
+	}
+	
+	/**
+	 * Muestra una ventana con la pregunta y una serie de respuestas a elegir
+	 */
+	private void mostrarVentanaPregunta(){
+		Pregunta p = juego.getQuestionSet(juego.getCurrentPlayer().getPosicion());
+		VentanaPreguntaRespuesta vpr = new VentanaPreguntaRespuesta(p);
+		vpr.setLocationRelativeTo(this);
+		vpr.setModal(true);
+		vpr.setVisible(true);
+		String veredicto = juego.answerQuestionSet(p, vpr.getRespElegida());
+		siJuegoAcabado(veredicto);
+		jugadorActual = juego.getCurrentPlayer();
+		actualizarPanelesDeJugador();
+	}
+	
+	/**
+	 * Actualiza los paneles Tablero, Quesito
+	 * y campo de texto de jugador
+	 */
+	private void actualizarPanelesDeJugador(){
+		this.panelTablero.actualizarCasillas();
+		this.panelQuesitos.actualizarQuesitos(jugadorActual);
+		getTxtJugador().setText(jugadorActual.getUser().get_id());
+		actualizarPaneles(this.panelTablero);
+		actualizarPaneles(this.panelQuesitos);
+		getBtnDado().setEnabled(true);
+	}
+	
+	/**
+	 * Actualiza cualquier panel
+	 * @param panel actualizado
+	 */
+	private void actualizarPaneles(JPanel panel){
+		panel.revalidate();
+		panel.repaint();
+	}
+	
+	/**
+	 * Al finalizar el juego:
+	 * 	devuelve un mensaje diciendo quien gano
+	 * 	llama a endGame() de juego
+	 * 	y cierra la aplicacion
+	 * @param veredicto (mensaje que decide si acaba el juego o no)
+	 */
+	private void siJuegoAcabado(String veredicto) {
+		if (veredicto.equals("End")) {
+			JOptionPane.showMessageDialog(this, "¡¡Jugador "
+					+ jugadorActual.getUser().get_id() + " ha ganado!!", "Fin",
+					JOptionPane.INFORMATION_MESSAGE);
+			juego.endGame();
+			System.exit(0);
+		}
+	}
 
+	private JPanel getPanelSur() {
+		if (panelSur == null) {
+			panelSur = new JPanel();
+			FlowLayout flowLayout = (FlowLayout) panelSur.getLayout();
+			flowLayout.setAlignment(FlowLayout.RIGHT);
+			panelSur.add(getBtnSalir());
+		}
+		return panelSur;
+	}
+	private JButton getBtnSalir() {
+		if (btnSalir == null) {
+			btnSalir = new JButton("Salir");
+			btnSalir.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					System.exit(0);
+				}
+			});
+		}
+		return btnSalir;
+	}
 }

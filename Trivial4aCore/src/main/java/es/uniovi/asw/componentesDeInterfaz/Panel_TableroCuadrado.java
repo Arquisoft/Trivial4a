@@ -1,4 +1,4 @@
-package es.uniovi.asw.trivial.interfaz;
+package es.uniovi.asw.componentesDeInterfaz;
 
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -8,18 +8,33 @@ import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import es.uniovi.asw.trivial.game.Game;
+import es.uniovi.asw.interfaz.VentanaJuego;
 
+/**
+ * Esta clase es el panel donde se moveran los jugadores
+ * @author Santiago
+ *
+ */
 @SuppressWarnings("serial")
 public class Panel_TableroCuadrado extends JPanel{
 	
 	Map<Integer,Casilla> casillas;
 	
-	public Panel_TableroCuadrado(int tam, Game juego){
+	public Panel_TableroCuadrado(){
 		casillas = new HashMap<Integer,Casilla>();
-		setOrganizacion(tam);
-		rellenarTablero(tam);
+		setOrganizacion(VentanaJuego.juego.getNumCasillas());
+		rellenarTablero(VentanaJuego.juego.getNumCasillas());
 	}
+	
+	/**
+	 * Actualiza las casillas cuando cambian 
+	 * los jugadores o sus posiciones
+	 */
+	public void actualizarCasillas(){
+		for(Casilla casilla : casillas.values())
+			casilla.setFondo();
+	}
+	
 	/**
 	 * Establece el layout para el panel tablero y el panel de los quesitos de
 	 * forma dinamica
@@ -142,14 +157,21 @@ public class Panel_TableroCuadrado extends JPanel{
 		enumerarCasillas(der,arriba,izq,abajo);
 	}
 	
+	/**
+	 * Añade al panel un boton invisble
+	 */
 	private void agregarBotonVacio(){
 			JButton btn = new JButton();
 			btn.setVisible(false);
 			this.add(btn);
 	}
 	
+	/**
+	 * Añade al panel una casilla visible
+	 * @return
+	 */
 	private Casilla agregarCasilla(){
-		Casilla casilla = new Casilla(0,VentanaJuego.colores);
+		Casilla casilla = new Casilla();
 		casilla.setVisible(true);
 		this.add(casilla);
 		return casilla;
@@ -168,24 +190,32 @@ public class Panel_TableroCuadrado extends JPanel{
 		
 		int enumeracion = 0;
 		for(int i=der.size()-1; i>=0; i--){
-			casillas.put(enumeracion, remplazar(der,i,enumeracion));
+			casillas.put(enumeracion, actualizarCasilla(der,i,enumeracion));
 			enumeracion++;
 		}
 		for(int i=arriba.size()-1; i>=0; i--){
-			casillas.put(enumeracion, remplazar(arriba,i,enumeracion));
+			casillas.put(enumeracion, actualizarCasilla(arriba,i,enumeracion));
 			enumeracion++;
 		}
 		for(int i=0; i<izq.size(); i++){
-			casillas.put(enumeracion,remplazar(izq,i,enumeracion));
+			casillas.put(enumeracion,actualizarCasilla(izq,i,enumeracion));
 			enumeracion++;
 		}
 		for(int i=0; i<abajo.size(); i++){
-			casillas.put(enumeracion,remplazar(abajo,i,enumeracion));
+			casillas.put(enumeracion,actualizarCasilla(abajo,i,enumeracion));
 			enumeracion++;
 		}
 	}
 	
-	private Casilla remplazar(ArrayList<Casilla> list, int i, int enu){
+	/**
+	 * Actualiza las casillas dandoles
+	 * un indice y un color
+	 * @param list (lista de los 4 lados)
+	 * @param i (posicion dentro de la lista)
+	 * @param enu (indice de la propia casilla)
+	 * @return casilla modificada
+	 */
+	private Casilla actualizarCasilla(ArrayList<Casilla> list, int i, int enu){
 		Casilla casilla = list.get(i);
 		casilla.setPosicion(enu);
 		return casilla;

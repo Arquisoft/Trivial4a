@@ -14,9 +14,8 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import es.uniovi.asw.trivial.extractor.parser.Extractor;
 import es.uniovi.asw.trivial.extractor.view.ConsoleExtract;
-import es.uniovi.asw.trivial.persistence.JSonWriter;
+import es.uniovi.asw.trivial.persistence.JSonFileWriter;
 
 public class ExtractorTest {
 	
@@ -32,7 +31,7 @@ public class ExtractorTest {
 	{
 		
 		ConsoleExtract.main(new String[]{"test"});
-		String ruta=JSonWriter.ruta;
+		String ruta= JSonFileWriter.ruta;
 		String ficheroSalida=lector(ruta);
 		String ficheroTest=lector("testFiles/testFile.json");
 		assertTrue(ficheroSalida.equals(ficheroTest));
