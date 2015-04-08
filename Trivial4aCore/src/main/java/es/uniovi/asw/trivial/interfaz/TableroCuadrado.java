@@ -2,6 +2,8 @@ package es.uniovi.asw.trivial.interfaz;
 
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;

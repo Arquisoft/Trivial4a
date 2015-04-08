@@ -13,10 +13,12 @@ import javax.swing.JTextField;
 
 import es.uniovi.asw.trivial.game.Game;
 import es.uniovi.asw.trivial.game.GameFactory;
+
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
 
 @SuppressWarnings("serial")
 public class VentanaJuego extends JFrame {
