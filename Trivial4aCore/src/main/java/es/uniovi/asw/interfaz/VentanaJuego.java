@@ -20,7 +20,6 @@ import es.uniovi.asw.componentesDeInterfaz.Panel_TableroCuadrado;
 import es.uniovi.asw.trivial.game.Game;
 import es.uniovi.asw.trivial.model.Player;
 import es.uniovi.asw.trivial.model.Pregunta;
-import es.uniovi.asw.trivial.model.User;
 
 import java.awt.Component;
 import java.awt.GridLayout;
@@ -37,7 +36,6 @@ import javax.swing.UIManager;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class VentanaJuego extends JFrame {

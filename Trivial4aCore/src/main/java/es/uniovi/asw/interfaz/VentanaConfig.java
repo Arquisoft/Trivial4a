@@ -12,7 +12,6 @@ import es.uniovi.asw.componentesDeInterfaz.Panel_Jugador;
 import es.uniovi.asw.main.GameLoader;
 import es.uniovi.asw.trivial.game.Game;
 import es.uniovi.asw.trivial.game.GameFactory;
-import es.uniovi.asw.trivial.model.User;
 
 import javax.swing.JScrollPane;
 import javax.swing.JButton;

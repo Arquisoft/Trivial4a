@@ -114,6 +114,7 @@ public class GameLoader {
 	 * @param pass
 	 * @return
 	 */
+	@SuppressWarnings("unused")
 	private boolean loginAdmin(String user, String pass) {
 		if (admin.get_id().equals(user) && admin.getContrasena().equals(pass))
 			return true;
@@ -200,6 +201,7 @@ public class GameLoader {
 	 */
 	public void startGame(User[] usuarios, Pregunta[] preguntas, int tam,
 			Dado dado, MongoDB conexion) throws UnknownHostException {
+		@SuppressWarnings("unused")
 		Game g = GameFactory.getNewGame();
 	}
 

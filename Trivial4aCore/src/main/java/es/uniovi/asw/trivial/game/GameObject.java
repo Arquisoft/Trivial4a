@@ -71,13 +71,18 @@ public class GameObject extends GameLoader implements Game {
 
     
     public boolean endGame() {
-    	
-    	
 			try {
 				for(Contestacion respuesta : respuestas)
-				bd.guardarRespuesta(respuesta);
+					bd.guardarRespuesta(respuesta);
+				for(Player p : players){
+					User user = p.getUser();
+					int partidasGanadas = user.getPartidasganadas();
+					if(user.get_id().equals(players[jugadorActual].getUser().get_id()))
+						partidasGanadas++;
+					bd.guardarUsuario(user.get_id(), user.getPassword(), user.getAdmin(), user.getPartidasJugadas()+1, partidasGanadas);
+				}
+					
 			} catch (UnknownHostException e) {
-				
 				System.err.println(e.getMessage());
 				return false;
 			}

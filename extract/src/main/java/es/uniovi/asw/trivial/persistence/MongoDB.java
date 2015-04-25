@@ -3,6 +3,7 @@ package es.uniovi.asw.trivial.persistence;
 import com.google.gson.Gson;
 import com.mongodb.*;
 import com.mongodb.util.JSON;
+
 import es.uniovi.asw.trivial.model.Contestacion;
 import es.uniovi.asw.trivial.model.Pregunta;
 import es.uniovi.asw.trivial.model.User;
@@ -88,15 +89,26 @@ public class MongoDB {
         BasicDBObject searchQuery = new BasicDBObject();
         searchQuery.put("_id", _id);
         DBCursor cursor = collection.find(searchQuery);
-        while (cursor.hasNext()){
-            System.out.println(cursor.next());
+        while (cursor.hasNext())
         	usuario.add(JSonObjectBuilder.UserFromJson(cursor.next().toString()));
-            
-        }
-        
         if(cursor.size()==0)
         	return null;
         return usuario.get(0);
+    }
+    
+    /**
+     * Retorna todos los usuarios dela base d datos.
+     * @return Array de usuarios.
+     * @throws UnknownHostException
+     */
+    public User[] getUsuarios() throws UnknownHostException {
+    	User[] aux = {};
+        List<User> usuarios = new ArrayList<User>();
+        DBCollection coleccion = getDB().getCollection(DB_COLLECTION_USUARIOS);
+        DBCursor cursor = coleccion.find();
+        while (cursor.hasNext())
+        	usuarios.add(JSonObjectBuilder.UserFromJson(cursor.next().toString()));
+        return usuarios.toArray(aux);
     }
 
     /**
@@ -123,6 +135,25 @@ public class MongoDB {
         return -1;
 
     }
+    
+    /**
+     * Guarda o actualiza un usuario en la base de datos.
+     *
+     */
+    public int guardarUsuario(String _id, String password, String admin, int partidasJugadas, int partidasGanadas) throws UnknownHostException {
+
+        DBCollection dbCollection = getDB().getCollection(DB_COLLECTION_USUARIOS);
+        DBObject dbObject = (DBObject) JSON.parse("{'_id':'" + _id + "', 'password':'" + password +"', 'admin':'"+ admin +"', 'partidasJugadas':'"+partidasJugadas+"', 'partidasGanadas':'"+partidasGanadas+ "'}");
+        BasicDBObject searchQuery = new BasicDBObject();
+        searchQuery.put("_id", _id);
+        DBCursor cursor = dbCollection.find(searchQuery);
+        if (cursor.size() == 0) {
+            dbCollection.save(dbObject);
+            return 0;
+        }
+        return -1;
+
+    }
 
     /**
      * Guarda una tupla de usuario/respuesta en la base de datos.
@@ -137,6 +168,59 @@ public class MongoDB {
         String correcto = respuesta.isCorrecta() ? "Y" : "N";
         BasicDBObject doc = new BasicDBObject("_idUsuario", _idUsuario).append("_idPregunta", _idPregunta).append("correcto", correcto);
         dbCollection.insert(doc);
+    }
+    
+    
+    public String informeUsusario(String _id) throws UnknownHostException{
+		StringBuilder sb = new StringBuilder();
+    	BasicDBObject searchQuery = new BasicDBObject();
+    	searchQuery.put("_idUsuario", _id);
+        DBCollection dbCollection = getDB().getCollection(DB_COLLECTION_RESPUESTAS);
+        DBCursor cursor = dbCollection.find(searchQuery);
+        ArrayList<Response> list = new ArrayList<Response>();
+        while (cursor.hasNext())
+        	list.add(Response.FromJSON((cursor.next().toString())));
+        
+        sb.append("El ususaro ");
+        sb.append(_id);
+        sb.append(" respondió a las siguientes preguntas:\n");
+        for(Response r : list){
+        	sb.append("\n");
+        	sb.append(r.pregunta);
+        	String bien = (r.correcto.equals("N")) ? " incorrectamente" : " correctamente";
+        	sb.append(bien);
+        }
+    	return sb.toString();
+    }
+    public String informePregunta(String _id) throws UnknownHostException{
+		StringBuilder sb = new StringBuilder();
+    	BasicDBObject searchQuery = new BasicDBObject();
+    	searchQuery.put("_idPregunta", _id);
+        DBCollection dbCollection = getDB().getCollection(DB_COLLECTION_RESPUESTAS);
+        DBCursor cursor = dbCollection.find(searchQuery);
+        ArrayList<Response> list = new ArrayList<Response>();
+        while (cursor.hasNext())
+        	list.add(Response.FromJSON((cursor.next().toString())));
+        
+        sb.append("La pregunta ");
+        sb.append(_id);
+        sb.append("fue respondida por:\n");
+        for(Response r : list){
+        	sb.append("\n");
+        	sb.append(r.user);
+        	String bien = (r.correcto.equals("N")) ? " incorrectamente" : " correctamente";
+        	sb.append(bien);
+        }
+    	return sb.toString();
+    }
+
+    private static class Response{
+		 String user;
+    	 String pregunta;
+    	 String correcto;
+    	 static Response FromJSON(String json){
+    		 return new Gson().fromJson(json, Response.class);
+    	 }
     }
 
 }
