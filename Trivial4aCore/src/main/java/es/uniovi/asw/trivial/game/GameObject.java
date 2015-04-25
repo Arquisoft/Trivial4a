@@ -1,41 +1,47 @@
 package es.uniovi.asw.trivial.game;
 
+import es.uniovi.asw.main.GameLoader;
 import es.uniovi.asw.trivial.model.Contestacion;
+import es.uniovi.asw.trivial.model.Dado;
 import es.uniovi.asw.trivial.model.Player;
 import es.uniovi.asw.trivial.model.Pregunta;
 import es.uniovi.asw.trivial.model.User;
+import es.uniovi.asw.trivial.persistence.MongoDB;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 
-public class GameObject implements Game {
+public class GameObject extends GameLoader implements Game {
 
-    private Player[] players;
+    public GameObject() throws UnknownHostException {
+		super();
+	}
+
+	private Player[] players;
     private Pregunta[] preguntas;
     private int jugadorActual;
     private List<Contestacion> respuestas;
     //Informacion de control
     private int tam;
-    private int min;
-    private int max;
+    private Dado dado;
     private String[] categorias;
     private int nCategorias;
-    GameObject() {
-    }
+    private MongoDB bd;
 
-    public void startGame(User[] usuarios, Pregunta[] preguntas, int tam,
-                          int min, int max) {
+    public void startGame(List<User> usuarios, Pregunta[] preguntas, int tam,
+                          Dado dado,MongoDB conexion) {
 
         this.players = createPlayers(usuarios);
         this.preguntas = preguntas;
         this.tam = tam;
-        this.min = min;
-        this.max = max;
+        this.dado=dado;
         this.categorias = categoryCount(preguntas);
         this.jugadorActual = 0;
         respuestas = new ArrayList<Contestacion>();
+        this.bd = conexion;
     }
 
 
@@ -54,20 +60,29 @@ public class GameObject implements Game {
     }
 
 
-    private Player[] createPlayers(User[] usuarios) {
+    private Player[] createPlayers(List<User> usuarios) {
 
-        Player[] players = new Player[usuarios.length];
+        Player[] players = new Player[usuarios.size()];
         for (int i = 0; i < players.length; i++)
-            players[i] = new Player(usuarios[i], 0);
+            players[i] = new Player(usuarios.get(i), 0);
 
         return players;
     }
 
-    public int endGame() {
-        String[] auxRespuestas = {};
-        auxRespuestas = respuestas.toArray(auxRespuestas);
-        //TODO pasarlo al mongo
-        return 0;
+    
+    public boolean endGame() {
+    	
+    	
+			try {
+				for(Contestacion respuesta : respuestas)
+				bd.guardarRespuesta(respuesta);
+			} catch (UnknownHostException e) {
+				
+				System.err.println(e.getMessage());
+				return false;
+			}
+        
+        return true;
     }
 
     public Player[] getPlayers() {
@@ -118,7 +133,7 @@ public class GameObject implements Game {
     }
 
     private boolean isCorrecta(Pregunta pregunta, String respuesta) {
-        // TODO Auto-generated method stub
+        
         String[] auxRespuestas = pregunta.getRespuestasCorrectas();
         for (int i = 0; i < auxRespuestas.length; i++)
             if (auxRespuestas[i].equals(respuesta))
@@ -140,7 +155,7 @@ public class GameObject implements Game {
 
     public int diceGetNumer() {
         Random r = new Random();
-        int valorDado = r.nextInt(max) + min;
+        int valorDado = r.nextInt(dado.getMax()) + dado.getMin();
         return valorDado;
     }
 
@@ -148,8 +163,11 @@ public class GameObject implements Game {
 
         int posicionFinal = players[jugadorActual].getPosicion() + moves;
 
-        if (posicionFinal < tam)
+        if (posicionFinal < tam && posicionFinal>=0)
             players[jugadorActual].setPosicion(posicionFinal);
+        else if(posicionFinal<0){
+        	players[jugadorActual].setPosicion(tam+posicionFinal);
+        }
         else {
             posicionFinal = posicionFinal - (tam - 1);
             players[jugadorActual].setPosicion(posicionFinal);
@@ -159,6 +177,10 @@ public class GameObject implements Game {
 
     public String[] getCategorias() {
         return this.categorias;
+    }
+    
+    public int getNumCasillas(){
+    	return tam;
     }
 
 }

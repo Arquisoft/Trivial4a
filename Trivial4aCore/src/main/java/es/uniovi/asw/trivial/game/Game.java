@@ -1,8 +1,12 @@
 package es.uniovi.asw.trivial.game;
 
+import java.util.List;
+
+import es.uniovi.asw.trivial.model.Dado;
 import es.uniovi.asw.trivial.model.Player;
 import es.uniovi.asw.trivial.model.Pregunta;
 import es.uniovi.asw.trivial.model.User;
+import es.uniovi.asw.trivial.persistence.MongoDB;
 
 /**
  * Para usar una clase Game debe usarse GameFactory para obtener una referencia.
@@ -21,13 +25,14 @@ public interface Game {
      * @param min       numero maximo del dado
      * @param max       numero minimo del dado
      */
-    public void startGame(User[] usuarios, Pregunta[] preguntas, int tam, int min, int max);
+    public void startGame(List<User> usuarios, Pregunta[] preguntas, int tam, Dado dado,MongoDB conexion);
 
     /**
      * Finalizar partida.
      * Debe ejecutarse esta funcion para guardar los resutados en la base de datos.
+     * Si se produce algún error devuelve false
      */
-    public int endGame();
+    public boolean endGame();
 
     /**
      * @return La lista de los jugadores.
@@ -84,6 +89,10 @@ public interface Game {
      * @return array de categorias
      */
     public String[] getCategorias();
-
+    
+    /**
+     * @return numero total de casillas
+     */
+    public int getNumCasillas();
 
 }
