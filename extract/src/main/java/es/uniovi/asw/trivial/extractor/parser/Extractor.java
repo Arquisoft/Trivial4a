@@ -11,6 +11,8 @@ import java.io.FilenameFilter;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+import javax.swing.JFileChooser;
+
 public class Extractor {
 
 
@@ -36,14 +38,26 @@ public class Extractor {
     }
 
     private void loadFiles() throws FileNotFoundException, UnknownHostException {
-        File folder = new File("input");
+    	JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new java.io.File("."));
+        chooser.setDialogTitle("Select a folder.");
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chooser.setAcceptAllFileFilterUsed(false);
+        File folder;
+        if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+        	folder = new File("input");
+        else
+        	return;
+    	
+        
         FilenameFilter textFilter = new FilenameFilter() {
             public boolean accept(File dir, String name) {
                 String lowercaseName = name.toLowerCase();
                 return lowercaseName.endsWith(".gift");
             }
         };
-        File[] giftFiles = folder.listFiles(textFilter);
+        
+		File[] giftFiles = folder.listFiles(textFilter);
 
         for (File f : giftFiles) {
         	System.out.println("Loading "+nombre(f));
