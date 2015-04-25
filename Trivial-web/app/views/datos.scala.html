@@ -1,0 +1,34 @@
+@(user: model.User)
+
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h2>Modifica tus datos aquí</h2>
+        <h3>Datos personales</h3>
+    @helper.form(routes.Application.modificarDatos) {
+        <p>
+            Usuario: @user.getId()
+        </p>
+        <p>
+            Contraseña: <input type="password" name="password" placeholder="Contraseña">
+        </p>
+
+        <p>
+            Contraseña de nuevo: <input type="password" name="password2" placeholder="Repite">
+        </p>
+        <p>
+            <button type="submit">Modificar datos</button>
+        </p>
+        <h3>Estadísticas</h3>
+
+        <p>Partidas jugadas: @user.getNumPartidas()</p>
+        <p>Partidas ganadas: @user.getNumPartidasGanadas()</p>
+
+    }
+</body>
+
+
+
+
+

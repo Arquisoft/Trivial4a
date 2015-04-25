@@ -1,0 +1,23 @@
+@(form: Form[Application.Login])
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <h1>Bienvenido al trivial</h1>
+        <h2>Introduzca sus datos para iniciar sesión</h2>
+
+        @helper.form(action=routes.Application.authenticate()) {
+
+            <p>
+                <input type="id" name="id" placeholder="Usuario">
+            </p>
+            <p>
+                <input type="password" name="password" placeholder="Password">
+            </p>
+            <p>
+                <button type="submit">Iniciar sesión</button>
+            </p>
+        }
+    </body>
+</html>
