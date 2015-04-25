@@ -233,6 +233,11 @@ public class VentanaConfig extends JFrame {
 	private JButton getBtnSalir() {
 		if (btnSalir == null) {
 			btnSalir = new JButton("Salir");
+			btnSalir.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					dispose();
+				}
+			});
 		}
 		return btnSalir;
 	}
