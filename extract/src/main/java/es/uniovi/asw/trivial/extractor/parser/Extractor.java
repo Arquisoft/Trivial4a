@@ -60,8 +60,8 @@ public class Extractor {
 		File[] giftFiles = folder.listFiles(textFilter);
 
         for (File f : giftFiles) {
-        	System.out.println("Loading "+nombre(f));
             parseFile(f);
+            System.out.println("Loaded "+nombre(f));
         }
 
     }

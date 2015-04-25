@@ -44,7 +44,7 @@ public class GUIExtract extends JFrame {
 
         JTextPane txtpnInputMustBe = new JTextPane();
         txtpnInputMustBe.setEditable(false);
-        txtpnInputMustBe.setText("Input files must be inside of input folder.\r\nFiles must match this pattern: [Category.gift].");
+        txtpnInputMustBe.setText("Input files must be inside of input folder.\r\nFiles must match this pattern: [Name.gift].");
         panel_1.add(txtpnInputMustBe);
         btnNewButton_1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

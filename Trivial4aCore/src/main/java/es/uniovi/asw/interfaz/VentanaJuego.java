@@ -281,6 +281,7 @@ public class VentanaJuego extends JFrame {
 	 * Muestra una ventana con la pregunta y una serie de respuestas a elegir
 	 */
 	private void mostrarVentanaPregunta(){
+		actualizarPanelesDeJugador();
 		Pregunta p = juego.getQuestionSet(juego.getCurrentPlayer().getPosicion());
 		VentanaPreguntaRespuesta vpr = new VentanaPreguntaRespuesta(p);
 		vpr.setLocationRelativeTo(this);
