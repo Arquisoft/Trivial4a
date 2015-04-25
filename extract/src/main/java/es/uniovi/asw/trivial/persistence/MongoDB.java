@@ -88,8 +88,14 @@ public class MongoDB {
         BasicDBObject searchQuery = new BasicDBObject();
         searchQuery.put("_id", _id);
         DBCursor cursor = collection.find(searchQuery);
-        while (cursor.hasNext())
-            usuario.add(JSonObjectBuilder.UserFromJson(cursor.next().toString()));
+        while (cursor.hasNext()){
+            System.out.println(cursor.next());
+        	usuario.add(JSonObjectBuilder.UserFromJson(cursor.next().toString()));
+            
+        }
+        
+        if(cursor.size()==0)
+        	return null;
         return usuario.get(0);
     }
 
@@ -104,7 +110,9 @@ public class MongoDB {
     public int guardarUsuario(String _id, String password) throws UnknownHostException {
 
         DBCollection dbCollection = getDB().getCollection(DB_COLLECTION_USUARIOS);
-        DBObject dbObject = (DBObject) JSON.parse("{'_id':'" + _id + "', 'password':" + password + "}");
+        String no = "N";
+        int cero = 0;
+        DBObject dbObject = (DBObject) JSON.parse("{'_id':'" + _id + "', 'password':'" + password +"', 'admin':'"+ no +"', 'partidasJugadas':'"+cero+"', 'partidasGanadas':'"+cero+ "'}");
         BasicDBObject searchQuery = new BasicDBObject();
         searchQuery.put("_id", _id);
         DBCursor cursor = dbCollection.find(searchQuery);

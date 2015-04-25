@@ -4,26 +4,12 @@ public class Dado {
 
 	private int min;
 	private int max;
-	private static Dado instance;
 	
-	private Dado(int min,int max)
+	public Dado(int min,int max)
 	{
 		this.min=min;
 		this.max=max;
 		
-	}
-
-	public Dado getInstance(int min,int max)
-	{
-		if(instance==null)
-			new Dado(min,max);
-		return instance;
-	}
-	public Dado getInstance()
-	{
-		if(instance==null)
-			new Dado(1,6);
-		return instance;
 	}
 	
 	public int getMin() {

@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 public class Extractor {
 
@@ -45,6 +46,7 @@ public class Extractor {
         File[] giftFiles = folder.listFiles(textFilter);
 
         for (File f : giftFiles) {
+        	System.out.println("Loading "+nombre(f));
             parseFile(f);
         }
 
@@ -54,18 +56,36 @@ public class Extractor {
 
         Yylex lexico = new Yylex(new FileReader(f));
         Parser p = new Parser(lexico);
-        p.setCategoria(nombre(f));
         p.run();
 
-        Pregunta[] arrayp = new Pregunta[0];
-        arrayp = p.getPreguntas().toArray(arrayp);
-        if (writeFiles)
-            new JSonFileWriter().writeJSONfile(p.getPreguntas());
-        if (useDB)
-            new MongoDB().addPreguntas(arrayp);
+        Marcador[] arrayp = new Marcador[0];
+        arrayp = p.getMarcadores().toArray(arrayp);
 
-        for (Pregunta pp : arrayp)
-            System.out.println(pp);
+        ArrayList<Pregunta> preguntas = new ArrayList<Pregunta>();
+        
+        String categoria = "";
+        for (Marcador pp : arrayp){
+        	if(pp instanceof Categoria)
+        		categoria = ((Categoria)pp).valor.split(":")[1];
+        	else{
+        		if(!(categoria.equals(""))){
+        			PreguntaM m = (PreguntaM)pp;
+        			m.setCategoria(categoria);
+        			preguntas.add(PreguntaM.transformarPregunta(m));
+        		}
+        	}
+        }
+        
+//        for (Pregunta pregunta : preguntas) {
+//			System.out.println(pregunta);
+//		}
+//        
+        if (writeFiles)
+        	new JSonFileWriter().writeJSONfile(preguntas);
+        if (useDB)
+        	new MongoDB().addPreguntas(preguntas.toArray(new Pregunta[0]));
+
+        
     }
 
     private String nombre(File f) {

@@ -1,4 +1,5 @@
-package es.uniovi.asw.trivial.parser;
+package es.uniovi.asw.trivial.extractor.parser;
+  @SuppressWarnings("all")
 %%
 //%debug
 //%class Lexico
@@ -28,24 +29,15 @@ package es.uniovi.asw.trivial.parser;
 	}
 %}
 
-//alfanumerico	= [a-zA-Z0-9]
-//puntuacion		= "!"|"?"|"."|","|"'" 
-//operado			= "+"|"-"|"*"|"/"|"%"|"("|")"|"_"
-//caracter		= {operado}|{puntuacion}|{alfanumerico}
-//blancos			= [ \t]
-//bancoYSimbolo	= {simbolo}|{blancos}
-
 %%
-
-
 //Símbolos
+::				{ return Parser.DOBLEPUNTO; }
 
-::		{ return Parser.DOBLEPUNTO; }
+"$CATEGORY:"[áéíóúÁÉÍÓÚñÑa-zA-Z0-9_?¿¡!'\*\+\-\%\/,.]+					{ return Parser.CATEGORY; }
 
 [=#\~,{}]		{ return yytext().charAt(0); }
 
-
-[a-zA-Z0-9_?!'\*\+\-\%\/,.]+[a-zA-Z0-9_?!'\*\+\-\%\/,. ]*[a-zA-Z0-9_?!'\*\+\-\%\/,.]*					{ return Parser.TEXTO; }
+[áéíóúÁÉÍÓÚñÑa-zA-Z0-9_?¿¡!'\*\+\-\%\/,.]+[áéíóúÁÉÍÓÚñÑa-zA-Z0-9_?¿¡!'\*\+\-\%\/,. ]*[áéíóúÁÉÍÓÚñÑa-zA-Z0-9_?¿¡!'\*\+\-\%\/,.]*					{ return Parser.TEXTO; }
 
 "/*"~"*/"										{/*ignorar comentario*/ }
 "//".*\n										{/*ignorar comentario*/ }

@@ -1,31 +1,41 @@
 %{
-package es.uniovi.asw.trivial.parser;
-import es.uniovi.asw.trivial.pregunta.*;
+package es.uniovi.asw.trivial.extractor.parser;
+
 import java.util.*;
+import es.uniovi.asw.trivial.extractor.parser.Marcador;
+import es.uniovi.asw.trivial.extractor.parser.Respuesta;
+import es.uniovi.asw.trivial.model.Pregunta;
+
 
  @SuppressWarnings("all")
 %}
 
 %TOKEN TEXTO
-%TOKEN DOBLEPUNTO
+%TOKEN DOBLEPUNTO CATEGORY
 
 %%
 
 s
-	:	preguntas	{ preguntas = (ArrayList<Pregunta>)$1; }
+	:	elementos							{ marcadores = (ArrayList<Marcador>)$1; }
 	;
+	
+elementos
+	:	elementos	elemento				{ 	ArrayList<Marcador> aux = (ArrayList<Marcador>) $1; 
+												aux.add((Marcador)$2);
+												$$ = aux;
+											}
+	|										{ $$ = new ArrayList<Marcador>(); }
+	;
+	
+elemento
+	:	categoria							{ $$ = $1; }
+	|	pregunta							{ $$ = $1; }
+	;
+	
 
-preguntas
-	:	preguntas pregunta						{
-													List<Pregunta> preguntas = (List<Pregunta>)$1;
-													preguntas.add((Pregunta)$2);
-													$$ = preguntas;
-												}
-	|	pregunta								{
-													List<Pregunta> preguntas = new ArrayList<Pregunta>();
-													preguntas.add((Pregunta)$1);
-													$$ = preguntas;
-												}
+categoria
+	:	CATEGORY								{ Categoria aux = new Categoria();
+													aux.valor=(String)$1; $$ = aux;}
 	;
 		
 pregunta
@@ -43,7 +53,7 @@ pregunta
 														else
 															respuestasIncorrectas.add(r.respuesta);	
 													String[] arrayp = new String[0];
-													Pregunta preguntas = new Pregunta(identificador,pregunta,categoria, respuestasCorrectas.toArray(arrayp),respuestasIncorrectas.toArray(arrayp));
+													PreguntaM preguntas = new PreguntaM(identificador,pregunta,"NA", respuestasCorrectas.toArray(arrayp),respuestasIncorrectas.toArray(arrayp));
 													$$ = preguntas;	
 												}
 	;
@@ -98,7 +108,7 @@ simbolo
 %%
 
 private Yylex lex;
-private ArrayList<Pregunta> preguntas;
+private ArrayList<Marcador> marcadores;
 private int token;
 
 public Parser(Yylex lex, boolean debug) {
@@ -108,12 +118,7 @@ public Parser(Yylex lex, boolean debug) {
 
 public int parse() { return yyparse(); }
 
-private String categoria;
 
-public void setCategoria(String nombre) {
-	categoria = nombre;
-	
-}
 // Funciones requeridas por el parser
 
 void yyerror(String s)
@@ -131,8 +136,8 @@ int yylex() {
   }
 }
 
-public ArrayList<Pregunta> getPreguntas() {
-	return preguntas;
+public ArrayList<Marcador> getMarcadores() {
+	return marcadores;
 }
 
 public Parser(Yylex lexico) {
