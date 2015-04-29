@@ -1,0 +1,22 @@
+New log file opened at Wed Apr 29 13:27:22 CEST 2015 by 2592@EII-L-01-07
+Taking next connection to: 10093
+New client attempting to connect on port: 10094-10093
+  Address = /192.168.61.145:10093
+This client on port 10094 has uuid 4a87a60e-5c14-4ab6-b6b3-a5baa2e4327b configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
+Connected Clients: play-fork-run-4a87a60e-5c14-4ab6-b6b3-a5baa2e4327b
+Taking next connection to: 10093
+Checking to see if clients are empty...
+We have 1 non-daemon clients, continuing serving connections.
+Taking next connection to: 10093
+Checking to see if clients are empty...
+We have 1 non-daemon clients, continuing serving connections.
+Taking next connection to: 10093
+Checking to see if clients are empty...
+We have 1 non-daemon clients, continuing serving connections.
+Taking next connection to: 10093
+Checking to see if clients are empty...
+No non-daemon clients connected after 3 min. Shutting down.
+Server socket thread exiting.
+0 clients open, will close them...
+All client sockets have been closed.
+Closing the 2592@EII-L-01-07 logs at Wed Apr 29 13:39:24 CEST 2015, goodbye.
