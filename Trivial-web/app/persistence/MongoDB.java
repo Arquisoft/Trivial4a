@@ -4,9 +4,9 @@ import com.google.gson.Gson;
 import com.mongodb.*;
 import com.mongodb.util.JSON;
 
-import es.uniovi.asw.trivial.model.Contestacion;
-import es.uniovi.asw.trivial.model.Pregunta;
-import es.uniovi.asw.trivial.model.User;
+import model.Contestacion;
+import model.Pregunta;
+import model.User;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;

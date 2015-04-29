@@ -8,7 +8,7 @@
         <h3>Datos personales</h3>
     @helper.form(routes.Application.modificarDatos) {
         <p>
-            Usuario: @user.getId()
+            Usuario: @user.get_id()
         </p>
         <p>
             Contraseña: <input type="password" name="password" placeholder="Contraseña">

@@ -2,8 +2,8 @@ package persistence;
 
 import com.google.gson.Gson;
 
-import es.uniovi.asw.trivial.model.Pregunta;
-import es.uniovi.asw.trivial.model.User;
+import model.Pregunta;
+import model.User;
 
 /**
  * Created by Jorge on 24/03/2015.

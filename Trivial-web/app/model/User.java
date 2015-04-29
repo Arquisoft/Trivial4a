@@ -39,7 +39,7 @@ public class User extends Model{
         return true;
     }
 
-    public String getId() {
+    public String get_id() {
         return id;
     }
 

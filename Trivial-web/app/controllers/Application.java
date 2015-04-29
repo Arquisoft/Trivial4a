@@ -59,16 +59,18 @@ public class Application extends Controller {
 
 
 
+
     public static Result authenticate() {
 
-        Login loginForm =Form.form(Login.class).bindFromRequest().get();
-        User usuario=new User(loginForm.id,loginForm.password);
-        System.out.println("User: "+loginForm.id);
-        System.out.println("Pass: "+loginForm.password);
+       // Login loginForm =Form.form(Login.class).bindFromRequest().get();
+       Form<Login> loginForm = Form.form(Login.class).bindFromRequest();
+        User usuario=new User(loginForm.get().id,loginForm.get().password);
+        System.out.println("User: "+loginForm.get().id);
+        System.out.println("Pass: "+loginForm.get().password);
 
-        if(usuario.validate(usuario.getId(),usuario.getPassword()))
+        if(usuario.validate(usuario.get_id(),usuario.getPassword()))
         {
-            session("user", usuario.getId());
+            session("user", usuario.get_id());
             return ok(main.render(usuario));
 
         }

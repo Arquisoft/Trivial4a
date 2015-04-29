@@ -15,3 +15,5 @@ libraryDependencies ++= Seq( javaJdbc ,
                               "com.google.code.gson" % "gson" % "2.3.1")
 
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )
+
+fork in run := true
