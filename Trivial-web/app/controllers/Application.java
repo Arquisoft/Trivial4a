@@ -1,5 +1,7 @@
 package controllers;
 
+import java.net.UnknownHostException;
+import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -7,6 +9,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import model.User;
+import persistence.MongoDB;
 import play.*;
 import play.data.Form;
 import play.libs.Json;
@@ -22,16 +25,47 @@ public class Application extends Controller {
         return ok(login.render(Form.form(Login.class)));
     }
 
+    public static Result irRegister() {
+
+        return ok(register.render(Form.form(Register.class)));
+    }
+
+    public static Result register() throws UnknownHostException {
+
+        Form<Register> register=Form.form(Register.class).bindFromRequest();
+        User user=new User(register.get().id,register.get().password);
+        System.out.println("Cosas: "+register.get().id+register.get().password+register.get().password2);
+        user.setPassword2(register.get().password2);
+        if(user.validatePass())
+        {
+            MongoDB mdb=new MongoDB();
+            mdb.guardarUsuario(user.get_id(),user.getPassword(),"no",56,43);
+            return login();
+        }
+        return irRegister();
+    }
     public static Result salir()
     {
         session().clear();
         return login();
     }
-    public static Result irDatos() {
-        User us=new User("caca","caca");
-        us.setNumPartidas(100);
-        us.setNumPartidasGanadas(0);
-        return ok(datos.render(us));
+
+    public static Result principal() throws UnknownHostException {
+        MongoDB mdb=new MongoDB();
+
+        return ok(main.render(mdb.getUser(session("user"))));
+    }
+    public static Result irDatos(String userId) throws UnknownHostException {
+
+        MongoDB mdb=new MongoDB();
+        User user=mdb.getUser(userId);
+        System.out.println(user.get_id());
+        if(user!=null)
+        {
+            return ok(datos.render(user));
+        }
+
+        return login();
     }
 
 
@@ -46,7 +80,6 @@ public class Application extends Controller {
                 {
                     user.setPassword(user.getPassword());
                     System.out.println("Contraseña cambiada");
-                    user.setLog("Contraseña cambiada");
                     return ok(main.render(user));
                 }
             }
@@ -58,24 +91,31 @@ public class Application extends Controller {
     }
 
 
+    public static Result mostrarUsuarios() throws UnknownHostException {
+        MongoDB mdb=new MongoDB();
+        List<User> usersList=mdb.getUsuarios();
+        System.out.println(usersList.size());
+        System.out.println(usersList.get(0));
+        return ok(users.render(usersList));
+    }
+
+    public static Result authenticate() throws UnknownHostException {
 
 
-    public static Result authenticate() {
-
-       // Login loginForm =Form.form(Login.class).bindFromRequest().get();
-       Form<Login> loginForm = Form.form(Login.class).bindFromRequest();
-        User usuario=new User(loginForm.get().id,loginForm.get().password);
-        System.out.println("User: "+loginForm.get().id);
-        System.out.println("Pass: "+loginForm.get().password);
-
-        if(usuario.validate(usuario.get_id(),usuario.getPassword()))
+        // Login loginForm =Form.form(Login.class).bindFromRequest().get();
+        Login loginForm = Form.form(Login.class).bindFromRequest().get();
+        System.out.println(loginForm);
+        System.out.println("User: "+loginForm.id);
+        System.out.println("Pass: " + loginForm.password);
+        MongoDB mdb=new MongoDB();
+        User user=mdb.getUser(loginForm.id);
+        if(user!=null && user.getPassword().equals(loginForm.password))
         {
-            session("user", usuario.get_id());
-            return ok(main.render(usuario));
-
+            session("user", user.get_id());
+            return ok(main.render(user));
         }
 
-        return ok();
+        return login();
     }
 
 
@@ -88,9 +128,16 @@ public class Application extends Controller {
      public static class Login {
 
          public String id;
-          public String password;
+         public String password;
 
      }
+
+    public static class Register{
+
+        public String id;
+        public String password;
+        public String password2;
+    }
 }
 
 

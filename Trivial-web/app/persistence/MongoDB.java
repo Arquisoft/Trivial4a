@@ -101,14 +101,15 @@ public class MongoDB {
      * @return Array de usuarios.
      * @throws UnknownHostException
      */
-    public User[] getUsuarios() throws UnknownHostException {
+    public List<User> getUsuarios() throws UnknownHostException {
     	User[] aux = {};
         List<User> usuarios = new ArrayList<User>();
         DBCollection coleccion = getDB().getCollection(DB_COLLECTION_USUARIOS);
         DBCursor cursor = coleccion.find();
         while (cursor.hasNext())
         	usuarios.add(JSonObjectBuilder.UserFromJson(cursor.next().toString()));
-        return usuarios.toArray(aux);
+        System.out.println(usuarios.size());
+        return usuarios;
     }
 
     /**

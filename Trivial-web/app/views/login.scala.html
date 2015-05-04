@@ -1,4 +1,4 @@
-@(form: Form[Application.Login])
+@(loginform: Form[Application.Login])
 <html>
     <head>
         <meta charset="UTF-8">
@@ -7,17 +7,14 @@
         <h1>Bienvenido al trivial</h1>
         <h2>Introduzca sus datos para iniciar sesión</h2>
 
-        @helper.form(action=routes.Application.authenticate()) {
+        @helper.form(action=routes.Application.authenticate) {
 
-            <p>
-                <input type="id" name="id" placeholder="Usuario">
-            </p>
-            <p>
-                <input type="password" name="password" placeholder="Password">
-            </p>
+            @helper.inputText(loginform("id"), 'placeholder -> "Usuario")
+            @helper.inputPassword(loginform("password"), 'placeholder -> "Contraseña")
             <p>
                 <button type="submit">Iniciar sesión</button>
             </p>
         }
+        <a href="/register">¿No tiene cuenta? Regístrese aquí</a>
     </body>
 </html>

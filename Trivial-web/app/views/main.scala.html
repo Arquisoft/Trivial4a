@@ -12,11 +12,15 @@
 
         <table>
             <td>
-             @helper.form(routes.Application.irDatos) {
+             @helper.form(routes.Application.irDatos(user.get_id())) {
                  <p>
                      <button type="submit">Consultar datos</button>
                  </p>
             }
+
+            </td>
+            <td>
+               @if(user.getAdmin){<a href="/users">Gestionar usuarios</a> }
             </td>
             <td>
                 <a href='/logout'>Cerrar sesión</a>
