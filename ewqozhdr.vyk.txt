@@ -1,0 +1,12 @@
+﻿
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch is up-to-date with 'origin/master'.
+#
+# Changes to be committed:
+#	modified:   "DOCUMENTACION/Documentaci\303\263n_entrega_final/TRIVIAL4A-ESQUELETO-DOC.docx"
+#	new file:   Trivial-web/activator-launch-1.3.2.jar
+#	new file:   Trivial-web/project/.sbtserver.lock
+#
+
