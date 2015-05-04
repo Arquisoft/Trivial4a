@@ -1,0 +1,31 @@
+@(loginform: Form[Application.Login])
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
+
+    </head>
+    <body>
+        <table align="center">
+            <tr>
+        <h1>Bienvenido al trivial</h1>
+            </tr>
+            <tr>
+        <h2>Introduzca sus datos para iniciar sesión</h2>
+            </tr>
+            <tr>
+        @helper.form(action=routes.Application.authenticate) {
+
+            @helper.inputText(loginform("id"), 'placeholder -> "Usuario")
+            @helper.inputPassword(loginform("password"), 'placeholder -> "Contraseña")
+            <p>
+                <button type="submit">Iniciar sesión</button>
+            </p>
+        }
+            </tr>
+            <tr>
+        <a href="/register">¿No tiene cuenta? Regístrese aquí</a>
+            </tr>
+        </table>
+    </body>
+</html>

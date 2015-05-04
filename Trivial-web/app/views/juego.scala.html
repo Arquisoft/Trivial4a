@@ -1,0 +1,42 @@
+@(pregunta: model.Pregunta,form: Form[Application.Respuesta], caso: String)
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Trivial</title>
+        <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
+    </head>
+    <body>
+        <h1>Bienvenido al Trivial()</h1>
+
+        <h2>@pregunta.getPregunta()</h2>
+        <h2 style="color:green">@caso</h2>
+        <br>
+        <table>
+        @for(respuesta <- pregunta.getRespuestasCorrectas()) {
+
+            <tr>
+                <td>@respuesta</td><td>@helper.checkbox(field=form(respuesta))</td>
+            </tr>
+
+        }
+        </table>
+        <table>
+        @for(respuesta2 <- pregunta.getRespuestasIncorrectas()) {
+
+                <tr>
+                    <td>@respuesta2</td><td>@helper.checkbox(field=form(respuesta2))</td>
+                </tr>
+
+        }
+
+        </table>
+        @helper.form(action=routes.Application.responder){
+
+
+        }
+        <a href="@routes.Application.principal()">Volver</a>
+    </body>
+</html>

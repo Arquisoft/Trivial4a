@@ -1,0 +1,25 @@
+@(users: List[model.User])
+
+
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
+    </head>
+    <h1>List of users</h1>
+    <table>
+    @for(user <- users) {
+        <tr>
+            <td><a href="@routes.Application.irDatos(user.get_id())">@user.get_id()</a></td>
+        </tr>
+    }
+    </table>
+
+    <a href="@routes.Application.principal()">Volver</a>
+
+
+</html>
+
+
+
+
+

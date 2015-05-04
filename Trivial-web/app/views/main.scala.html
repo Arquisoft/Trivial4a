@@ -1,0 +1,41 @@
+@(user: model.User)
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
+        <title>Trivial</title>
+    </head>
+    <body>
+        <h1>Bienvenido, @user.get_id()</h1>
+
+        <table>
+            <tr>
+            <td>
+                <a href="/juego">Jugar</a>
+            </td>
+            </tr>
+            <tr>
+            <td>
+             @helper.form(routes.Application.irDatos(user.get_id())) {
+                 <p>
+                     <button type="submit">Consultar datos</button>
+                 </p>
+            }
+
+            </td>
+
+            <td>
+               @if(user.getAdmin){<a href="/users">Gestionar usuarios</a> }
+            </td>
+            </tr>
+            <tr>
+            <td>
+                <a href='/logout'>Cerrar sesión</a>
+            </td>
+            </tr>
+        </table>
+    </body>
+</html>
