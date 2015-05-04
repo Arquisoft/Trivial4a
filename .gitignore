@@ -1,0 +1,7 @@
+.idea/*
+.project
+.settings/
+extract/
+Trivial-web/
+Trivial4aCore/
+*.iml
