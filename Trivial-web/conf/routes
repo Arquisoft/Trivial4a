@@ -8,6 +8,8 @@ GET         /logout              controllers.Application.salir()
 GET         /register            controllers.Application.irRegister()
 GET         /main                controllers.Application.principal()
 GET         /users               controllers.Application.mostrarUsuarios()
+GET         /juego               controllers.Application.jugar()
+
 POST        /register            controllers.Application.register()
 POST        /login               controllers.Application.authenticate()
 

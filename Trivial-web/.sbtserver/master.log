@@ -1,6 +1,6 @@
-New log file opened at Mon May 04 17:08:07 CEST 2015 by 3748@nunse-PC
-jvm 3748@nunse-PC
-jvm vmName=Java HotSpot(TM) 64-Bit Server VM vmVendor=Oracle Corporation vmVersion=25.40-b25
+New log file opened at Mon May 04 18:51:28 CEST 2015 by 4808@nunse-PC
+jvm 4808@nunse-PC
+jvm vmName=Java HotSpot(TM) 64-Bit Server VM vmVendor=Oracle Corporation vmVersion=25.31-b07
 jvm specName=Java Virtual Machine Specification specVendor=Oracle Corporation specVersion=1.8
 jvm arguments: [-Xms256m, -Xmx1024m, -XX:MetaspaceSize=64m, -XX:MaxMetaspaceSize=256m]
 Starting event engine
@@ -27,7 +27,7 @@ sorting: ns: List(sbt.plugins.CorePlugin, sbt.plugins.IvyPlugin, sbt.plugins.Jvm
   :: sorted deduced result: List(sbt.plugins.CorePlugin, sbt.plugins.IvyPlugin, sbt.plugins.JvmPlugin, sbt.plugins.JUnitXmlReportPlugin)
 [Loading] Done in C:\Users\nunse\Desktop\CARRERA\ASW\Trivial4a\Trivial-web\project, returning: (trivial-web-build)
 Loading project definition from C:\Users\nunse\Desktop\CARRERA\ASW\Trivial4a\Trivial-web\project
-Running task... Cancel: sbt.TaskCancellationStrategy$Null$@13951f4, check cycles: false
+Running task... Cancel: sbt.TaskCancellationStrategy$Null$@cc6d045, check cycles: false
 
 Initial source changes: 
 	removed:Set()

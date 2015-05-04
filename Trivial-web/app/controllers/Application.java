@@ -3,19 +3,24 @@ package controllers;
 import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import model.Pregunta;
 import model.User;
 import persistence.MongoDB;
 import play.*;
 import play.data.Form;
+import play.db.ebean.Model;
 import play.libs.Json;
 import play.mvc.*;
 import play.mvc.Http.*;
 import views.html.*;
+
+import javax.persistence.Id;
 
 
 public class Application extends Controller {
@@ -39,7 +44,7 @@ public class Application extends Controller {
         if(user.validatePass())
         {
             MongoDB mdb=new MongoDB();
-            mdb.guardarUsuario(user.get_id(),user.getPassword(),"no",56,43);
+            mdb.guardarUsuario(user.get_id(),user.getPassword(),"no",0,0);
             return login();
         }
         return irRegister();
@@ -48,6 +53,20 @@ public class Application extends Controller {
     {
         session().clear();
         return login();
+    }
+
+
+    public static Result jugar() throws UnknownHostException {
+        preguntas=new MongoDB().getPreguntas();
+        return turno();
+
+    }
+
+    public static Result turno()
+    {
+        Random r=new Random();
+        Pregunta p=preguntas[r.nextInt(preguntas.length)];
+        return ok(juego.render(p, Form.form(Respuesta.class)));
     }
 
     public static Result principal() throws UnknownHostException {
@@ -103,13 +122,13 @@ public class Application extends Controller {
 
 
         // Login loginForm =Form.form(Login.class).bindFromRequest().get();
-        Login loginForm = Form.form(Login.class).bindFromRequest().get();
+        Form<Login> loginForm = Form.form(Login.class).bindFromRequest();
         System.out.println(loginForm);
-        System.out.println("User: "+loginForm.id);
-        System.out.println("Pass: " + loginForm.password);
+        System.out.println("User: "+loginForm.get().id);
+        System.out.println("Pass: " + loginForm.get().password);
         MongoDB mdb=new MongoDB();
-        User user=mdb.getUser(loginForm.id);
-        if(user!=null && user.getPassword().equals(loginForm.password))
+        User user=mdb.getUser(loginForm.get().id);
+        if(user!=null && user.getPassword().equals(loginForm.get().password))
         {
             session("user", user.get_id());
             return ok(main.render(user));
@@ -120,12 +139,14 @@ public class Application extends Controller {
 
 
     static Form<User> userForm=Form.form(model.User.class);
+    static Pregunta[] preguntas;
 
 
 
 
      ///////////////////////////////////
-     public static class Login {
+     public static class Login{
+
 
          public String id;
          public String password;
@@ -137,6 +158,11 @@ public class Application extends Controller {
         public String id;
         public String password;
         public String password2;
+    }
+
+    public static class Respuesta
+    {
+        public String respuesta;
     }
 }
 

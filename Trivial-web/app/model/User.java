@@ -12,8 +12,12 @@ import java.net.UnknownHostException;
 @Entity
 public class User extends Model{
 
+        @Id
         private String _id;
+
+        @Required
         private String password;
+
         private String password2;
         private String admin;
         private int partidasJugadas;

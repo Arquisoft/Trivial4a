@@ -47,10 +47,15 @@ public class MongoDB {
      * @return Array con las preguntas de la consulta.
      * @throws UnknownHostException
      */
-    public Pregunta[] getPreguntas_Categoria(String categoria) throws UnknownHostException {
+    public Pregunta[] getPreguntas_Categoria(String categoria)  {
         Pregunta[] aux = {};
         List<Pregunta> preguntas = new ArrayList<Pregunta>();
-        DBCollection coleccion = getDB().getCollection(DB_COLLECTION_PREGUNTAS);
+        DBCollection coleccion = null;
+        try {
+            coleccion = getDB().getCollection(DB_COLLECTION_PREGUNTAS);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
         BasicDBObject searchQuery = new BasicDBObject();
         searchQuery.put(CATEGORIA, categoria);
         DBCursor cursor = coleccion.find(searchQuery);
