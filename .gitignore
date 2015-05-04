@@ -12,6 +12,7 @@ bin/
 .idea/
 tmp/
 *.tmp
+*~*
 *.bak
 *.swp
 *~.nib
