@@ -12,6 +12,7 @@ GET         /juego               controllers.Application.jugar()
 
 POST        /register            controllers.Application.register()
 POST        /login               controllers.Application.authenticate()
+POST        /juego               controllers.Application.responder()
 
 POST        /datos               controllers.Application.irDatos(user: String)
 

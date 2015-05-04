@@ -1,13 +1,7 @@
-New log file opened at Mon May 04 18:51:28 CEST 2015 by 4808@nunse-PC
-Taking next connection to: 56418
-New client attempting to connect on port: 56419-56418
-  Address = /192.168.0.17:56418
-This client on port 56419 has uuid d46baf8a-324f-41bb-a838-5ead1f5e5bef configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
-Connected Clients: play-fork-run-d46baf8a-324f-41bb-a838-5ead1f5e5bef
-Taking next connection to: 56418
-Checking to see if clients are empty...
-No non-daemon clients connected after 3 min. Shutting down.
-Server socket thread exiting.
-0 clients open, will close them...
-All client sockets have been closed.
-Closing the 4808@nunse-PC logs at Mon May 04 18:54:28 CEST 2015, goodbye.
+New log file opened at Tue May 05 01:45:22 CEST 2015 by 10424@nunse-PC
+Taking next connection to: 49919
+New client attempting to connect on port: 49920-49919
+  Address = /192.168.0.17:49919
+This client on port 49920 has uuid 8a099767-f2c4-4a9a-a73f-ec4fd4b835ea configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
+Connected Clients: play-fork-run-8a099767-f2c4-4a9a-a73f-ec4fd4b835ea
+Taking next connection to: 49919

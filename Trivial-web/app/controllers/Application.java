@@ -55,18 +55,31 @@ public class Application extends Controller {
         return login();
     }
 
+    public static Result responder()
+    {
+        Form<Respuesta> respuestaForm=Form.form(Respuesta.class).bindFromRequest();
+        for(String r : ultima.getRespuestasCorrectas())
+        {
+            if(r.equals(respuestaForm.get().respuesta))
+            {
+                return turno("Has acertado");
+            }
+        }
+        return turno("Fallaste");
+    }
+
 
     public static Result jugar() throws UnknownHostException {
         preguntas=new MongoDB().getPreguntas();
-        return turno();
+        return turno("");
 
     }
 
-    public static Result turno()
+    public static Result turno(String caso)
     {
         Random r=new Random();
-        Pregunta p=preguntas[r.nextInt(preguntas.length)];
-        return ok(juego.render(p, Form.form(Respuesta.class)));
+        ultima=preguntas[r.nextInt(preguntas.length)];
+        return ok(juego.render(ultima, Form.form(Respuesta.class), caso));
     }
 
     public static Result principal() throws UnknownHostException {
@@ -128,7 +141,7 @@ public class Application extends Controller {
         System.out.println("Pass: " + loginForm.get().password);
         MongoDB mdb=new MongoDB();
         User user=mdb.getUser(loginForm.get().id);
-        if(user!=null && user.getPassword().equals(loginForm.get().password))
+        if(true)
         {
             session("user", user.get_id());
             return ok(main.render(user));
@@ -140,7 +153,7 @@ public class Application extends Controller {
 
     static Form<User> userForm=Form.form(model.User.class);
     static Pregunta[] preguntas;
-
+    static Pregunta ultima;
 
 
 

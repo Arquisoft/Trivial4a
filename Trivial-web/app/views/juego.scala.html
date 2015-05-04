@@ -1,4 +1,4 @@
-@(pregunta: model.Pregunta,form: Form[Application.Respuesta])
+@(pregunta: model.Pregunta,form: Form[Application.Respuesta], caso: String)
 
 <!DOCTYPE html>
 
@@ -12,6 +12,7 @@
         <h1>Bienvenido al Trivial()</h1>
 
         <h2>@pregunta.getPregunta()</h2>
+        <h2 style="color:green">@caso</h2>
         <br>
         <table>
         @for(respuesta <- pregunta.getRespuestasCorrectas()) {
@@ -30,6 +31,12 @@
                 </tr>
 
         }
+
         </table>
+        @helper.form(action=routes.Application.responder){
+
+
+        }
+        <a href="@routes.Application.principal()">Volver</a>
     </body>
 </html>
