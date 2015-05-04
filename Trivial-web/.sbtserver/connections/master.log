@@ -1,7 +1,7 @@
-New log file opened at Tue May 05 01:45:22 CEST 2015 by 10424@nunse-PC
-Taking next connection to: 49919
-New client attempting to connect on port: 49920-49919
-  Address = /192.168.0.17:49919
-This client on port 49920 has uuid 8a099767-f2c4-4a9a-a73f-ec4fd4b835ea configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
-Connected Clients: play-fork-run-8a099767-f2c4-4a9a-a73f-ec4fd4b835ea
-Taking next connection to: 49919
+New log file opened at Tue May 05 01:48:32 CEST 2015 by 4460@nunse-PC
+Taking next connection to: 50025
+New client attempting to connect on port: 50026-50025
+  Address = /192.168.0.17:50025
+This client on port 50026 has uuid 6559ebea-936e-4497-a659-458783024f57 configName play-fork-run humanReadableName Play Fork Run protocolVersion 1 featureTags Vector()
+Connected Clients: play-fork-run-6559ebea-936e-4497-a659-458783024f57
+Taking next connection to: 50025
