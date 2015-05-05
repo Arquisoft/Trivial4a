@@ -12,9 +12,9 @@ GET         /juego               controllers.Application.jugar()
 
 POST        /register            controllers.Application.register()
 POST        /login               controllers.Application.authenticate()
-POST        /juego               controllers.Application.responder()
+POST        /juego               controllers.Application.responder(respuesta: String)
 
-POST        /datos               controllers.Application.irDatos(user: String)
+GET        /datos               controllers.Application.irDatos(user: String)
 
 POST        /datos               controllers.Application.modificarDatos()
 

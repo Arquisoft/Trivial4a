@@ -1,4 +1,4 @@
-@(pregunta: model.Pregunta,form: Form[Application.Respuesta], caso: String)
+@(pregunta: model.Pregunta,resp: Form[Application.Respuesta], acierto: String, fallo: String, quesos: Application.Queso)
 
 <!DOCTYPE html>
 
@@ -7,36 +7,72 @@
         <meta charset="UTF-8">
         <title>Trivial</title>
         <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
+        <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/main.css")">
     </head>
     <body>
-        <h1>Bienvenido al Trivial()</h1>
+        <h1>Bienvenido al Trivial</h1>
 
-        <h2>@pregunta.getPregunta()</h2>
-        <h2 style="color:green">@caso</h2>
+        <h3>@pregunta.getPregunta()</h3>
+        <h2 style="color:green">@acierto</h2>
+        <h2 style="color:red">@fallo</h2>
         <br>
-        <table>
-        @for(respuesta <- pregunta.getRespuestasCorrectas()) {
 
+
+        <table align="left" border="2">
             <tr>
-                <td>@respuesta</td><td>@helper.checkbox(field=form(respuesta))</td>
+                @if(quesos.queso1) {
+                    <td bgcolor="#8fbc8f">
+                        Entertaiment
+                    </td>
+                }
+                @if(quesos.queso2) {
+                    <td bgcolor="#daa520">
+                        Geography
+                    </td>
+                }
             </tr>
-
-        }
+            <tr>
+                @if(quesos.queso3) {
+                    <td bgcolor="#adff2f">
+                        History
+                    </td>
+                }
+                @if(quesos.queso4) {
+                    <td bgcolor="#7fffd4">
+                        Math
+                    </td>
+                }
+            </tr>
         </table>
-        <table>
-        @for(respuesta2 <- pregunta.getRespuestasIncorrectas()) {
 
+        <table align="center" border="1">
+
+
+            @for(respuesta <- pregunta.getRespuestasCorrectas()) {
+                @helper.form(action=routes.Application.responder(respuesta)){
                 <tr>
-                    <td>@respuesta2</td><td>@helper.checkbox(field=form(respuesta2))</td>
-                </tr>
+                    <td>
 
-        }
+                       @respuesta  <button type="submit">Responder</button>
+
+                    </td>
+                </tr>
+                }
+            }
+            @for(respuesta2 <- pregunta.getRespuestasIncorrectas()) {
+                @helper.form(action=routes.Application.responder(respuesta2)) {
+                    <tr>
+                        <<td>
+
+                        @respuesta2 <button type="submit">Responder</button>
+
+                    </td>
+                    </tr>
+                }
+
+            }
 
         </table>
-        @helper.form(action=routes.Application.responder){
-
-
-        }
         <a href="@routes.Application.principal()">Volver</a>
     </body>
 </html>

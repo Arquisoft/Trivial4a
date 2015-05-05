@@ -169,6 +169,22 @@ public class MongoDB {
         BasicDBObject doc = new BasicDBObject("_idUsuario", _idUsuario).append("_idPregunta", _idPregunta).append("correcto", correcto);
         dbCollection.insert(doc);
     }
+
+    public int getNumRespuestasCorrectas(String _idUsuario) throws UnknownHostException {
+        DBCollection dbCollection = getDB().getCollection(DB_COLLECTION_RESPUESTAS);
+        BasicDBObject searchQuery = new BasicDBObject();
+        searchQuery.append("correcto", "Y").append("_idUsuario", _idUsuario);
+        DBCursor cursor= dbCollection.find(searchQuery);
+        return cursor.count();
+    }
+
+    public int getNumRespuestasIncorrectas(String _idUsuario) throws UnknownHostException {
+        DBCollection dbCollection = getDB().getCollection(DB_COLLECTION_RESPUESTAS);
+        BasicDBObject searchQuery = new BasicDBObject();
+        searchQuery.append("correcto", "N").append("_idUsuario", _idUsuario);
+        DBCursor cursor= dbCollection.find(searchQuery);
+        return cursor.count();
+    }
     
     
     public String informeUsusario(String _id) throws UnknownHostException{
