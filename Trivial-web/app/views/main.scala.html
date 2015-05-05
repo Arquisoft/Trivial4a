@@ -1,0 +1,43 @@
+@(user: model.User)
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Trivial</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
+        <title>Trivial</title>
+    </head>
+    <body>
+        <h1 align="center">Bienvenido, @user.get_id()</h1>
+
+        <table align="center" border="1" bgcolor="#a9a9a9">
+            <tr>
+                <td>
+                    <a href="/juego">Jugar</a>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <a href="@routes.Application.irDatos(user.get_id())">Consultar datos</a>
+
+                </td>
+            </tr>
+            @if(!user.getAdmin().equals("no")){
+            <tr>
+                <td>
+                    <a href="/users">Gestionar usuarios</a>
+                </td>
+            </tr>
+            }
+
+            <tr>
+                <td>
+                    <a href='/logout'>Cerrar sesión</a>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
