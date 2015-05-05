@@ -1,6 +1,7 @@
 package es.uniovi.asw.main;
 
 import es.uniovi.asw.trivial.game.Game;
+
 import es.uniovi.asw.trivial.game.GameFactory;
 import es.uniovi.asw.trivial.model.Dado;
 import es.uniovi.asw.trivial.model.Pregunta;
