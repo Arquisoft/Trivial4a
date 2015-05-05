@@ -5,6 +5,8 @@
     <title>Trivial</title>
     <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/bootstrap.min.css")">
     <link rel="stylesheet" type="text/css" href="@routes.Assets.at("stylesheets/main.css")">
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
 </head>
 <body>
     <h2>Modifica tus datos aquí</h2>
@@ -25,16 +27,115 @@
         </p>
         <h3>Estadísticas</h3>
 
+
+        <!-- Preguntas correctas VS incorrectas.  -->
+        <div id="container_Respuestas" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+        <script>
+            $(function () {
+                $(document).ready(function () {
+
+                    // Build the chart
+                    $('#container_Respuestas').highcharts({
+                        chart: {
+                            plotBackgroundColor: null,
+                            plotBorderWidth: null,
+                            plotShadow: false
+                        },
+                        title: {
+                            text: 'Preguntas contestadas'
+                        },
+                        tooltip: {
+                            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                        },
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: false
+                                },
+                                showInLegend: true
+                            }
+                        },
+                        series: [{
+                            type: 'pie',
+                            name: 'Preguntas',
+                            data: [
+                                ['Correctas',   50.0],
+                                ['Incorrectas', 50.0]
+                            ]
+                        }]
+                    });
+                });
+
+            });
+        </script>
+
+
+        <!-- Partidas ganadas VS perdidas.  -->
+        <div id="container_Partidas" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+        <script>
+            $(function () {
+                $('#container_Partidas').highcharts({
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: 0,
+                        plotShadow: false
+                    },
+                    title: {
+                        text: 'Browser<br>shares',
+                        align: 'center',
+                        verticalAlign: 'middle',
+                        y: 50
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+                    plotOptions: {
+                        pie: {
+                            dataLabels: {
+                                enabled: true,
+                                distance: -50,
+                                style: {
+                                    fontWeight: 'bold',
+                                    color: 'white',
+                                    textShadow: '0px 1px 2px black'
+                                }
+                            },
+                            startAngle: -90,
+                            endAngle: 90,
+                            center: ['50%', '75%']
+                        }
+                    },
+                    series: [{
+                        type: 'pie',
+                        name: 'Partidas jugadas',
+                        innerSize: '50%',
+                        data: [
+                            ['Ganadas',   50.0],
+                            ['Perdidas',  50.0],
+                            {
+                                name: 'Others',
+                                y: 0.7,
+                                dataLabels: {
+                                    enabled: false
+                                }
+                            }
+                        ]
+                    }]
+                });
+            });
+        </script>
+
+
+        <!-- Esto de aquí abajo puede que sobre después.  -->
         <p>Partidas jugadas: @user.getPartidasJugadas()</p>
         <p>Partidas ganadas: @user.getPartidasganadas()</p>
 
     }
-    <script src="http://code.highcharts.com/highcharts.js"></script>
-    <script src="http://code.highcharts.com/highcharts-more.js"></script>
-    <script src="http://code.highcharts.com/modules/exporting.js"></script>
-
-
     <a href="@routes.Application.principal()">Volver</a>
+
+
 </body>
 
 
