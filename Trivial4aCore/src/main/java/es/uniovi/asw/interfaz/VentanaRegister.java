@@ -1,25 +1,23 @@
 package es.uniovi.asw.interfaz;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.UnknownHostException;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import es.uniovi.asw.trivial.model.User;
 import es.uniovi.asw.trivial.persistence.MongoDB;
 
+@SuppressWarnings("serial")
 public class VentanaRegister extends JFrame {
 
 	private JPanel contentPane;
@@ -86,14 +84,13 @@ public class VentanaRegister extends JFrame {
 		btOk.setBounds(95, 154, 89, 23);
 		btOk.addActionListener(new ActionListener() {
 			
+			@SuppressWarnings("static-access")
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				if(!isRegistered(txtUser.getText())){
 					try {
 						mdb.guardarUsuario(txtUser.getText(), txtPass.getText());
 						dispose();
 					} catch (UnknownHostException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}else{
@@ -113,7 +110,6 @@ public class VentanaRegister extends JFrame {
 			}
 			return false;
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

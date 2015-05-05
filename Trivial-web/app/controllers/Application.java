@@ -38,13 +38,12 @@ public class Application extends Controller {
     public static Result register() throws UnknownHostException {
 
         Form<Register> register=Form.form(Register.class).bindFromRequest();
-        User user=new User(register.get().id,register.get().password);
-        System.out.println("Cosas: "+register.get().id+register.get().password+register.get().password2);
-        user.setPassword2(register.get().password2);
+        User user=new User(register.data().get("id"),register.data().get("password"));
+        user.setPassword2(register.data().get("password2"));
         if(user.validatePass())
         {
             MongoDB mdb=new MongoDB();
-            mdb.guardarUsuario(user.get_id(),user.getPassword(),"no",0,0);
+            mdb.guardarUsuario(user.get_id(),user.getPassword(),"no",50,40);
             return login();
         }
         return irRegister();
@@ -55,31 +54,55 @@ public class Application extends Controller {
         return login();
     }
 
-    public static Result responder()
+    public static Result responder(String respuesta)
     {
-        Form<Respuesta> respuestaForm=Form.form(Respuesta.class).bindFromRequest();
+
+        System.out.println(respuesta);
         for(String r : ultima.getRespuestasCorrectas())
         {
-            if(r.equals(respuestaForm.get().respuesta))
+
+            if(r.equals(respuesta))
             {
-                return turno("Has acertado");
+                if(ultima.getCategoria().equals("Entertainment"))
+                {
+                    quesos.queso1=true;
+                }
+                if(ultima.getCategoria().equals("Geography"))
+                {
+                    quesos.queso2=true;
+                }
+                if(ultima.getCategoria().equals("History"))
+                {
+                    quesos.queso3=true;
+                }
+                if(ultima.getCategoria().equals("Math"))
+                {
+                    quesos.queso4=true;
+                }
+                if(quesos.queso1 && quesos.queso2 && quesos.queso3 && quesos.queso4)
+                {
+                    return ok(victoria.render());
+                }
+                System.out.println(ultima.getCategoria());
+
+                return turno("Has acertado","");
             }
         }
-        return turno("Fallaste");
+        return turno("","Fallaste");
     }
 
 
     public static Result jugar() throws UnknownHostException {
         preguntas=new MongoDB().getPreguntas();
-        return turno("");
+        return turno("","");
 
     }
 
-    public static Result turno(String caso)
+    public static Result turno(String acierto, String fallo)
     {
         Random r=new Random();
         ultima=preguntas[r.nextInt(preguntas.length)];
-        return ok(juego.render(ultima, Form.form(Respuesta.class), caso));
+        return ok(juego.render(ultima, Form.form(Respuesta.class),acierto, fallo, quesos));
     }
 
     public static Result principal() throws UnknownHostException {
@@ -92,8 +115,10 @@ public class Application extends Controller {
         MongoDB mdb=new MongoDB();
         User user=mdb.getUser(userId);
         System.out.println(user.get_id());
+
         if(user!=null)
         {
+            session("userDatos",user.get_id());
             return ok(datos.render(user));
         }
 
@@ -101,18 +126,22 @@ public class Application extends Controller {
     }
 
 
-    public static Result modificarDatos() {
+    public static Result modificarDatos() throws UnknownHostException {
 
-        if(session().containsKey("user"))
+        if(session().containsKey("userDatos"))
         {
-            User user=userForm.bindFromRequest().get();
-            if(user.getPassword()!=null && user.getPassword2()!=null)
+
+            MongoDB mdb=new MongoDB();
+            User user=mdb.getUser(session("userDatos"));
+            Form<User> userF=userForm.bindFromRequest();
+            if(userF.data().get("password")!=null && userF.data().get("password")!=null)
             {
-                if(user.getPassword().equals(user.getPassword2()))
+                if(userF.data().get("password").equals(userF.data().get("password2")))
                 {
-                    user.setPassword(user.getPassword());
+                    user.setPassword(userF.data().get("password"));
+                    mdb.guardarUsuario(user.get_id(), user.getPassword(), user.getAdmin(), user.getPartidasJugadas(), user.getPartidasganadas());
                     System.out.println("Contraseña cambiada");
-                    return ok(main.render(user));
+                    return ok(main.render(mdb.getUser(session("user"))));
                 }
             }
 
@@ -137,11 +166,12 @@ public class Application extends Controller {
         // Login loginForm =Form.form(Login.class).bindFromRequest().get();
         Form<Login> loginForm = Form.form(Login.class).bindFromRequest();
         System.out.println(loginForm);
-        System.out.println("User: "+loginForm.get().id);
-        System.out.println("Pass: " + loginForm.get().password);
+        System.out.println("User: "+loginForm.data().get("id"));
+        System.out.println("Pass: " + loginForm.data().get("password"));
         MongoDB mdb=new MongoDB();
-        User user=mdb.getUser(loginForm.get().id);
-        if(true)
+        User user=mdb.getUser(loginForm.data().get("id"));
+        System.out.println("Mongo: "+user);
+        if(user!=null)
         {
             session("user", user.get_id());
             return ok(main.render(user));
@@ -154,6 +184,7 @@ public class Application extends Controller {
     static Form<User> userForm=Form.form(model.User.class);
     static Pregunta[] preguntas;
     static Pregunta ultima;
+    static Queso quesos=new Queso();
 
 
 
@@ -176,6 +207,24 @@ public class Application extends Controller {
     public static class Respuesta
     {
         public String respuesta;
+        public String respuesta2;
+        public String respuesta3;
+        public String respuesta4;
+        public String respuesta5;
+        public String respuesta6;
+        public String respuesta7;
+        public String respuesta8;
+
+
+    }
+
+    public static class Queso
+    {
+        public boolean queso1=false;
+        public boolean queso2=false;
+        public boolean queso3=false;
+        public boolean queso4=false;
+
     }
 }
 

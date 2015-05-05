@@ -8,11 +8,13 @@ import java.net.UnknownHostException;
 /**
  * Created by Jorge on 13/03/2015.
  */
+@SuppressWarnings("all")
 public class MongoDBPlaygorund {
 
     private final static String DB_NAME = "mydb";
     private final static String DB_HOST = "localhost";
-    private final static String DB_COLLECTION_PREGUNTAS = "preguntas";
+
+	private final static String DB_COLLECTION_PREGUNTAS = "preguntas";
     private final static String CATEGORIA = "categoria";
     private final static String DB_COLLECTION_USUARIOS = "usuarios";
 

@@ -1,6 +1,7 @@
 package es.uniovi.asw.trivial.persistence;
 
 import com.google.gson.Gson;
+
 import es.uniovi.asw.trivial.model.Pregunta;
 import es.uniovi.asw.trivial.model.User;
 

@@ -73,6 +73,10 @@ public class User extends Model{
 
 
 
+        public User()
+        {
+
+        }
         public User(String _id) {
 
             this._id = _id;

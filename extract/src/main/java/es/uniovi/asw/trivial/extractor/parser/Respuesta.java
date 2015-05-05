@@ -1,6 +1,6 @@
-package es.uniovi.asw.trivial.model;
+package es.uniovi.asw.trivial.extractor.parser;
 
-public class Respuesta {
+public class Respuesta{
 
 
     public String respuesta;

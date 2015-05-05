@@ -3,7 +3,6 @@ package es.uniovi.asw.componentesDeInterfaz;
 import java.awt.Color;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
 
 @SuppressWarnings("serial")
 public class Quesito extends JButton{

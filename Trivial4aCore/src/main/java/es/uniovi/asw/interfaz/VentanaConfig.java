@@ -12,7 +12,6 @@ import es.uniovi.asw.componentesDeInterfaz.Panel_Jugador;
 import es.uniovi.asw.main.GameLoader;
 import es.uniovi.asw.trivial.game.Game;
 import es.uniovi.asw.trivial.game.GameFactory;
-import es.uniovi.asw.trivial.model.User;
 
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
@@ -234,6 +233,11 @@ public class VentanaConfig extends JFrame {
 	private JButton getBtnSalir() {
 		if (btnSalir == null) {
 			btnSalir = new JButton("Salir");
+			btnSalir.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					dispose();
+				}
+			});
 		}
 		return btnSalir;
 	}

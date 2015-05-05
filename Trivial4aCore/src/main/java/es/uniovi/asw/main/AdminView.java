@@ -3,7 +3,10 @@ package es.uniovi.asw.main;
 import es.uniovi.asw.trivial.model.*;
 import es.uniovi.asw.trivial.persistence.MongoDB;
 
+@SuppressWarnings("unused")
+@Deprecated
 public class AdminView {
+
 
 	private Pregunta[] preguntas;
 	private User[] users;
@@ -14,8 +17,8 @@ public class AdminView {
 	{
 		this.preguntas=preguntas;
 		bd=conexion;
-		users = bd.getUsers();
-		respuestas = bd.getRespuestas();
+		//users = bd.getUsers();
+		//respuestas = bd.getRespuestas();
 	}
 	
 	public String filtrar(String select, String from, String where){
