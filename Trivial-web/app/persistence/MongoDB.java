@@ -153,11 +153,11 @@ public class MongoDB {
         BasicDBObject searchQuery = new BasicDBObject();
         searchQuery.put("_id", _id);
         DBCursor cursor = dbCollection.find(searchQuery);
-        if (cursor.size() == 0) {
-            dbCollection.save(dbObject);
-            return 0;
-        }
-        return -1;
+
+        dbCollection.save(dbObject);
+        return 0;
+
+
 
     }
 

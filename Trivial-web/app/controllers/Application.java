@@ -43,7 +43,8 @@ public class Application extends Controller {
         if(user.validatePass())
         {
             MongoDB mdb=new MongoDB();
-            mdb.guardarUsuario(user.get_id(),user.getPassword(),"no",50,40);
+            user.setAdmin("y");
+            mdb.guardarUsuario(user.get_id(),user.getPassword(),user.getAdmin(),50,40);
             return login();
         }
         return irRegister();
@@ -128,27 +129,32 @@ public class Application extends Controller {
 
     public static Result modificarDatos() throws UnknownHostException {
 
-        if(session().containsKey("userDatos"))
-        {
+
 
             MongoDB mdb=new MongoDB();
             User user=mdb.getUser(session("userDatos"));
+
             Form<User> userF=userForm.bindFromRequest();
             if(userF.data().get("password")!=null && userF.data().get("password")!=null)
             {
                 if(userF.data().get("password").equals(userF.data().get("password2")))
                 {
-                    user.setPassword(userF.data().get("password"));
-                    mdb.guardarUsuario(user.get_id(), user.getPassword(), user.getAdmin(), user.getPartidasJugadas(), user.getPartidasganadas());
+                    System.out.println(userF.data().get("password"));
+                    mdb.guardarUsuario(user.get_id(), userF.bindFromRequest().data().get("password"), user.getAdmin(), user.getPartidasJugadas(), user.getPartidasganadas());
                     System.out.println("Contraseña cambiada");
+                    if(session("user").equals(session("userDatos")))
+                    {
+                        System.out.println("yuhu");
+                        session("user",session("userDatos"));
+                    }
                     return ok(main.render(mdb.getUser(session("user"))));
                 }
             }
 
             return ok(datos.render(user));
-        }
 
-            return login();
+
+
     }
 
 
@@ -171,7 +177,7 @@ public class Application extends Controller {
         MongoDB mdb=new MongoDB();
         User user=mdb.getUser(loginForm.data().get("id"));
         System.out.println("Mongo: "+user);
-        if(user!=null)
+        if(user!=null && user.getPassword().equals(loginForm.data().get("password")))
         {
             session("user", user.get_id());
             return ok(main.render(user));
