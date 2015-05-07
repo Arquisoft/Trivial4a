@@ -43,8 +43,8 @@ public class Application extends Controller {
         if(user.validatePass())
         {
             MongoDB mdb=new MongoDB();
-            user.setAdmin("y");
-            mdb.guardarUsuario(user.get_id(),user.getPassword(),user.getAdmin(),50,40);
+            user.setAdmin("n");
+            mdb.guardarUsuario(user.get_id(),user.getPassword(),user.getAdmin(),0,0);
             return login();
         }
         return irRegister();
@@ -55,8 +55,7 @@ public class Application extends Controller {
         return login();
     }
 
-    public static Result responder(String respuesta)
-    {
+    public static Result responder(String respuesta) throws UnknownHostException {
 
         System.out.println(respuesta);
         for(String r : ultima.getRespuestasCorrectas())
@@ -82,6 +81,9 @@ public class Application extends Controller {
                 }
                 if(quesos.queso1 && quesos.queso2 && quesos.queso3 && quesos.queso4)
                 {
+                    MongoDB mdb=new MongoDB();
+                    User user=mdb.getUser(session("user"));
+                    mdb.guardarUsuario(user.get_id(),user.getPassword(),user.getAdmin(),user.getPartidasJugadas(),user.getPartidasganadas()+1);
                     return ok(victoria.render());
                 }
                 System.out.println(ultima.getCategoria());
@@ -94,7 +96,11 @@ public class Application extends Controller {
 
 
     public static Result jugar() throws UnknownHostException {
-        preguntas=new MongoDB().getPreguntas();
+        MongoDB mdb=new MongoDB();
+        preguntas=mdb.getPreguntas();
+        User user=mdb.getUser(session("user"));
+        mdb.guardarUsuario(user.get_id(),user.getPassword(),user.getAdmin(),user.getPartidasJugadas()+1,user.getPartidasganadas());
+
         return turno("","");
 
     }
